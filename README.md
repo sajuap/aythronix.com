@@ -352,7 +352,13 @@ duplicate `ppmondwest-regular.otf` there (the one the site uses lives in
 
 ---
 
-## Branch
+## Branches
 
-Work is on `feature/aythronix-agency-site`. `main` holds the original empty
-Bootstrap/webpack scaffold as a baseline commit, so the whole build is reviewable as a diff.
+| Branch | Contents |
+| --- | --- |
+| `aythronix-website` | **This one.** Blue rebrand + agency content. |
+| `botronics-clone` | The original pixel-verified recreation, frozen before any Aythronix change. Kept for reuse in a separate project — do not land rebrand or content commits on it. |
+| `main` | The original empty Bootstrap/webpack scaffold, so the whole build is reviewable as a diff. |
+
+`botronics-clone` branches off this history at the commit *before* the rebrand, so it is a
+genuine snapshot rather than a revert, and it builds standalone.
