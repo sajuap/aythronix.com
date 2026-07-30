@@ -22,7 +22,7 @@
       <header class="nav_component" role="banner">
         <div class="padding-global">
           <div class="nav_container">
-            <a href="/#Hero" class="nav_logo" aria-label="Aythronix — home">
+            <a href="index.html#Hero" class="nav_logo" aria-label="Aythronix — home">
               <img
                 src="/src/assets/icons/logo.svg"
                 loading="eager"
@@ -34,14 +34,14 @@
             </a>
 
             <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Main">
-              <a href="/#Services" class="nav_link">Services</a>
-              <a href="/#Work" class="nav_link">Case Studies</a>
-              <a href="/#Process" class="nav_link">Process</a>
-              <a href="/#Reviews" class="nav_link">Testimonials</a>
+              <a href="index.html#Services" class="nav_link">Services</a>
+              <a href="index.html#Work" class="nav_link">Case Studies</a>
+              <a href="index.html#Process" class="nav_link">Process</a>
+              <a href="index.html#Reviews" class="nav_link">Testimonials</a>
 
               <!-- Tablet/mobile copy of the CTA, shown once the menu collapses. -->
               <div class="display-horizontal-left is-hidden-desktop">
-                <a href="/#Contact" class="button is-secondary is-small is-tab-only">
+                <a href="index.html#Contact" class="button is-secondary is-small is-tab-only">
                   <div>Book a consultation</div>
                   <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
                   <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
@@ -63,7 +63,7 @@
               </span>
             </button>
 
-            <a href="/#Contact" class="button is-secondary is-small">
+            <a href="index.html#Contact" class="button is-secondary is-small">
               <div>Book a consultation</div>
               <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
               <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
@@ -100,7 +100,7 @@
                     <div>
                       <div class="margin-bottom margin-small">
                         <div class="display-horizontal-left is-gap-1rem">
-                          <a href="/#Hero" class="nav_brand" aria-label="Aythronix — home">
+                          <a href="index.html#Hero" class="nav_brand" aria-label="Aythronix — home">
                             <img src="/src/assets/icons/logo.svg" loading="lazy" alt="Aythronix" class="nav_logo" />
                           </a>
                           <div class="subtitle-line is-higher is-hidden-mob"></div>
@@ -124,33 +124,51 @@
                         </div>
                       </div>
 
+                      <!--
+                        The legal pages are reachable from here rather than from a
+                        fourth link column: the content brief specifies exactly
+                        three (Company / Services / Connect), and a cookie policy
+                        nothing links to is worse than an untidy footer.
+
+                        Relative hrefs, not root-absolute — these have to resolve
+                        both at a domain root and under a project subpath such as
+                        GitHub Pages' /<repo>/.
+                      -->
                       <div class="footer_copyright-text">
-                        © <span data-year>2026</span> Aythronix | All rights reserved
+                        © <span data-year>2026</span> Aythronix |
+                        <a href="legal-notice.html"
+                          ><span class="footer_copyright-text is-link">Legal Notice</span></a
+                        >
+                        |
+                        <a href="policy.html"
+                          ><span class="footer_copyright-text is-link">Cookie Policy</span></a
+                        >
+                        | All rights reserved
                       </div>
                     </div>
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Company">
                       <div class="footer_link text-color-primary">Company</div>
-                      <a href="/#About" class="footer_link">About Us</a>
-                      <a href="/#Process" class="footer_link">Process</a>
-                      <a href="/#Work" class="footer_link">Gallery</a>
-                      <a href="/#Contact" class="footer_link">Careers</a>
+                      <a href="index.html#About" class="footer_link">About Us</a>
+                      <a href="index.html#Process" class="footer_link">Process</a>
+                      <a href="index.html#Work" class="footer_link">Gallery</a>
+                      <a href="index.html#Contact" class="footer_link">Careers</a>
                     </nav>
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Services">
                       <div class="footer_link text-color-primary">Services</div>
-                      <a href="/#Services" class="footer_link">Web Development</a>
-                      <a href="/#Services" class="footer_link">Mobile Apps</a>
-                      <a href="/#Services" class="footer_link">AI Solutions</a>
-                      <a href="/#Services" class="footer_link">SEO Strategy</a>
+                      <a href="index.html#Services" class="footer_link">Web Development</a>
+                      <a href="index.html#Services" class="footer_link">Mobile Apps</a>
+                      <a href="index.html#Services" class="footer_link">AI Solutions</a>
+                      <a href="index.html#Services" class="footer_link">SEO Strategy</a>
                     </nav>
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Connect">
                       <div class="footer_link text-color-primary">Connect</div>
                       <a href="https://www.linkedin.com/company/aythronix/" target="_blank" rel="noopener" class="footer_link">LinkedIn</a>
                       <a href="https://x.com/aythronix" target="_blank" rel="noopener" class="footer_link">Twitter / X</a>
-                      <a href="/#Contact" class="footer_link">Contact Support</a>
-                      <a href="/#Contact" class="footer_link">Book Consultation</a>
+                      <a href="index.html#Contact" class="footer_link">Contact Support</a>
+                      <a href="index.html#Contact" class="footer_link">Book Consultation</a>
                     </nav>
                   </div>
                 </div>

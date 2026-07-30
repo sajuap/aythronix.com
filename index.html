@@ -898,8 +898,26 @@
                         </div>
                       </div>
 
+                      <!--
+                        The legal pages are reachable from here rather than from a
+                        fourth link column: the content brief specifies exactly
+                        three (Company / Services / Connect), and a cookie policy
+                        nothing links to is worse than an untidy footer.
+
+                        Relative hrefs, not root-absolute — these have to resolve
+                        both at a domain root and under a project subpath such as
+                        GitHub Pages' /<repo>/.
+                      -->
                       <div class="footer_copyright-text">
-                        © <span data-year>2026</span> Aythronix | All rights reserved
+                        © <span data-year>2026</span> Aythronix |
+                        <a href="legal-notice.html"
+                          ><span class="footer_copyright-text is-link">Legal Notice</span></a
+                        >
+                        |
+                        <a href="policy.html"
+                          ><span class="footer_copyright-text is-link">Cookie Policy</span></a
+                        >
+                        | All rights reserved
                       </div>
                     </div>
 

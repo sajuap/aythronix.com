@@ -1,0 +1,60 @@
+# Builds the site and publishes it to GitHub Pages.
+#
+# One-time setup in the repo: Settings → Pages → Build and deployment → Source →
+# "GitHub Actions". Without that the workflow runs green but nothing is served.
+#
+# Deploys from `aythronix-website`. `botronics-clone` is deliberately *not* built
+# here — it is a frozen snapshot for a separate project, and publishing it to the
+# same Pages site would overwrite this one.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [aythronix-website]
+  # Lets you publish on demand from the Actions tab without pushing a commit.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race. `cancel-in-progress: false` so an in-flight deploy
+# finishes rather than leaving Pages half-updated.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # `npm ci` needs the lockfile to be in step with package.json; it fails
+      # loudly rather than silently resolving different versions.
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
