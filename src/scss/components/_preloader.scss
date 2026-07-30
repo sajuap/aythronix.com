@@ -54,9 +54,32 @@
   align-items: center;
   width: 100%;
   height: 100%;
+
+  // Soft white scrim so the wordmark stays legible while the particle field is
+  // still dense behind it. It fades out well before the field's edge, so the
+  // assembly still reads as one continuous shape.
+  &::before {
+    content: '';
+    position: absolute;
+    width: 26rem;
+    height: 26rem;
+    background: radial-gradient(
+      circle,
+      rgb(255 255 255 / 96%) 0%,
+      rgb(255 255 255 / 88%) 38%,
+      rgb(255 255 255 / 0%) 70%
+    );
+    pointer-events: none;
+
+    @include mobile-landscape {
+      width: 18rem;
+      height: 18rem;
+    }
+  }
 }
 
 .preloader_logo {
+  position: relative;
   width: 9rem;
   @include will-animate(transform, opacity);
 

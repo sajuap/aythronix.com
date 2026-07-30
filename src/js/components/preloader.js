@@ -151,6 +151,11 @@ export function initPreloader({ onComplete } = {}) {
         const tl = gsap.timeline({
           onComplete: () => {
             panel.classList.add('is-done');
+            // The initial state wrote `display: flex` as an inline style, which
+            // outranks `.is-done { display: none }`. Clear it directly or the
+            // panel stays a live fixed-position layer for the rest of the
+            // session, translated off-screen but still composited.
+            panel.style.display = 'none';
             sphere?.destroy();
             startScroll();
             onComplete?.();

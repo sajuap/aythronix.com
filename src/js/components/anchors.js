@@ -9,7 +9,15 @@
 import { scrollToTarget } from '../core/smooth-scroll.js';
 import { prefersReducedMotion } from '../utils/env.js';
 
-const HEADER_CLEARANCE = -88;
+/**
+ * Extra offset applied on top of the target's own `scroll-margin-top`.
+ *
+ * Zero on purpose: Lenis already honours `scroll-margin-top`, and the sections
+ * carry 6rem of it (see utilities/_helpers.scss) so that a hard load onto a
+ * `#hash` clears the fixed header too. Adding a second offset here stacked the
+ * two and overshot by the full header height.
+ */
+const HEADER_CLEARANCE = 0;
 
 export function initAnchors() {
   document.addEventListener('click', (event) => {

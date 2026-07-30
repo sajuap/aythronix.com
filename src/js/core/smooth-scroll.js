@@ -73,6 +73,17 @@ export function scrollToTarget(target, { offset = -80, duration = 1.2 } = {}) {
   }
   const el = typeof target === 'string' ? document.querySelector(target) : target;
   if (!el) return;
+
+  const behavior = prefersReducedMotion() ? 'auto' : 'smooth';
+
+  // `scrollIntoView` honours the target's `scroll-margin-top`, so the header
+  // clearance comes from the same place it does on the Lenis path. A manual
+  // `window.scrollTo(top)` would ignore it and land the section under the nav.
+  if (!offset) {
+    el.scrollIntoView({ behavior, block: 'start' });
+    return;
+  }
+
   const top = el.getBoundingClientRect().top + window.scrollY + offset;
-  window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+  window.scrollTo({ top, behavior });
 }
