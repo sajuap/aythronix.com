@@ -81,6 +81,13 @@ Three derivatives in `src/assets/icons/`:
 | `logo-mark.svg` | mark alone — favicon, tight spaces | `65.68 × 67.70` |
 | `footer-logo.svg` | oversized footer wordmark, masked fade | `1192 × 201` |
 
+The footer wordmark's opacity is matched to the original by *perceived weight*, not by
+copying its number. The original was near-black at 20%, landing on `rgb(204,204,204)` over
+white — luminance ≈ 204. This blue is much lighter per unit of alpha:
+`L(a) = 255 − 164.3·a`, so 20% would give ≈ 222 and read washed out. Solving for 204 gives
+**31%**. Its fade also stops at 27% rather than 0, because the original's gradient ran past
+the bottom of its viewBox and was still around 27% where it got cropped.
+
 Two decisions worth recording:
 
 - **The mark is set to 1.3× the wordmark's box height.** Side by side at equal heights it
