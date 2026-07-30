@@ -36,6 +36,11 @@
 }
 
 // The still that replaces the canvas below 992px.
+//
+// The source render is black dots, so it is recoloured at paint time by the
+// `brand-tint` filter declared inline in each page. That maps input black to the
+// brand blue and leaves white/transparent alone, which keeps the still matching
+// the live canvas without regenerating six raster variants per breakpoint.
 .hero-sphere-picture {
   display: none;
 
@@ -45,5 +50,6 @@
     height: 100%;
     object-fit: cover;
     object-position: 50% 0%;
+    filter: url('#brand-tint');
   }
 }

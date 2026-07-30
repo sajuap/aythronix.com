@@ -15,6 +15,10 @@
   object-position: 0% 0%;
   overflow: hidden;
   place-self: end;
+  // Same black-to-brand-blue remap as the hero still. This render is opaque
+  // (white background rather than transparent), which a mask could not handle —
+  // the filter maps white to white and black to blue, so it works for both.
+  filter: url('#brand-tint');
 
   @include tablet {
     display: none;

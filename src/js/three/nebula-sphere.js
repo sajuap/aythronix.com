@@ -39,7 +39,9 @@ export default class NebulaSphere {
       // 'hero' anchors the sphere below the canvas so only its upper arc shows;
       // 'center' keeps it centred, which is what the preloader wants.
       anchor: 'hero',
-      color: '0,0,0',
+      // Brand blue as an "r,g,b" triplet — the per-point alpha is appended in
+      // the draw loop, so this is a bare triplet rather than a colour string.
+      color: '7,101,235',
       ...options,
     };
 

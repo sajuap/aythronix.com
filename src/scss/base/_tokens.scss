@@ -1,28 +1,43 @@
 // ---------------------------------------------------------------------------
 // Design tokens
-// The full colour system, exposed as custom properties so runtime animations
-// (nav background, blur overlays) can interpolate against the same values the
-// stylesheet uses.
+//
+// The brand is built on one blue — #0765eb, taken straight from the logo — and a
+// deep navy that acts as the dark neutral.
+//
+// The neutral ramp is deliberately *not* black. Every step is an alpha of the
+// same navy, so body copy, hairlines, form fills and shadows all carry a trace
+// of the brand hue instead of reading as a grey layer sitting on top of a blue
+// logo. It is a small shift per element and the reason the page holds together
+// as one system rather than "blue accents on a monochrome site".
 // ---------------------------------------------------------------------------
 
 :root {
   // --- Brand -------------------------------------------------------------
-  --base-color-brand--white: #fff;
-  --base-color-brand--black: #000;
-  --base-color-brand--pink: #dd23bb;
-  --base-color-brand--pink-light: #ffaefe;
-  --base-color-brand--pink-dark: #3c043b;
+  --base-color-brand--blue: #0765eb;
+  --base-color-brand--blue-dark: #0550c2; // hover / pressed
+  --base-color-brand--blue-darker: #043a8c;
+  --base-color-brand--blue-light: #cfe0fd;
+  --base-color-brand--blue-lightest: #f0f5ff; // tinted surfaces
 
-  // --- Neutrals ----------------------------------------------------------
+  --base-color-brand--white: #fff;
+  --base-color-brand--black: #04173a; // the navy stands in for black
+
+  // Kept so nothing referencing the old accent breaks; repointed at the blue
+  // family rather than left as a stale magenta.
+  --base-color-brand--pink: var(--base-color-brand--blue);
+  --base-color-brand--pink-light: var(--base-color-brand--blue-light);
+  --base-color-brand--pink-dark: var(--base-color-brand--blue-darker);
+
+  // --- Neutrals (alphas of the navy) -------------------------------------
   --base-color-neutral--white: #fff;
-  --base-color-neutral--black: #000;
-  --base-color-neutral--neutral-darkest: #000;
-  --base-color-neutral--neutral-darker: #000000b3; // 70%
-  --base-color-neutral--neutral-dark: #00000080; // 50%
-  --base-color-neutral--neutral: #0000004d; // 30%
-  --base-color-neutral--neutral-light: #0003; // 20%
-  --base-color-neutral--neutral-lighter: #0000001a; // 10%
-  --base-color-neutral--neutral-lightest: #0000000d; // 5%
+  --base-color-neutral--black: #04173a;
+  --base-color-neutral--neutral-darkest: #04173a;
+  --base-color-neutral--neutral-darker: rgb(4 23 58 / 72%);
+  --base-color-neutral--neutral-dark: rgb(4 23 58 / 52%);
+  --base-color-neutral--neutral: rgb(4 23 58 / 32%);
+  --base-color-neutral--neutral-light: rgb(4 23 58 / 20%);
+  --base-color-neutral--neutral-lighter: rgb(4 23 58 / 11%);
+  --base-color-neutral--neutral-lightest: rgb(4 23 58 / 5%);
 
   // --- System ------------------------------------------------------------
   --base-color-system--success-green: #cef5ca;
@@ -31,20 +46,23 @@
   --base-color-system--warning-yellow-dark: #5e5515;
   --base-color-system--error-red: #f8e4e4;
   --base-color-system--error-red-dark: #3b0b0b;
-  --base-color-system--focus-state: #277bff;
+  --base-color-system--focus-state: var(--base-color-brand--blue);
 
   // --- Semantic: text ----------------------------------------------------
-  --text-color--text-primary: var(--base-color-neutral--black);
+  --text-color--text-primary: var(--base-color-neutral--neutral-darkest);
   --text-color--text-secondary: var(--base-color-neutral--neutral-darker);
   --text-color--text-alternate: var(--base-color-neutral--white);
+  --text-color--text-brand: var(--base-color-brand--blue);
   --text-color--text-success: var(--base-color-system--success-green-dark);
   --text-color--text-warning: var(--base-color-system--warning-yellow-dark);
   --text-color--text-error: var(--base-color-system--error-red-dark);
 
   // --- Semantic: background ---------------------------------------------
-  --background-color--background-primary: var(--base-color-neutral--black);
+  // Primary is the brand blue: it is what the solid buttons are filled with.
+  --background-color--background-primary: var(--base-color-brand--blue);
+  --background-color--background-primary-hover: var(--base-color-brand--blue-dark);
   --background-color--background-secondary: var(--base-color-brand--white);
-  --background-color--background-tertiary: var(--base-color-brand--pink);
+  --background-color--background-tertiary: var(--base-color-brand--blue-lightest);
   --background-color--background-alternate: var(--base-color-neutral--white);
   --background-color--background-success: var(--base-color-system--success-green);
   --background-color--background-warning: var(--base-color-system--warning-yellow);
@@ -54,19 +72,24 @@
   --border-color--border-primary: var(--base-color-neutral--neutral-lightest);
   --border-color--border-secondary: var(--base-color-brand--white);
   --border-color--border-alternate: var(--base-color-neutral--neutral-darker);
+  --border-color--border-brand: var(--base-color-brand--blue);
 
   // --- Semantic: link ----------------------------------------------------
   --link-color--link-primary: var(--base-color-brand--white);
-  --link-color--link-secondary: var(--base-color-neutral--black);
+  --link-color--link-secondary: var(--base-color-neutral--neutral-darkest);
   --link-color--link-alternate: var(--base-color-neutral--white);
+  --link-color--link-brand: var(--base-color-brand--blue);
 
   // --- Elevation ---------------------------------------------------------
-  // The button's long, soft, top-left-cast shadow and the wide ambient shadow
-  // shared by the project card and the contact panel.
-  --shadow--button: -5px 5px 17px #0000001a, -22px 22px 31px #00000017,
-    -49px 49px 41px #0000000d, -87px 87px 49px #00000003, -136px 136px 54px #0000;
-  --shadow--ambient-wide: -644px 644px 250px #0000, -412px 412px 233px #00000003,
-    -232px 232px 197px #00000005, -103px 103px 146px #0000000a, -26px 26px 80px #0000000d;
+  // The button's long top-left-cast shadow and the wide ambient shadow shared by
+  // the project card and the contact panel. Both are navy-tinted rather than
+  // neutral black, so they sit under blue elements without going muddy.
+  --shadow--button: -5px 5px 17px rgb(4 23 58 / 12%), -22px 22px 31px rgb(4 23 58 / 10%),
+    -49px 49px 41px rgb(4 23 58 / 6%), -87px 87px 49px rgb(4 23 58 / 2%),
+    -136px 136px 54px rgb(4 23 58 / 0%);
+  --shadow--ambient-wide: -644px 644px 250px rgb(4 23 58 / 0%),
+    -412px 412px 233px rgb(4 23 58 / 2%), -232px 232px 197px rgb(4 23 58 / 3%),
+    -103px 103px 146px rgb(4 23 58 / 5%), -26px 26px 80px rgb(4 23 58 / 6%);
 
   // --- Layout ------------------------------------------------------------
   --container-max: 80rem; // 1280px

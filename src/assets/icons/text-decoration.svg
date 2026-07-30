@@ -3,12 +3,12 @@
 <path d="M8 46H7L7 0L8 0L8 46Z" fill="url(#paint1_linear_84_71)"/>
 <defs>
 <linearGradient id="paint0_linear_84_71" x1="45.5" y1="7.5" x2="2.66964e-06" y2="7.5" gradientUnits="userSpaceOnUse">
-<stop stop-color="#CCCCCC" stop-opacity="0"/>
-<stop offset="1" stop-color="#CCCCCC"/>
+<stop stop-color="#0765eb" stop-opacity="0"/>
+<stop offset="1" stop-color="#0765eb"/>
 </linearGradient>
 <linearGradient id="paint1_linear_84_71" x1="7.5" y1="46" x2="7.5" y2="0" gradientUnits="userSpaceOnUse">
-<stop stop-color="#CCCCCC" stop-opacity="0"/>
-<stop offset="1" stop-color="#CCCCCC"/>
+<stop stop-color="#0765eb" stop-opacity="0"/>
+<stop offset="1" stop-color="#0765eb"/>
 </linearGradient>
 </defs>
 </svg>

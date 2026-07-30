@@ -23,6 +23,13 @@
   border: 0;
   border-radius: 0;
   box-shadow: var(--shadow--button);
+  transition: background-color 0.2s, opacity 0.2s;
+
+  // The original's solid button was black and had no hover state — there is not
+  // much a black fill can do. A blue one can darken, so it does.
+  &:hover {
+    background-color: var(--background-color--background-primary-hover);
+  }
 
   &.is-small {
     padding: 0.625rem 1.5rem;
@@ -32,6 +39,12 @@
     background-color: var(--base-color-neutral--neutral-lighter);
     color: var(--text-color--text-primary);
     box-shadow: none;
+
+    // The secondary button is a navy wash, so it deepens rather than darkening
+    // toward the brand blue — going blue here would compete with the real CTA.
+    &:hover {
+      background-color: var(--base-color-neutral--neutral-light);
+    }
 
     &.is-small {
       transition: all 0.2s;

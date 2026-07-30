@@ -1,11 +1,12 @@
-# Botronics — website
+# Aythronix — website
 
-A handwritten rebuild of the Botronics site: HTML5, SCSS, Bootstrap 5 (grid + utilities
-only), ES6 modules, GSAP, Lenis and a 2D-canvas particle system, bundled with Vite.
+A handwritten site: HTML5, SCSS, Bootstrap 5 (grid + utilities only), ES6 modules, GSAP,
+Lenis and a 2D-canvas particle system, bundled with Vite.
 
-No page builder, no framework. Every value in the stylesheet was taken from the
-reference's own compiled CSS rather than estimated by eye, and the result is verified
-against the live site with headless Chrome (see [Verification](#verification)).
+No page builder, no framework. The layout was built against a reference implementation's
+own compiled CSS rather than estimated by eye, and is verified against it with headless
+Chrome (see [Verification](#verification)). The brand layer on top — logo, palette,
+imagery treatment — is Aythronix's own (see [Brand](#brand)).
 
 ---
 
@@ -42,6 +43,76 @@ design's typography is specific — a 4rem H1 at `letter-spacing: -2.16px`, para
 gain. So `main.scss` pulls in `functions`, `variables`, `maps`, `mixins`, `utilities`,
 `grid` and `utilities/api`, with `$grid-breakpoints` re-pointed at the design's own
 boundaries so Bootstrap's `media-breakpoint-*` and our max-width mixins agree.
+
+---
+
+## Brand
+
+### Palette
+
+Everything derives from one blue, `#0765eb`, taken straight from the logo. Tokens live in
+`src/scss/base/_tokens.scss`.
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `--base-color-brand--blue` | `#0765eb` | solid buttons, the mark, accents, particles |
+| `--base-color-brand--blue-dark` | `#0550c2` | primary button hover |
+| `--base-color-brand--blue-lightest` | `#f0f5ff` | tinted surfaces |
+| navy base | `#04173a` | the dark neutral — headings, and the base of every tint |
+
+The neutral ramp is deliberately **not** black. Each step (`neutral-darker` through
+`neutral-lightest`) is an alpha of that navy, so body copy, hairlines, form fills, card
+gradients and shadows all carry a trace of the brand hue. It is a small shift per element
+and it is the reason the page reads as one system rather than blue accents dropped onto a
+monochrome site.
+
+### Logo
+
+The supplied artwork (`aythronix 300.300 blue.svg`, kept at the repo root as the source of
+truth) is a stacked lockup — mark above wordmark. Horizontal is what the header needs, so
+`scratchpad`-side tooling splits the two groups and re-lays them out. Measured source
+geometry: wordmark `295.92 × 61.67`, mark `65.68 × 67.70`.
+
+Three derivatives in `src/assets/icons/`:
+
+| File | Purpose | viewBox |
+| --- | --- | --- |
+| `logo.svg` | horizontal lockup — header, footer brand, preloader | `397.03 × 80.17` |
+| `logo-mark.svg` | mark alone — favicon, tight spaces | `65.68 × 67.70` |
+| `footer-logo.svg` | oversized footer wordmark, masked fade | `1192 × 201` |
+
+Two decisions worth recording:
+
+- **The mark is set to 1.3× the wordmark's box height.** Side by side at equal heights it
+  reads as a small badge; at 1.3 it carries the lockup, which is what "make the icon a
+  little bigger" asked for.
+- **The wordmark is centred on its ascender-to-baseline band, not its bounding box.** The
+  box includes the `y` descender, which the eye does not read as part of the line —
+  centring the box instead visibly floats the word above the mark.
+
+### Imagery
+
+The sphere renders and the mission dot-illustration were authored as black dots. Rather
+than regenerate ten raster variants, an SVG `feComponentTransfer` filter (`#brand-tint`,
+declared inline in `index.html`) maps input black to the brand blue and white to white:
+
+```
+feFuncR tableValues="0.02745 1"   →  7/255
+feFuncG tableValues="0.39608 1"   → 101/255
+feFuncB tableValues="0.92157 1"   → 235/255
+```
+
+It handles the transparent PNG in the hero *and* the opaque white-background AVIF in the
+milestones — a mask could only have done the first — and covers every `srcset` variant for
+free. `color-interpolation-filters="sRGB"` is required; the default linearRGB applies the
+ramp in the wrong colour space and comes out washed.
+
+The four milestone Lottie glyphs were recoloured in place by walking the animation JSON and
+rewriting only genuine colour properties. A string replace on `"k":[0,0,0,1]` would also
+have hit position and anchor-point keyframes, which serialise identically.
+
+Press logos stay black on purpose: they are other companies' marks and tinting them would
+misrepresent them.
 
 ---
 
@@ -182,12 +253,19 @@ and measured geometry against `https://www.botronics.be/`.
 
 **Section heights and total document height — 0px delta at every breakpoint:**
 
-| Viewport | Sections matching | Total height (local = live) |
+| Viewport | Content sections matching | Total height (local = live) |
 | --- | --- | --- |
-| 1440 × 900 | 10 / 10 | 6420px |
-| 1280 × 800 | 10 / 10 | 6270px |
-| 834 × 1112 | 10 / 10 | 8346px |
-| 390 × 844 | 10 / 10 | 8731px |
+| 1440 × 900 | 9 / 9 | 6420px |
+| 1280 × 800 | 9 / 9 | 6270px |
+| 834 × 1112 | 9 / 9 | 8346px |
+| 390 × 844 | 9 / 9 | 8731px |
+
+Since the rebrand, all nine content sections still match exactly; the footer is
+intentionally **+50px** taller (469 vs 419 at 1440), entirely because the new oversized
+wordmark uses a `1192 × 201` viewBox instead of the original's `1192 × 154` so the word
+shows down to its baseline. Cropping at the old height cut through the x-height. Total
+document height is therefore 6470px against the reference's 6420px, and that 50px is the
+only structural difference.
 
 Measured *after* walking the page so every lazy image has loaded and decoded. This
 matters more than it sounds: an image with no intrinsic size yet collapses its grid row,
@@ -287,6 +365,27 @@ Recorded so they read as decisions rather than gaps.
 bold, PP Mondwest), the press logos, team portraits with their full `srcset` ladders, the
 sphere renders, the four Lottie JSONs and the UI icons. Nothing is loaded from a third-party
 CDN at runtime.
+
+---
+
+## Outstanding — needs your input
+
+The rebrand renamed every human-readable brand string. Three things were left pointing at
+the old identity because inventing a replacement would have produced broken links:
+
+| What | Current value | Where |
+| --- | --- | --- |
+| Domain | `https://www.botronics.be/` | `canonical`, `og:url`, JSON-LD `url` in `index.html`; body text and `canonical` in both legal pages |
+| Contact email | `info@botronics.be` | `legal-notice.html`, `policy.html` |
+| LinkedIn profile | `linkedin.com/company/botronics/` | footer of all three pages, JSON-LD `sameAs` |
+
+`utm_campaign` values *were* renamed to `aythronix` — those are analytics labels, not
+addresses, so they should follow the brand.
+
+Also worth a look: `ppneuebit-bold.otf` and a duplicate `ppmondwest-regular.otf` sit at the
+repo root. They arrived mid-session rather than from the build; PP NeueBit is not
+referenced anywhere. The Mondwest copy the site actually uses lives in
+`src/assets/fonts/`.
 
 ---
 

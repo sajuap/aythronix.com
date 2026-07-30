@@ -27,6 +27,9 @@
   height: 100%;
   object-fit: contain;
   object-position: 100% 100%;
+  // Same dot-render language as the spheres, so it gets the same black-to-brand
+  // remap. Left monochrome it was the one large visual still reading as grey.
+  filter: url('#brand-tint');
 
   @include tablet {
     max-width: 90%;

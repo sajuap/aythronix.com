@@ -4,10 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Botronics | Autonomous Robotics &amp; Embedded AI for Everyday Objects</title>
+    <title>Aythronix | Autonomous Robotics &amp; Embedded AI for Everyday Objects</title>
     <meta
       name="description"
-      content="Botronics brings AI-driven autonomy to the everyday objects people already use and trust. Discover iXi, our first autonomous golf trolley, and the embedded intelligence behind it."
+      content="Aythronix brings AI-driven autonomy to the everyday objects people already use and trust. Discover iXi, our first autonomous golf trolley, and the embedded intelligence behind it."
     />
     <link rel="canonical" href="https://www.botronics.be/" />
 
@@ -15,16 +15,16 @@
     <meta property="og:url" content="https://www.botronics.be/" />
     <meta
       property="og:title"
-      content="Botronics | Autonomous Robotics &amp; Embedded AI for Everyday Objects"
+      content="Aythronix | Autonomous Robotics &amp; Embedded AI for Everyday Objects"
     />
     <meta
       property="og:description"
-      content="Autonomy, designed for everyday life. Botronics turns today's hardware into autonomous intelligence."
+      content="Autonomy, designed for everyday life. Aythronix turns today's hardware into autonomous intelligence."
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#0765eb" />
 
-    <link rel="icon" type="image/svg+xml" href="/src/assets/icons/logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/icons/logo-mark.svg" />
 
     <!--
       Preload the two faces that paint above the fold. Overused Grotesk Medium
@@ -51,9 +51,9 @@
       {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "Botronics",
+        "name": "Aythronix",
         "url": "https://www.botronics.be/",
-        "description": "Botronics brings AI-driven autonomy to everyday objects.",
+        "description": "Aythronix brings AI-driven autonomy to everyday objects.",
         "sameAs": ["https://www.linkedin.com/company/botronics/"]
       }
     </script>
@@ -61,6 +61,29 @@
 
   <body>
     <a class="skip-link" href="#Hero">Skip to content</a>
+
+    <!--
+      Recolours the two pre-rendered sphere images from their original black dots
+      to the brand blue, referenced from CSS as `filter: url(#brand-tint)`.
+
+      A component transfer maps input 0 (black) to the brand blue and input 1
+      (white) to white, interpolating in between — so it works for the
+      transparent PNG used in the hero *and* the opaque white-background AVIF in
+      the milestones, which a mask could not have handled. It also covers every
+      srcset variant for free, instead of regenerating ten raster files.
+
+      `color-interpolation-filters="sRGB"` is required: the default linearRGB
+      would apply the ramp in the wrong colour space and come out washed.
+    -->
+    <svg width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
+      <filter id="brand-tint" color-interpolation-filters="sRGB">
+        <feComponentTransfer>
+          <feFuncR type="table" tableValues="0.02745 1" />
+          <feFuncG type="table" tableValues="0.39608 1" />
+          <feFuncB type="table" tableValues="0.92157 1" />
+        </feComponentTransfer>
+      </filter>
+    </svg>
 
     <!--
       Preloader. Layer 1 holds the progress-driven particle field, layer 2 the
@@ -77,7 +100,7 @@
             alt=""
             class="preloader_logo"
             width="144"
-            height="32"
+            height="29"
           />
         </div>
         <div class="preloader_progress"><div class="preloader_progress-bar"></div></div>
@@ -92,14 +115,14 @@
       <header class="nav_component is-preload-hidden" role="banner">
         <div class="padding-global">
           <div class="nav_container">
-            <a href="#Hero" class="nav_logo" aria-label="Botronics — home">
+            <a href="#Hero" class="nav_logo" aria-label="Aythronix — home">
               <img
                 src="/src/assets/icons/logo.svg"
                 loading="eager"
-                alt="Botronics"
+                alt="Aythronix"
                 class="nav_logo"
                 width="128"
-                height="28"
+                height="26"
               />
             </a>
 
@@ -206,7 +229,7 @@
                     "
                     sizes="100vw"
                     loading="lazy"
-                    alt="Botronics dynamic particle sphere"
+                    alt="Aythronix dynamic particle sphere"
                     class="hero-sphere-picture"
                   />
                 </div>
@@ -296,7 +319,7 @@
                       <div class="display-horizontal-left">
                         <a
                           id="cta_project_ixi"
-                          href="https://www.ixi.golf/?utm_source=website&amp;utm_campaign=botronics"
+                          href="https://www.ixi.golf/?utm_source=website&amp;utm_campaign=aythronix"
                           target="_blank"
                           rel="noopener"
                           class="button is-icon"
@@ -369,7 +392,7 @@
                         integrated into daily life.
                       </p>
                       <p>
-                        At Botronics, we imagine a world where autonomous objects quietly
+                        At Aythronix, we imagine a world where autonomous objects quietly
                         support us, where intelligence blends into the background, and where
                         technology adapts to people. By giving everyday objects the ability to
                         understand, move, and act with purpose, we aim to make life simpler,
@@ -722,7 +745,7 @@
                                 </div>
                                 <p class="team-section_p-max-width">
                                   “I’ve been passionate about technology from a young age. At
-                                  Botronics, I focus on combining AI and robotics to create
+                                  Aythronix, I focus on combining AI and robotics to create
                                   practical and impactful solutions. My goal is to align
                                   technical expertise with strategic insight to build the next
                                   generation of autonomous golf trolleys.”
@@ -788,7 +811,7 @@
                                   <div class="text-style-subtitle">Robotics Engineer</div>
                                 </div>
                                 <p class="team-section_p-max-width">
-                                  “I joined Botronics to challenge myself, push my skills
+                                  “I joined Aythronix to challenge myself, push my skills
                                   further, and explore the start-up world. The iXi project has
                                   been an incredible journey, especially in teaching the trolley
                                   to navigate autonomously. After countless hours of
@@ -907,7 +930,7 @@
                                   <div class="text-style-subtitle">Robotics Engineer</div>
                                 </div>
                                 <p class="team-section_p-max-width">
-                                  “I joined Botronics to challenge myself, grow my skills, and
+                                  “I joined Aythronix to challenge myself, grow my skills, and
                                   dive into the start-up world. On the iXi project, I put my
                                   robotics studies into practice by teaching the trolley to
                                   navigate the course, avoid bunkers, and stay clear of the
@@ -1042,8 +1065,8 @@
                     <div>
                       <div class="margin-bottom margin-small">
                         <div class="display-horizontal-left is-gap-1rem">
-                          <a href="#Hero" class="nav_brand" aria-label="Botronics — home">
-                            <img src="/src/assets/icons/logo.svg" loading="lazy" alt="Botronics" class="nav_logo" />
+                          <a href="#Hero" class="nav_brand" aria-label="Aythronix — home">
+                            <img src="/src/assets/icons/logo.svg" loading="lazy" alt="Aythronix" class="nav_logo" />
                           </a>
                           <div class="subtitle-line is-higher is-hidden-mob"></div>
                           <div class="text-style-paragraph">
@@ -1059,7 +1082,7 @@
                             href="https://www.linkedin.com/company/botronics/"
                             target="_blank"
                             rel="noopener"
-                            aria-label="Botronics on LinkedIn"
+                            aria-label="Aythronix on LinkedIn"
                           >
                             <img src="/src/assets/icons/linkedin.svg" loading="lazy" alt="" class="footer_icon" />
                           </a>
@@ -1067,9 +1090,9 @@
                       </div>
 
                       <div class="footer_copyright-text">
-                        © <span data-year>2025</span> Botronics | Webdesigned by
+                        © <span data-year>2025</span> Aythronix | Webdesigned by
                         <a
-                          href="https://www.we-r.co/?utm_source=website&amp;utm_medium=client&amp;utm_campaign=botronics"
+                          href="https://www.we-r.co/?utm_source=website&amp;utm_medium=client&amp;utm_campaign=aythronix"
                           target="_blank"
                           rel="noopener"
                           ><strong class="footer_copyright-text is-link">We-R</strong></a
