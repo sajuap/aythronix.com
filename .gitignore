@@ -33,3 +33,6 @@ desktop.ini
 coverage/
 .cache/
 .temp/
+
+# Local deploy bundle (drag-and-drop upload)
+aythronix-site.zip
