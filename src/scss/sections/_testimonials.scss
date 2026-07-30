@@ -1,0 +1,80 @@
+// ---------------------------------------------------------------------------
+// Testimonials
+//
+// Three equal cards. Deliberately text-only: there are no portraits for these
+// people, and dressing the quotes with stock faces or with photographs of
+// unrelated people would misrepresent them. The quote carries the card.
+// ---------------------------------------------------------------------------
+
+.testimonials_grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+}
+
+.testimonial-card {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem;
+  background-image: linear-gradient(112deg, #d2ddf0, #f6f9fe);
+  overflow: hidden;
+
+  @include tablet {
+    padding: 1.5rem;
+  }
+}
+
+.testimonial-card_quote {
+  opacity: 0.85;
+  color: var(--base-color-neutral--neutral-darker);
+  font-family: $font-body;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.5;
+
+  @include mobile-landscape {
+    font-size: 1rem;
+  }
+}
+
+.testimonial-card_name {
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+}
+
+.testimonial-card_role {
+  color: var(--base-color-neutral--neutral-dark);
+  font-family: $font-display;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+// Aggregate rating badge next to the section heading.
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--base-color-brand--blue);
+  font-family: $font-display;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.rating-badge_stars {
+  letter-spacing: 0.1em;
+}

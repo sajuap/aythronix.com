@@ -1,0 +1,86 @@
+// ---------------------------------------------------------------------------
+// Engineering lifecycle
+//
+// Four steps across on desktop, each led by its number. A connecting hairline
+// runs behind the row so it reads as a sequence rather than four unrelated
+// cards — it is drawn on the container and stops before the last step so the
+// line never dangles past the end.
+// ---------------------------------------------------------------------------
+
+.lifecycle_grid {
+  display: grid;
+  position: relative;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 2rem;
+  }
+
+  @include mobile-landscape {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.lifecycle-step {
+  display: flex;
+  position: relative;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+// The step number, in the display face, sitting above the glyph.
+.lifecycle-step_index {
+  color: var(--base-color-brand--blue);
+  font-family: $font-display;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.05em;
+}
+
+.lifecycle-step_title {
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.72px;
+
+  @include mobile-landscape {
+    font-size: 1.25rem;
+  }
+}
+
+// Hairline running from the glyph out to the next step. Suppressed on the last
+// one, and on any step that ends a row — otherwise it points into nothing.
+.lifecycle-step_rule {
+  width: 100%;
+  height: 1px;
+  margin-top: 0.25rem;
+  background-color: var(--base-color-neutral--neutral-lighter);
+}
+
+// Hide the *line*, not the box. `display: none` would reclaim the row and lift
+// the last step's paragraph ~24px above its neighbours', which reads as a
+// misalignment rather than as the end of the sequence.
+.lifecycle-step:last-child .lifecycle-step_rule {
+  background-color: transparent;
+}
+
+@include tablet {
+  .lifecycle-step:nth-child(2n) .lifecycle-step_rule {
+    background-color: transparent;
+  }
+}
+
+@include mobile-landscape {
+  // Stacked, so there is no "next step" to the right of anything.
+  .lifecycle-step_rule {
+    display: none;
+  }
+}

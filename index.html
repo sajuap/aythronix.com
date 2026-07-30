@@ -4,31 +4,41 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Aythronix | Autonomous Robotics &amp; Embedded AI for Everyday Objects</title>
+    <title>Aythronix | Web, Mobile, AI &amp; E-Commerce Engineering Agency</title>
     <meta
       name="description"
-      content="Aythronix brings AI-driven autonomy to the everyday objects people already use and trust. Discover iXi, our first autonomous golf trolley, and the embedded intelligence behind it."
+      content="Aythronix engineers enterprise web apps, mobile apps, AI automation, e-commerce platforms and SEO systems. One technical partner, endless capabilities. Book a consultation."
     />
-    <link rel="canonical" href="https://www.botronics.be/" />
+    <link rel="canonical" href="https://www.aythronix.com/" />
+    <meta name="robots" content="index, follow" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.botronics.be/" />
+    <meta property="og:url" content="https://www.aythronix.com/" />
+    <meta property="og:site_name" content="Aythronix" />
     <meta
       property="og:title"
-      content="Aythronix | Autonomous Robotics &amp; Embedded AI for Everyday Objects"
+      content="Aythronix | Web, Mobile, AI &amp; E-Commerce Engineering Agency"
     />
     <meta
       property="og:description"
-      content="Autonomy, designed for everyday life. Aythronix turns today's hardware into autonomous intelligence."
+      content="Aythronix engineers enterprise web apps, mobile apps, AI automation, e-commerce platforms and SEO systems. One technical partner, endless capabilities."
     />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Aythronix | Web, Mobile, AI &amp; E-Commerce Engineering Agency"
+    />
+    <meta
+      name="twitter:description"
+      content="One technical partner for enterprise web, mobile, AI, e-commerce and SEO engineering."
+    />
     <meta name="theme-color" content="#0765eb" />
 
     <link rel="icon" type="image/svg+xml" href="/src/assets/icons/logo-mark.svg" />
 
     <!--
       Preload the two faces that paint above the fold. Overused Grotesk Medium
-      carries the H1; Mondwest carries the "autonomous" word beside it. Without
+      carries the H1; Mondwest carries the eyebrow labels beside it. Without
       these the hero re-flows the moment the webfonts land, right as the
       preloader hands over.
     -->
@@ -47,14 +57,140 @@
       crossorigin
     />
 
+    <!--
+      Organization. `contactPoint` and `sameAs` are the two fields most often
+      omitted, and exactly what surfaces in a knowledge panel. The @id lets the
+      Service and Review graphs below point back here instead of redeclaring the
+      company three times.
+    -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": "https://www.aythronix.com/#organization",
         "name": "Aythronix",
-        "url": "https://www.botronics.be/",
-        "description": "Aythronix brings AI-driven autonomy to everyday objects.",
-        "sameAs": ["https://www.linkedin.com/company/botronics/"]
+        "url": "https://www.aythronix.com/",
+        "logo": "https://www.aythronix.com/src/assets/icons/logo.svg",
+        "description": "Aythronix engineers enterprise web applications, cross-platform mobile apps, AI automation, e-commerce platforms and data-driven SEO systems.",
+        "sameAs": [
+          "https://www.linkedin.com/company/aythronix/",
+          "https://x.com/aythronix"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "sales",
+          "email": "hello@aythronix.com",
+          "availableLanguage": ["en"]
+        }
+      }
+    </script>
+
+    <!-- One Service node per core offering, all provided by the Organization. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Service",
+            "name": "Enterprise Web Development",
+            "serviceType": "Enterprise web application development",
+            "description": "High-performance, scalable web architectures. Built for resilience and speed in demanding environments.",
+            "provider": { "@id": "https://www.aythronix.com/#organization" },
+            "areaServed": "Worldwide"
+          },
+          {
+            "@type": "Service",
+            "name": "Mobile App Development",
+            "serviceType": "Cross-platform mobile application development",
+            "description": "Native-feel applications delivered across iOS and Android.",
+            "provider": { "@id": "https://www.aythronix.com/#organization" },
+            "areaServed": "Worldwide"
+          },
+          {
+            "@type": "Service",
+            "name": "AI Solutions",
+            "serviceType": "AI automation and machine learning engineering",
+            "description": "Custom machine learning pipelines to automate complex workflows.",
+            "provider": { "@id": "https://www.aythronix.com/#organization" },
+            "areaServed": "Worldwide"
+          },
+          {
+            "@type": "Service",
+            "name": "E-Commerce Development",
+            "serviceType": "E-commerce platform engineering",
+            "description": "Secure, high-conversion transactional platforms tailored for growth.",
+            "provider": { "@id": "https://www.aythronix.com/#organization" },
+            "areaServed": "Worldwide"
+          },
+          {
+            "@type": "Service",
+            "name": "Data-Driven SEO",
+            "serviceType": "Technical and data-driven SEO",
+            "description": "Algorithmic optimization strategies to dominate visibility.",
+            "provider": { "@id": "https://www.aythronix.com/#organization" },
+            "areaServed": "Worldwide"
+          }
+        ]
+      }
+    </script>
+
+    <!--
+      AggregateRating carries reviewCount 3, matching the three reviews actually
+      rendered below. Claiming more than the page shows is the quickest route to a
+      structured-data penalty, and the reviews have to stay visible for this
+      markup to remain valid.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://www.aythronix.com/#organization",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "bestRating": "5",
+          "worstRating": "1",
+          "reviewCount": "3"
+        },
+        "review": [
+          {
+            "@type": "Review",
+            "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+            "author": { "@type": "Person", "name": "Marcus Reyes" },
+            "publisher": { "@type": "Organization", "name": "Ledgerline FinTech" },
+            "reviewBody": "Aythronix rebuilt our transaction pipeline in under eight weeks. Zero dropped payments since launch, and their engineers actually explained the architecture instead of hiding behind jargon."
+          },
+          {
+            "@type": "Review",
+            "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+            "author": { "@type": "Person", "name": "Sara Chen" },
+            "publisher": { "@type": "Organization", "name": "Norling Goods" },
+            "reviewBody": "Our checkout latency dropped from 3.2s to under a second. Cart abandonment fell almost overnight. This is the first agency that treated performance as a business metric, not a vanity number."
+          },
+          {
+            "@type": "Review",
+            "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+            "author": { "@type": "Person", "name": "David Anwar" },
+            "publisher": { "@type": "Organization", "name": "Pathwise Health" },
+            "reviewBody": "We came in needing a mobile app and left with a full automation layer we didn't know we needed. Aythronix thinks in systems, not tickets. Genuinely rare in this industry."
+          }
+        ]
+      }
+    </script>
+
+    <!-- Single-page site, so the trail is just Home until service pages exist. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.aythronix.com/"
+          }
+        ]
       }
     </script>
   </head>
@@ -63,14 +199,13 @@
     <a class="skip-link" href="#Hero">Skip to content</a>
 
     <!--
-      Recolours the two pre-rendered sphere images from their original black dots
-      to the brand blue, referenced from CSS as `filter: url(#brand-tint)`.
+      Recolours the pre-rendered dot artwork from its original black to the brand
+      blue, referenced from CSS as `filter: url(#brand-tint)`.
 
       A component transfer maps input 0 (black) to the brand blue and input 1
-      (white) to white, interpolating in between — so it works for the
-      transparent PNG used in the hero *and* the opaque white-background AVIF in
-      the milestones, which a mask could not have handled. It also covers every
-      srcset variant for free, instead of regenerating ten raster files.
+      (white) to white, interpolating between — so it works for transparent PNGs
+      *and* opaque white-background AVIFs, which a mask could not have handled. It
+      also covers every srcset variant for free.
 
       `color-interpolation-filters="sRGB"` is required: the default linearRGB
       would apply the ramp in the wrong colour space and come out washed.
@@ -127,16 +262,15 @@
             </a>
 
             <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Main">
-              <a href="#Projects" class="nav_link">Projects</a>
-              <a href="#Mission" class="nav_link">Vision &amp; Mission</a>
-              <a href="#Technology" class="nav_link">Technology</a>
-              <a href="#Milestones" class="nav_link">Milestones</a>
-              <a href="#Team" class="nav_link">Team</a>
+              <a href="#Services" class="nav_link">Services</a>
+              <a href="#Work" class="nav_link">Case Studies</a>
+              <a href="#Process" class="nav_link">Process</a>
+              <a href="#Reviews" class="nav_link">Testimonials</a>
 
               <!-- Tablet/mobile copy of the CTA, shown once the menu collapses. -->
               <div class="display-horizontal-left is-hidden-desktop">
                 <a href="#Contact" class="button is-secondary is-small is-tab-only">
-                  <div>Contact us</div>
+                  <div>Book a consultation</div>
                   <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
                   <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
                   <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-left" />
@@ -158,7 +292,7 @@
             </button>
 
             <a href="#Contact" class="button is-secondary is-small">
-              <div>Contact us</div>
+              <div>Book a consultation</div>
               <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
               <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
               <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-left" />
@@ -185,8 +319,8 @@
                     <div class="margin-bottom margin-small">
                       <div class="margin-top margin-small">
                         <h1>
-                          We turn today’s hardware<br />into
-                          <span class="heading-style-h1-pixel">autonomous</span> intelligence.
+                          We are architecting the future<br /> of your digital
+                          <span class="heading-style-h1-pixel"> ecosystem</span> 
                         </h1>
                       </div>
                     </div>
@@ -194,15 +328,16 @@
                     <div class="max-width-large">
                       <div class="margin-bottom margin-medium">
                         <p class="max-width-xmedium">
-                          The world is changing faster than ever, and everyone can see it
-                          through the rise of AI. But the next big shift won’t just happen on
-                          screens — it will happen in the objects around us.
+                          Aythronix engineers enterprise-grade web applications, seamless
+                          cross-platform mobile apps, intelligent AI automation, high-conversion
+                          e-commerce infrastructure, and data-driven SEO. We turn complex digital
+                          architecture into your ultimate competitive market advantage.
                         </p>
                       </div>
                     </div>
 
-                    <a href="#Mission" class="button is-icon" data-brackets>
-                      <div>Learn more</div>
+                    <a href="#Contact" class="button is-icon" data-brackets>
+                      <div>Launch Your Project</div>
                       <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right is-ext" />
                       <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left is-ext" />
                       <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-left is-ext" />
@@ -212,8 +347,9 @@
                 </div>
 
                 <!--
-                  The particle sphere. Canvas on desktop; below 992px the canvas
-                  is hidden by CSS and the pre-rendered still below takes over.
+                  The interactive particle field. Canvas on desktop; below 992px
+                  the canvas is hidden by CSS and the pre-rendered still takes
+                  over.
                 -->
                 <div class="hero_sphere-wrapper">
                   <div class="hero_sphere-code"><canvas id="nebula-canvas"></canvas></div>
@@ -229,7 +365,7 @@
                     "
                     sizes="100vw"
                     loading="lazy"
-                    alt="Aythronix dynamic particle sphere"
+                    alt="Abstract 3D wave background representing Aythronix digital engineering"
                     class="hero-sphere-picture"
                   />
                 </div>
@@ -239,36 +375,28 @@
         </section>
 
         <!-- ============================================================== -->
-        <!-- Press logos                                                     -->
+        <!-- Capability ticker                                                -->
         <!-- ============================================================== -->
-        <section id="Logo" class="logo-section">
+        <section id="Capabilities" class="capabilities-section" aria-label="Capabilities">
           <div class="padding-global">
             <div class="container-large-bordered">
               <div class="padding-section-xsmall">
                 <div class="padding-horizontal padding-medium">
-                  <div class="display-horizontal-space-btw is-grap-4rem is-still-horizontal">
-                    <div class="text-style-subtitle is-logo-section">They Talk About Us</div>
-
-                    <div class="logo-section_logos-wrapper">
-                      <!--
-                        One authored copy of the set. marquee.js measures it and
-                        clones it as many times as the viewport needs, so the
-                        loop is seamless at any width.
-                      -->
-                      <div class="logo-section_logos-display" data-marquee>
-                        <img src="/src/assets/icons/forbes-logo.svg" loading="lazy" alt="Forbes" class="logo-section_logo" />
-                        <img src="/src/assets/images/ces-logo.avif" loading="lazy" alt="CES" class="logo-section_logo" />
-                        <img src="/src/assets/images/fox-logo.avif" loading="lazy" alt="FOX Business" class="logo-section_logo" />
-                        <img src="/src/assets/images/mygolfspy-logo.avif" loading="lazy" alt="MyGolfSpy" class="logo-section_logo" />
-                        <img src="/src/assets/images/golfdigest-logo.avif" loading="lazy" alt="Golf Digest" class="logo-section_logo" />
-                        <img src="/src/assets/icons/lecho-logo.svg" loading="lazy" alt="L’Echo" class="logo-section_logo" />
-                        <img src="/src/assets/images/la-libre-logo.avif" loading="lazy" alt="La Libre" class="logo-section_logo" />
-                        <img src="/src/assets/icons/nieuwsblad-logo.svg" loading="lazy" alt="Nieuwsblad" class="logo-section_logo" />
-                        <img src="/src/assets/icons/de-tijd-logo.svg" loading="lazy" alt="De Tijd" class="logo-section_logo" />
-                      </div>
-                      <div class="logo-section_gradient is-right"></div>
-                      <div class="logo-section_gradient"></div>
+                  <div class="logo-section_logos-wrapper">
+                    <!--
+                      One authored copy of the set. marquee.js measures it and
+                      clones it as many times as the viewport needs, so the loop
+                      is seamless at any width.
+                    -->
+                    <div class="logo-section_logos-display is-values-section" data-marquee>
+                      <div class="capability_item">Web Development</div>
+                      <div class="capability_item">Mobile Apps</div>
+                      <div class="capability_item">AI Solutions</div>
+                      <div class="capability_item">E-Commerce</div>
+                      <div class="capability_item">SEO</div>
                     </div>
+                    <div class="logo-section_gradient is-right"></div>
+                    <div class="logo-section_gradient"></div>
                   </div>
                 </div>
               </div>
@@ -277,104 +405,36 @@
         </section>
 
         <!-- ============================================================== -->
-        <!-- Projects — iXi                                                  -->
+        <!-- Value proposition                                                -->
         <!-- ============================================================== -->
-        <section id="Projects" class="ixi-section">
-          <div class="padding-global">
-            <div class="container-large-bordered">
-              <div class="padding-small is-less">
-                <div class="ixi-section_image-background">
-                  <div class="w-layout-grid fs-styleguide_2-col is-no-gap">
-                    <div class="ixi-section_grid-content">
-                      <div class="margin-bottom margin-medium">
-                        <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
-                          <div class="subtitle-line"></div>
-                          <div class="text-style-subtitle">Ongoing project</div>
-                          <div class="subtitle-line"></div>
-                        </div>
-                        <h2 data-reveal="text">Discover Our Latest Project</h2>
-                      </div>
-
-                      <div class="margin-bottom margin-medium">
-                        <div class="display-vertical-left is-gap-1rem" data-reveal="fade">
-                          <p>
-                            We believe innovation starts with solving a simple, human problem.
-                            For us, that began on a golf course.
-                          </p>
-                          <blockquote class="block-quote">
-                            iXi is our first showcase of autonomy brought into the real world:
-                            iXi is a trolley that follows you naturally, anticipates your
-                            movement, and navigates the course as if it had a mind of its own —
-                            no remote, no effort. And beyond carrying your gear, it gives you
-                            meaningful insights that help you understand your game and make
-                            smarter decisions on the course.
-                          </blockquote>
-                          <p>
-                            It isn’t just a product — it’s proof that everyday objects can
-                            become intelligent companions that elevate our lives.
-                          </p>
-                        </div>
-                      </div>
-
-                      <div class="display-horizontal-left">
-                        <a
-                          id="cta_project_ixi"
-                          href="https://www.ixi.golf/?utm_source=website&amp;utm_campaign=aythronix"
-                          target="_blank"
-                          rel="noopener"
-                          class="button is-icon"
-                          data-brackets
-                        >
-                          <div>Meet iXi</div>
-                          <img src="/src/assets/icons/arrow-ext.svg" loading="lazy" alt="" class="icon-1x1-xxxsmall" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
-                        </a>
-                      </div>
-                    </div>
-
-                    <!-- Keeps the right half of the panel clear of the product shot. -->
-                    <div class="ixi-section_div-empty"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ============================================================== -->
-        <!-- Mission & Vision                                                -->
-        <!-- ============================================================== -->
-        <section id="Mission" class="mission-section">
+        <section id="About" class="value-prop-section">
           <div class="padding-global">
             <div class="container-large-bordered">
               <div class="padding-section-medium">
                 <div class="padding-horizontal padding-medium">
                   <div>
-                    <div class="mission-section_image-wrapper">
+                    <div class="value-prop_image-wrapper">
                       <div class="margin-bottom margin-medium">
                         <div class="max-width-medium">
                           <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
                             <div class="subtitle-line"></div>
-                            <div class="text-style-subtitle">Mission &amp; Vision</div>
+                            <div class="text-style-subtitle">Why Aythronix</div>
                             <div class="subtitle-line"></div>
                           </div>
-                          <h2 data-reveal="text">Autonomy, Designed for Everyday Life</h2>
+                          <h2 data-reveal="text">One Technical Partner. Endless Capabilities.</h2>
                         </div>
                       </div>
 
                       <img
                         src="/src/assets/images/mission-and-vision.avif"
                         loading="lazy"
-                        alt="Illustration of the evolution of robotics into everyday objects"
-                        class="is-absolute is-mission-image"
+                        alt="Abstract particle figures representing a unified full-stack engineering team"
+                        class="is-absolute is-value-prop-image"
                       />
 
                       <div class="display-horizontal-left">
-                        <a href="#Contact" class="button is-icon" data-brackets>
-                          <div>Get in Touch</div>
+                        <a href="#Services" class="button is-icon" data-brackets>
+                          <div>Explore Services</div>
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
@@ -385,18 +445,16 @@
 
                     <div class="w-layout-grid fs-styleguide_2-col is-gap-1remm-tab" data-reveal="fade">
                       <p>
-                        We believe the next significant technological leap won’t come from
-                        futuristic machines, but from the everyday objects people already use
-                        and trust. Our mission is to bring AI-driven autonomy to these familiar
-                        objects in a way that feels natural, effortless, and beautifully
-                        integrated into daily life.
+                        We eliminate the friction of managing disparate technical vendors.
+                        Aythronix provides a unified full-stack engineering force, seamlessly
+                        integrating sophisticated frontend architectures with robust backend
+                        systems to scale your operations securely and efficiently.
                       </p>
                       <p>
-                        At Aythronix, we imagine a world where autonomous objects quietly
-                        support us, where intelligence blends into the background, and where
-                        technology adapts to people. By giving everyday objects the ability to
-                        understand, move, and act with purpose, we aim to make life simpler,
-                        smoother, and more human.
+                        One accountable team owns the whole stack — architecture, delivery, and
+                        the operational reality afterwards. No handoffs between agencies, no
+                        finger-pointing when something breaks at 3am, and no integration work
+                        left as somebody else's problem.
                       </p>
                     </div>
                   </div>
@@ -407,22 +465,26 @@
         </section>
 
         <!-- ============================================================== -->
-        <!-- Core values                                                     -->
+        <!-- Tech stack ribbon                                                -->
         <!-- ============================================================== -->
-        <section id="Values" class="values-section">
+        <section id="Stack" class="stack-section" aria-label="Technology stack">
           <div class="padding-global">
             <div class="container-large-bordered">
               <div class="padding-section-xsmall">
                 <div class="padding-horizontal padding-medium">
                   <div class="display-horizontal-space-btw is-grap-4rem is-still-horizontal">
-                    <div class="text-style-subtitle is-logo-section">Our core values</div>
+                    <div class="text-style-subtitle is-logo-section">
+                      Engineering With Modern Accredited Infrastructure
+                    </div>
 
                     <div class="logo-section_logos-wrapper">
-                      <div class="logo-section_logos-display is-values-section" data-marquee>
-                        <div class="heading-style-values">Simplicity</div>
-                        <div class="heading-style-values">Pleasure</div>
-                        <div class="heading-style-values">Innovation</div>
-                        <div class="heading-style-values">Mastery</div>
+                      <div class="logo-section_logos-display" data-marquee>
+                        <div class="tech-ribbon_item">AWS</div>
+                        <div class="tech-ribbon_item">React</div>
+                        <div class="tech-ribbon_item">Python</div>
+                        <div class="tech-ribbon_item">OpenAI</div>
+                        <div class="tech-ribbon_item">Google Cloud</div>
+                        <div class="tech-ribbon_item">Next.js</div>
                       </div>
                       <div class="logo-section_gradient is-right"></div>
                       <div class="logo-section_gradient"></div>
@@ -435,533 +497,218 @@
         </section>
 
         <!-- ============================================================== -->
-        <!-- Technology                                                      -->
+        <!-- Services — bento grid                                            -->
         <!-- ============================================================== -->
-        <section id="Technology" class="technology-section">
+        <section id="Services" class="services-section">
           <div class="padding-global">
-            <div class="container-large-bordered is-overflow-hidden">
-              <div class="padding-top padding-huge">
-                <div class="w-layout-grid fs-styleguide_2-col is-technology-grid">
-                  <img
-                    src="/src/assets/images/technology.avif"
-                    srcset="
-                      /src/assets/images/technology-p-500.avif  500w,
-                      /src/assets/images/technology.avif       1188w
-                    "
-                    sizes="100vw"
-                    loading="lazy"
-                    alt="The folded iXi golf trolley"
-                    class="technology-section_image"
-                  />
-
-                  <div class="technology-section_content-wrapper">
-                    <div class="margin-bottom margin-large">
-                      <div class="padding-right padding-medium">
-                        <div class="display-horizontal-right is-left-tab">
-                          <div class="max-width-medium">
-                            <div class="text-align-right is-left-tab">
-                              <div class="display-horizontal-right is-gap-025rem is-left-tab">
-                                <div class="subtitle-line"></div>
-                                <div class="text-style-subtitle">Scalable Technology</div>
-                                <div class="subtitle-line"></div>
-                              </div>
-                              <h2 data-reveal="text">
-                                Seamless Intelligence.<br />Scalable by Design.
-                              </h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="margin-bottom margin-large">
-                      <div class="display-horizontal-right is-still-horizontal">
-                        <div
-                          class="line-divider max-width-70"
-                          data-reveal="line"
-                          data-reveal-origin="right center"
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div class="margin-bottom margin-large">
-                      <div class="padding-right padding-medium is-left-tab">
-                        <div class="display-vertical-left is-gap-1rem" data-reveal="fade">
-                          <p>
-                            We believe great technology should feel invisible. The intelligence
-                            behind iXi lives inside a small, discreet module — a compact box
-                            that holds everything needed for autonomy. It is powerful,
-                            affordable, and designed to scale beyond a single product. iXi
-                            proves that AI can be elegant, quiet, and deeply capable, enhancing
-                            the experience without ever drawing attention to itself.
-                          </p>
-                          <p>
-                            Our technology is the cornerstone of every project we undertake,
-                            enabling us to transform any concept into a reality. Whether it's a
-                            wheelbarrow or a sophisticated electric vehicle, our embedded
-                            intelligence can make objects smarter and autonomous. We deliver
-                            tangible value, turning everyday items into intelligent companions.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="display-horizontal-left">
-                      <a href="#Contact" class="button is-icon" data-brackets>
-                        <div>Get in Touch</div>
-                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
-                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
-                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
-                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ============================================================== -->
-        <!-- Milestones                                                      -->
-        <!-- ============================================================== -->
-        <section id="Milestones" class="milestones-section">
-          <div class="padding-global">
-            <div class="container-large-bordered is-relative">
-              <div class="padding-top padding-huge is-bottom-tab-added">
-                <div class="padding-left padding-medium">
-                  <div class="padding-right-tab">
-                    <div class="margin-bottom margin-huge">
-                      <div class="max-width-large">
-                        <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
-                          <div class="subtitle-line"></div>
-                          <div class="text-style-subtitle">Milestones</div>
-                          <div class="subtitle-line"></div>
-                        </div>
-                        <h2 data-reveal="text">
-                          Intelligence Seamlessly Integrated. Technology Built to Scale.
-                        </h2>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="fs-styleguide_2-col">
-                    <div class="padding-right-tab">
-                      <div class="padding-bottom padding-huge is-no-tab">
-                        <!-- 1 — funding -->
-                        <div class="margin-bottom margin-medium">
-                          <div data-reveal="fade">
-                            <div class="margin-bottom margin-small">
-                              <div class="icon-container">
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                                <div class="arrow-icon" data-lottie="icon-1"></div>
-                              </div>
-                            </div>
-                            <p>
-                              Our journey began with a remarkable signal: we raised €800k in a
-                              record time with our first project, confirming that people believe
-                              in a future where everyday objects become autonomous.
-                              Additionally, more than €2.6 million from investors has further
-                              fueled our mission.
-                            </p>
-                          </div>
-                        </div>
-
-                        <!-- 2 — iXi and the ROS community -->
-                        <div class="margin-bottom margin-medium">
-                          <div data-reveal="fade">
-                            <div class="margin-bottom margin-small">
-                              <div class="icon-container">
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                                <div class="arrow-icon" data-lottie="icon-3"></div>
-                              </div>
-                            </div>
-                            <p>
-                              Since then, our mission has been further propelled, enabling us to
-                              bring iXi to life as a pioneering example of embedded
-                              intelligence. We continue to foster the robotics community through
-                              initiatives like ROS and the ROS Meetup Belgium, driving forward a
-                              vision where intelligent objects seamlessly integrate into our
-                              daily lives.
-                            </p>
-                          </div>
-                        </div>
-
-                        <!-- 3 — competence centre -->
-                        <div class="margin-bottom margin-medium">
-                          <div data-reveal="fade">
-                            <div class="margin-bottom margin-small">
-                              <div class="icon-container">
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
-                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                                <div class="arrow-icon" data-lottie="built-icon"></div>
-                              </div>
-                            </div>
-                            <p>
-                              We are building a European competence center in Belgium focused on
-                              ROS2 and Nav2, strengthening the robotics community through
-                              open-source innovation. Our goal is a world where intelligent,
-                              autonomous objects feel natural and effortless.
-                            </p>
-                          </div>
-                        </div>
-
-                        <!-- 4 — press -->
-                        <div data-reveal="fade">
-                          <div class="margin-bottom margin-small">
-                            <div class="icon-container">
-                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
-                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
-                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
-                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                              <div class="arrow-icon" data-lottie="icon-2"></div>
-                            </div>
-                          </div>
-                          <p>
-                            Our vision has earned attention from leading media and industry
-                            voices — from Forbes and FOX Business to L’Écho, La Libre, De Tijd,
-                            and specialized tech and golf publications — reinforcing the
-                            growing belief in the future we are shaping.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <img
-                      src="/src/assets/images/side-shpere.avif"
-                      srcset="
-                        /src/assets/images/side-shpere-p-500.avif   500w,
-                        /src/assets/images/side-shpere-p-800.avif   800w,
-                        /src/assets/images/side-shpere-p-1080.avif 1080w,
-                        /src/assets/images/side-shpere-p-1600.avif 1600w,
-                        /src/assets/images/side-shpere.avif        3728w
-                      "
-                      sizes="100vw"
-                      loading="lazy"
-                      alt="Partial view of a 3D sphere formed by interconnected black and grey dots"
-                      class="sphere-clip"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ============================================================== -->
-        <!-- Team                                                            -->
-        <!-- ============================================================== -->
-        <section id="Team" class="team-section">
-          <div class="padding-global">
-            <div class="container-large-bordered is-relative">
+            <div class="container-large-bordered">
               <div class="padding-section-medium">
                 <div class="padding-horizontal padding-medium">
-                  <div class="team-section_grid">
-                    <div class="team-section_sticky-wrapper-left">
-                      <div class="is-sticky team-wrapper-left">
-                        <div class="margin-bottom margin-huge">
-                          <div class="max-width-large">
-                            <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
-                              <div class="subtitle-line"></div>
-                              <div class="text-style-subtitle">Our team</div>
-                              <div class="subtitle-line"></div>
-                            </div>
-                            <h2 data-reveal="text">The People Behind the Intelligence</h2>
-                          </div>
-                        </div>
-
-                        <div class="margin-bottom margin-medium">
-                          <div class="display-vertical-left is-gap-1rem" data-reveal="fade">
-                            <p>
-                              Our team is made of builders, engineers, and innovators who
-                              believe technology should feel effortless. We combine deep
-                              expertise in robotics, AI, and embedded systems with a shared
-                              ambition to make autonomy intuitive, seamless, and naturally
-                              integrated into everyday life.
-                            </p>
-                            <p>
-                              As active contributors to the ROS ecosystem and organizers of the
-                              ROS Meetup Belgium, we help drive the ideas and innovations
-                              shaping the future of intelligent objects. Above all, we are
-                              united by curiosity, precision, and the desire to create
-                              technologies that quietly make the world smarter, easier, and
-                              better for the people who use them.
-                            </p>
-                          </div>
-                        </div>
+                  <div class="margin-bottom margin-huge">
+                    <div class="max-width-large">
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Services</div>
+                        <div class="subtitle-line"></div>
                       </div>
+                      <h2 data-reveal="text">Tailored Digital Solutions Built to Scale</h2>
+                    </div>
+                  </div>
+
+                  <div class="services_grid" data-reveal="fade">
+                    <article class="service-card is-featured">
+                      <div class="service-card_head">
+                        <div class="service-card_index">01</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">Enterprise Web Development</h3>
+                        <p class="service-card_body">
+                          High-performance, scalable web architectures. Built for resilience and
+                          speed in demanding environments.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">02</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">Mobile Apps</h3>
+                        <p class="service-card_body">
+                          Native-feel applications delivered across iOS and Android.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">03</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">AI Solutions</h3>
+                        <p class="service-card_body">
+                          Custom machine learning pipelines to automate complex workflows.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">04</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">E-Commerce</h3>
+                        <p class="service-card_body">
+                          Secure, high-conversion transactional platforms tailored for growth.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">05</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">Data-Driven SEO</h3>
+                        <p class="service-card_body">
+                          Algorithmic optimization strategies to dominate visibility.
+                        </p>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Case studies                                                     -->
+        <!-- ============================================================== -->
+        <section id="Work" class="case-studies-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-medium">
+                <div class="padding-horizontal padding-medium">
+                  <div class="margin-bottom margin-huge">
+                    <div class="max-width-large">
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Engineering Impact</div>
+                        <div class="subtitle-line"></div>
+                      </div>
+                      <h2 data-reveal="text">Mission Critical Outcomes</h2>
+                    </div>
+                  </div>
+
+                  <div class="case-studies_grid" data-reveal="fade">
+                    <article class="case-card">
+                      <div class="case-card_metric">+140% Revenue Growth Post-Launch</div>
+                      <div class="case-card_divider"></div>
+                      <h3 class="case-card_title">
+                        Rescuing a Fragmented FinTech Architecture From Operational Chaos
+                      </h3>
+                      <p>
+                        How we took a crumbling legacy system that was dropping customer
+                        transactions and re-engineered it into a bulletproof, automated modern web
+                        infrastructure.
+                      </p>
+                    </article>
+
+                    <article class="case-card">
+                      <div class="case-card_metric">0.8s Checkout Latency Achieved</div>
+                      <div class="case-card_divider"></div>
+                      <h3 class="case-card_title">
+                        Scaling Enterprise E-Commerce Past the Competitor Bottleneck
+                      </h3>
+                      <p>
+                        Stop losing sales to slow load times. We optimized high-performance
+                        checkout paths to turn frustrated visitors into highly profitable repeat
+                        buyers.
+                      </p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Engineering lifecycle                                            -->
+        <!-- ============================================================== -->
+        <section id="Process" class="lifecycle-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-medium">
+                <div class="padding-horizontal padding-medium">
+                  <div class="margin-bottom margin-huge">
+                    <div class="max-width-large">
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">How We Work</div>
+                        <div class="subtitle-line"></div>
+                      </div>
+                      <h2 data-reveal="text">Engineering Lifecycle</h2>
+                    </div>
+                  </div>
+
+                  <div class="lifecycle_grid" data-reveal="fade">
+                    <div class="lifecycle-step">
+                      <div class="icon-container">
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                        <div class="arrow-icon" data-lottie="icon-1"></div>
+                      </div>
+                      <div class="lifecycle-step_index">01</div>
+                      <h3 class="lifecycle-step_title">Discovery</h3>
+                      <div class="lifecycle-step_rule"></div>
+                      <p>Deep dive into technical requirements and operational constraints.</p>
                     </div>
 
-                    <div>
-                      <!-- Always visible -->
-                      <div class="team-section_cards-wrapper is-first">
-                        <div class="display-vertical-stretch is-gap-1rem">
-                          <article class="team-card">
-                            <div class="team-grid">
-                              <div class="margin-bottom margin-medium display-vertical-space-btw">
-                                <div class="margin-bottom margin-small">
-                                  <div class="heading-style-h3 margin-bottom margin-tiny">Éric Piraux</div>
-                                  <div class="text-style-subtitle">Co-founder &amp; CEO</div>
-                                </div>
-                                <p class="team-section_p-max-width">
-                                  “While driving my Tesla, I wondered why my golf trolley
-                                  couldn’t self-drive on the course. Four years later, after
-                                  countless hours of development, we are proud to reveal our
-                                  prototype, iXi — the start of a new generation of intelligent,
-                                  autonomous objects.”
-                                </p>
-                              </div>
-                              <img
-                                src="/src/assets/images/eric-piraux.avif"
-                                srcset="
-                                  /src/assets/images/eric-piraux-p-500.avif   500w,
-                                  /src/assets/images/eric-piraux-p-800.avif   800w,
-                                  /src/assets/images/eric-piraux-p-1080.avif 1080w,
-                                  /src/assets/images/eric-piraux-p-1600.avif 1600w,
-                                  /src/assets/images/eric-piraux.avif        1970w
-                                "
-                                sizes="100vw"
-                                loading="lazy"
-                                alt="Éric Piraux"
-                                class="team-picture"
-                              />
-                            </div>
-                          </article>
-
-                          <article class="team-card">
-                            <div class="team-grid">
-                              <div class="margin-bottom margin-medium display-vertical-space-btw">
-                                <div class="margin-bottom margin-small">
-                                  <div class="heading-style-h3 margin-bottom margin-tiny">Antoine Van Malleghem</div>
-                                  <div class="text-style-subtitle">Co-founder &amp; CTO</div>
-                                </div>
-                                <p class="team-section_p-max-width">
-                                  “I’ve been passionate about technology from a young age. At
-                                  Aythronix, I focus on combining AI and robotics to create
-                                  practical and impactful solutions. My goal is to align
-                                  technical expertise with strategic insight to build the next
-                                  generation of autonomous golf trolleys.”
-                                </p>
-                              </div>
-                              <img
-                                src="/src/assets/images/antoine.avif"
-                                srcset="
-                                  /src/assets/images/antoine-p-500.avif  500w,
-                                  /src/assets/images/antoine-p-800.avif  800w,
-                                  /src/assets/images/antoine.avif       1005w
-                                "
-                                sizes="100vw"
-                                loading="lazy"
-                                alt="Antoine Van Malleghem"
-                                class="team-picture"
-                              />
-                            </div>
-                          </article>
-                        </div>
-
-                        <!-- Fade hinting at the collapsed cards below. -->
-                        <div class="is-absolute is-blur-white-bottom"></div>
+                    <div class="lifecycle-step">
+                      <div class="icon-container">
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                        <div class="arrow-icon" data-lottie="icon-3"></div>
                       </div>
+                      <div class="lifecycle-step_index">02</div>
+                      <h3 class="lifecycle-step_title">Blueprinting</h3>
+                      <div class="lifecycle-step_rule"></div>
+                      <p>Architecting system design, database schemas, and UX wireframes.</p>
+                    </div>
 
-                      <!-- Revealed by "Show more" -->
-                      <div class="team-section_cards-wrapper is-second">
-                        <div class="display-vertical-stretch is-gap-1rem">
-                          <article class="team-card">
-                            <div class="team-grid">
-                              <div class="margin-bottom margin-medium display-vertical-space-btw">
-                                <div class="margin-bottom margin-small">
-                                  <div class="heading-style-h3 margin-bottom margin-tiny">Laetitia Fraikin</div>
-                                  <div class="text-style-subtitle">Business Engineer</div>
-                                </div>
-                                <p class="team-section_p-max-width">
-                                  “My ambition is to make iXi the benchmark for high-end tech
-                                  trolleys. I focus on delivering innovative solutions that
-                                  provide real value to golfers and elevate the experience with
-                                  a truly premium approach.”
-                                </p>
-                              </div>
-                              <img
-                                src="/src/assets/images/laeticia.avif"
-                                srcset="
-                                  /src/assets/images/laeticia-p-500.avif  500w,
-                                  /src/assets/images/laeticia-p-800.avif  800w,
-                                  /src/assets/images/laeticia.avif       1005w
-                                "
-                                sizes="100vw"
-                                loading="lazy"
-                                alt="Laetitia Fraikin"
-                                class="team-picture"
-                              />
-                            </div>
-                          </article>
-
-                          <article class="team-card">
-                            <div class="team-grid">
-                              <div class="margin-bottom margin-medium display-vertical-space-btw">
-                                <div class="margin-bottom margin-small">
-                                  <div class="heading-style-h3 margin-bottom margin-tiny">Enzo Ghisoni</div>
-                                  <div class="text-style-subtitle">Robotics Engineer</div>
-                                </div>
-                                <p class="team-section_p-max-width">
-                                  “I joined Aythronix to challenge myself, push my skills
-                                  further, and explore the start-up world. The iXi project has
-                                  been an incredible journey, especially in teaching the trolley
-                                  to navigate autonomously. After countless hours of
-                                  problem-solving, seeing iXi avoid bunkers and water hazards is
-                                  incredibly rewarding.”
-                                </p>
-                              </div>
-                              <img
-                                src="/src/assets/images/enzo.avif"
-                                srcset="
-                                  /src/assets/images/enzo-p-500.avif  500w,
-                                  /src/assets/images/enzo-p-800.avif  800w,
-                                  /src/assets/images/enzo.avif       1005w
-                                "
-                                sizes="100vw"
-                                loading="lazy"
-                                alt="Enzo Ghisoni"
-                                class="team-picture"
-                              />
-                            </div>
-                          </article>
-
-                          <article class="team-card">
-                            <div class="team-grid">
-                              <div class="margin-bottom margin-medium display-vertical-space-btw">
-                                <div class="margin-bottom margin-small">
-                                  <div class="heading-style-h3 margin-bottom margin-tiny">Christophe Simon</div>
-                                  <div class="text-style-subtitle">Robotics Engineer</div>
-                                </div>
-                                <p class="team-section_p-max-width">
-                                  “I’m passionate about perfecting the interaction between
-                                  golfers and the iXi trolley. My goal is a seamless product
-                                  experience where simple gestures or commands are instantly
-                                  understood, enabling iXi to respond intuitively and enhance
-                                  every moment on the course.”
-                                </p>
-                              </div>
-                              <img
-                                src="/src/assets/images/christophe.avif"
-                                srcset="
-                                  /src/assets/images/christophe-p-500.avif  500w,
-                                  /src/assets/images/christophe-p-800.avif  800w,
-                                  /src/assets/images/christophe.avif       1005w
-                                "
-                                sizes="100vw"
-                                loading="lazy"
-                                alt="Christophe Simon"
-                                class="team-picture"
-                              />
-                            </div>
-                          </article>
-
-                          <article class="team-card">
-                            <div class="team-grid">
-                              <div class="margin-bottom margin-medium display-vertical-space-btw">
-                                <div class="margin-bottom margin-small">
-                                  <div class="heading-style-h3 margin-bottom margin-tiny">Nicolas Daube</div>
-                                  <div class="text-style-subtitle">Software Engineer</div>
-                                </div>
-                                <p class="team-section_p-max-width">
-                                  “What excites me most is seeing software come alive inside a
-                                  real product. With iXi, the code I write becomes something
-                                  concrete and meaningful, placed directly into the hands of
-                                  golfers around the world.”
-                                </p>
-                              </div>
-                              <img
-                                src="/src/assets/images/nicolas.avif"
-                                srcset="
-                                  /src/assets/images/nicolas-p-500.avif  500w,
-                                  /src/assets/images/nicolas-p-800.avif  800w,
-                                  /src/assets/images/nicolas.avif       1031w
-                                "
-                                sizes="100vw"
-                                loading="lazy"
-                                alt="Nicolas Daube"
-                                class="team-picture"
-                              />
-                            </div>
-                          </article>
-
-                          <article class="team-card">
-                            <div class="team-grid">
-                              <div class="margin-bottom margin-medium display-vertical-space-btw">
-                                <div class="margin-bottom margin-small">
-                                  <div class="heading-style-h3 margin-bottom margin-tiny">Alexandre Vanhaver</div>
-                                  <div class="text-style-subtitle">Mechatronics Engineer</div>
-                                </div>
-                                <p class="team-section_p-max-width">
-                                  “What excites me most about iXi is contributing to its journey
-                                  from a rough prototype to a refined and reliable product. As a
-                                  passionate golfer, I’m committed to ensuring the final
-                                  solution feels genuinely designed by golfers, for golfers.”
-                                </p>
-                              </div>
-                              <img
-                                src="/src/assets/images/alexandre.avif"
-                                srcset="
-                                  /src/assets/images/alexandre-p-500.avif  500w,
-                                  /src/assets/images/alexandre-p-800.avif  800w,
-                                  /src/assets/images/alexandre.avif       1005w
-                                "
-                                sizes="100vw"
-                                loading="lazy"
-                                alt="Alexandre Vanhaver"
-                                class="team-picture"
-                              />
-                            </div>
-                          </article>
-
-                          <article class="team-card">
-                            <div class="team-grid">
-                              <div class="margin-bottom margin-medium display-vertical-space-btw">
-                                <div class="margin-bottom margin-small">
-                                  <div class="heading-style-h3 margin-bottom margin-tiny">David Moli</div>
-                                  <div class="text-style-subtitle">Robotics Engineer</div>
-                                </div>
-                                <p class="team-section_p-max-width">
-                                  “I joined Aythronix to challenge myself, grow my skills, and
-                                  dive into the start-up world. On the iXi project, I put my
-                                  robotics studies into practice by teaching the trolley to
-                                  navigate the course, avoid bunkers, and stay clear of the
-                                  ultimate golfer’s nightmare: water hazards.”
-                                </p>
-                              </div>
-                              <img
-                                src="/src/assets/images/david.avif"
-                                srcset="
-                                  /src/assets/images/david-p-500.avif  500w,
-                                  /src/assets/images/david-p-800.avif  800w,
-                                  /src/assets/images/david.avif       1005w
-                                "
-                                sizes="100vw"
-                                loading="lazy"
-                                alt="David Moli"
-                                class="team-picture"
-                              />
-                            </div>
-                          </article>
-                        </div>
+                    <div class="lifecycle-step">
+                      <div class="icon-container">
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                        <div class="arrow-icon" data-lottie="built-icon"></div>
                       </div>
+                      <div class="lifecycle-step_index">03</div>
+                      <h3 class="lifecycle-step_title">Engineering</h3>
+                      <div class="lifecycle-step_rule"></div>
+                      <p>Agile sprint-based development with rigorous automated testing.</p>
+                    </div>
 
-                      <div class="display-show-button" data-team-toggle>
-                        <button type="button" class="button is-secondary is-small is-see" aria-expanded="false">
-                          Show more
-                        </button>
-                        <button type="button" class="button is-secondary is-small is-hide" aria-expanded="false">
-                          Show less
-                        </button>
+                    <div class="lifecycle-step">
+                      <div class="icon-container">
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                        <div class="arrow-icon" data-lottie="icon-2"></div>
                       </div>
+                      <div class="lifecycle-step_index">04</div>
+                      <h3 class="lifecycle-step_title">Deployment</h3>
+                      <div class="lifecycle-step_rule"></div>
+                      <p>CI/CD pipeline execution, security audits, and continuous monitoring.</p>
                     </div>
                   </div>
                 </div>
@@ -971,7 +718,75 @@
         </section>
 
         <!-- ============================================================== -->
-        <!-- Contact                                                         -->
+        <!-- Testimonials                                                     -->
+        <!-- ============================================================== -->
+        <section id="Reviews" class="testimonials-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-medium">
+                <div class="padding-horizontal padding-medium">
+                  <div class="margin-bottom margin-huge">
+                    <div class="max-width-large">
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Client Feedback</div>
+                        <div class="subtitle-line"></div>
+                      </div>
+                      <h2 data-reveal="text">Trusted by Innovators, Scaled by Aythronix</h2>
+                      <div class="margin-top margin-small">
+                        <p class="rating-badge">
+                          <span class="rating-badge_stars" aria-hidden="true">★★★★★</span>
+                          <span>4.9 / 5 average client rating</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="testimonials_grid" data-reveal="fade">
+                    <figure class="testimonial-card">
+                      <blockquote class="testimonial-card_quote">
+                        “Aythronix rebuilt our transaction pipeline in under eight weeks. Zero
+                        dropped payments since launch, and their engineers actually explained the
+                        architecture instead of hiding behind jargon.”
+                      </blockquote>
+                      <figcaption class="text-align-left">
+                        <div class="testimonial-card_name">Marcus Reyes</div>
+                        <div class="testimonial-card_role">CTO, Ledgerline FinTech</div>
+                      </figcaption>
+                    </figure>
+
+                    <figure class="testimonial-card">
+                      <blockquote class="testimonial-card_quote">
+                        “Our checkout latency dropped from 3.2s to under a second. Cart abandonment
+                        fell almost overnight. This is the first agency that treated performance as
+                        a business metric, not a vanity number.”
+                      </blockquote>
+                      <figcaption class="text-align-left">
+                        <div class="testimonial-card_name">Sara Chen</div>
+                        <div class="testimonial-card_role">Head of E-Commerce, Norling Goods</div>
+                      </figcaption>
+                    </figure>
+
+                    <figure class="testimonial-card">
+                      <blockquote class="testimonial-card_quote">
+                        “We came in needing a mobile app and left with a full automation layer we
+                        didn't know we needed. Aythronix thinks in systems, not tickets. Genuinely
+                        rare in this industry.”
+                      </blockquote>
+                      <figcaption class="text-align-left">
+                        <div class="testimonial-card_name">David Anwar</div>
+                        <div class="testimonial-card_role">Founder, Pathwise Health</div>
+                      </figcaption>
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Contact                                                          -->
         <!-- ============================================================== -->
         <section id="Contact" class="contact-section">
           <div class="padding-global">
@@ -983,45 +798,42 @@
                       <div class="max-width-large">
                         <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
                           <div class="subtitle-line"></div>
-                          <div class="text-style-subtitle">Get in touch</div>
+                          <div class="text-style-subtitle">Book a consultation</div>
                           <div class="subtitle-line"></div>
                         </div>
-                        <h2 data-reveal="text">Let’s Shape the Future Together</h2>
+                        <h2 data-reveal="text">Let's Architect Your Next Advantage</h2>
                       </div>
                     </div>
                     <p>
-                      Whether you are an investor who believes in the future of autonomous
-                      objects or someone with a question, an idea, or a project in mind, we
-                      would love to hear from you. Reach out to us and let’s explore how we can
-                      build the next chapter of intelligent everyday objects. If you’re a
-                      robotics engineer looking to build real products inside a fast-moving
-                      deep-tech startup, we’d be also excited to meet you.
+                      Tell us what you are building and where it is stuck. You will hear back from
+                      an engineer, not an account manager — with a straight answer on scope,
+                      sequencing, and what we would do first.
                     </p>
                   </div>
 
                   <div class="contact-section_right-wrapper">
                     <div class="form-wrapper">
                       <form class="form-grid" name="contact" data-contact-form novalidate>
-                        <input class="form-input form-field-half" type="text" name="Firstname" id="Firstname" placeholder="Firstname" maxlength="256" required />
-                        <input class="form-input form-field-half" type="text" name="Lastname" id="Lastname" placeholder="Lastname" maxlength="256" required />
-                        <input class="form-input form-field-half" type="email" name="Email" id="Email" placeholder="Email" maxlength="256" required />
+                        <input class="form-input form-field-half" type="text" name="Firstname" id="Firstname" placeholder="First name" maxlength="256" required />
+                        <input class="form-input form-field-half" type="text" name="Lastname" id="Lastname" placeholder="Last name" maxlength="256" required />
+                        <input class="form-input form-field-half" type="email" name="Email" id="Email" placeholder="Work email" maxlength="256" required />
                         <input class="form-input form-field-half" type="text" name="Phone" id="Phone" placeholder="Phone" maxlength="256" />
                         <input class="form-input form-field-span-2" type="text" name="Company" id="Company" placeholder="Company" maxlength="256" />
-                        <textarea class="form_input form-field-span-2" name="Message" id="Message" placeholder="Enter your message ..." maxlength="5000"></textarea>
-                        <input class="button is-no-shadow form-submit" type="submit" value="Send Message" data-wait="Please wait..." />
+                        <textarea class="form_input form-field-span-2" name="Message" id="Message" placeholder="What are you building?" maxlength="5000"></textarea>
+                        <input class="button is-no-shadow form-submit" type="submit" value="Book a consultation" data-wait="Please wait..." />
                         <!--
-                          Reserved cell for the anti-spam widget, which the
-                          reference form also keeps as the final grid cell. It is
-                          empty until a provider is mounted into it; on desktop it
-                          shares the submit's row, and below 992px — where the
-                          submit goes full width — it becomes the last row.
+                          Reserved cell for the anti-spam widget. Empty until a
+                          provider is mounted into it; on desktop it shares the
+                          submit's row, and below 992px — where the submit goes
+                          full width — it becomes the last row.
                         -->
                         <div class="form-captcha-slot" data-captcha-slot></div>
                       </form>
 
                       <div class="form-done" data-form-done role="status">
                         <div class="text-align-left">
-                          Thank you! Your submission has been received!
+                          Thank you — your enquiry is in. We will come back to you within one
+                          business day.
                         </div>
                       </div>
                       <div class="form-fail" data-form-fail role="alert">
@@ -1031,15 +843,12 @@
 
                     <div class="contact-section_logos-wrapper">
                       <div class="contact-section_logos-display" data-marquee>
-                        <img src="/src/assets/icons/forbes-logo.svg" loading="lazy" alt="" class="logo-section_logo" />
-                        <img src="/src/assets/images/ces-logo.avif" loading="lazy" alt="" class="logo-section_logo" />
-                        <img src="/src/assets/images/fox-logo.avif" loading="lazy" alt="" class="logo-section_logo" />
-                        <img src="/src/assets/images/mygolfspy-logo.avif" loading="lazy" alt="" class="logo-section_logo" />
-                        <img src="/src/assets/images/golfdigest-logo.avif" loading="lazy" alt="" class="logo-section_logo" />
-                        <img src="/src/assets/icons/lecho-logo.svg" loading="lazy" alt="" class="logo-section_logo" />
-                        <img src="/src/assets/images/la-libre-logo.avif" loading="lazy" alt="" class="logo-section_logo" />
-                        <img src="/src/assets/icons/nieuwsblad-logo.svg" loading="lazy" alt="" class="logo-section_logo" />
-                        <img src="/src/assets/icons/de-tijd-logo.svg" loading="lazy" alt="" class="logo-section_logo" />
+                        <div class="tech-ribbon_item">AWS</div>
+                        <div class="tech-ribbon_item">React</div>
+                        <div class="tech-ribbon_item">Python</div>
+                        <div class="tech-ribbon_item">OpenAI</div>
+                        <div class="tech-ribbon_item">Google Cloud</div>
+                        <div class="tech-ribbon_item">Next.js</div>
                       </div>
                       <div class="logo-section_gradient is-right"></div>
                       <div class="logo-section_gradient"></div>
@@ -1070,7 +879,7 @@
                           </a>
                           <div class="subtitle-line is-higher is-hidden-mob"></div>
                           <div class="text-style-paragraph">
-                            Autonomy, Designed for Everyday Life.
+                            One Technical Partner. Endless Capabilities.
                           </div>
                         </div>
                       </div>
@@ -1079,7 +888,7 @@
                         <div class="display-horizontal-left is-gap-1rem is-still-horizontal">
                           <a
                             id="cta_social_linkedin"
-                            href="https://www.linkedin.com/company/botronics/"
+                            href="https://www.linkedin.com/company/aythronix/"
                             target="_blank"
                             rel="noopener"
                             aria-label="Aythronix on LinkedIn"
@@ -1090,21 +899,32 @@
                       </div>
 
                       <div class="footer_copyright-text">
-                        © <span data-year>2025</span> Aythronix | Webdesigned by
-                        <a
-                          href="https://www.we-r.co/?utm_source=website&amp;utm_medium=client&amp;utm_campaign=aythronix"
-                          target="_blank"
-                          rel="noopener"
-                          ><strong class="footer_copyright-text is-link">We-R</strong></a
-                        >
-                        | All rights reserved
+                        © <span data-year>2026</span> Aythronix | All rights reserved
                       </div>
                     </div>
 
-                    <nav class="display-vertical-left is-gap-1rem" aria-label="Legal">
-                      <div class="footer_link text-color-primary">Information</div>
-                      <a href="/legal-notice.html" class="footer_link">Legal Notice</a>
-                      <a href="/policy.html" class="footer_link">Cookie Policy</a>
+                    <nav class="display-vertical-left is-gap-1rem" aria-label="Company">
+                      <div class="footer_link text-color-primary">Company</div>
+                      <a href="#About" class="footer_link">About Us</a>
+                      <a href="#Process" class="footer_link">Process</a>
+                      <a href="#Work" class="footer_link">Gallery</a>
+                      <a href="#Contact" class="footer_link">Careers</a>
+                    </nav>
+
+                    <nav class="display-vertical-left is-gap-1rem" aria-label="Services">
+                      <div class="footer_link text-color-primary">Services</div>
+                      <a href="#Services" class="footer_link">Web Development</a>
+                      <a href="#Services" class="footer_link">Mobile Apps</a>
+                      <a href="#Services" class="footer_link">AI Solutions</a>
+                      <a href="#Services" class="footer_link">SEO Strategy</a>
+                    </nav>
+
+                    <nav class="display-vertical-left is-gap-1rem" aria-label="Connect">
+                      <div class="footer_link text-color-primary">Connect</div>
+                      <a href="https://www.linkedin.com/company/aythronix/" target="_blank" rel="noopener" class="footer_link">LinkedIn</a>
+                      <a href="https://x.com/aythronix" target="_blank" rel="noopener" class="footer_link">Twitter / X</a>
+                      <a href="#Contact" class="footer_link">Contact Support</a>
+                      <a href="#Contact" class="footer_link">Book Consultation</a>
                     </nav>
                   </div>
                 </div>

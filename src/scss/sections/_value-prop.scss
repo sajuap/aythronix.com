@@ -1,0 +1,110 @@
+// ---------------------------------------------------------------------------
+// Value proposition + tech stack ribbon
+// ---------------------------------------------------------------------------
+
+// Reuses the mission band's proportions: a fixed-height stage with the abstract
+// dot artwork anchored bottom-right behind the copy.
+.value-prop_image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  margin-bottom: 2rem;
+
+  @include tablet {
+    height: 420px;
+  }
+
+  @include mobile-portrait {
+    height: 360px;
+  }
+}
+
+.is-absolute.is-value-prop-image {
+  inset: 0% 0% 0% auto;
+  z-index: -1;
+  width: auto;
+  min-width: auto;
+  max-width: 68%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 100% 100%;
+  // Shares the black-to-brand-blue remap used by the spheres.
+  filter: url('#brand-tint');
+
+  @include tablet {
+    max-width: 85%;
+  }
+
+  @include mobile-landscape {
+    max-width: 95%;
+  }
+
+  @include mobile-portrait {
+    max-width: 100%;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Tech stack ribbon
+//
+// Set typographically rather than with brand logos. Two of the six marks (AWS,
+// OpenAI) are not available under a licence that permits redistribution, and
+// mixing four real logos with two text labels looks like an oversight. A single
+// consistent treatment is the better answer; drop in real marks later if the
+// brand guidelines allow it.
+// ---------------------------------------------------------------------------
+
+.tech-ribbon_item {
+  color: var(--base-color-neutral--neutral-dark);
+  font-family: $font-body;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+  transition: color 0.2s;
+
+  @include mobile-landscape {
+    font-size: 1.25rem;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Capability ticker (hero underline)
+//
+// The bullet separators are generated rather than typed, so the marquee can be
+// cloned without ever producing two bullets in a row at the seam.
+// ---------------------------------------------------------------------------
+
+.capability_item {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5rem;
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.96px;
+  white-space: nowrap;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: var(--base-color-brand--blue);
+    border-radius: 50%;
+    flex: 0 0 auto;
+  }
+
+  @include mobile-landscape {
+    gap: 1.5rem;
+    font-size: 1.5rem;
+
+    &::after {
+      width: 0.375rem;
+      height: 0.375rem;
+    }
+  }
+}

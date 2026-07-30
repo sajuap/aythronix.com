@@ -1,0 +1,119 @@
+// ---------------------------------------------------------------------------
+// Services — bento grid
+//
+// Three columns on desktop. The featured card spans two of them on the first
+// row, which is what makes the arrangement read as a bento rather than a plain
+// card grid: one clear entry point, then four equal siblings.
+//
+//   [ featured — Enterprise Web  ][ Mobile ]
+//   [ AI ][ E-Commerce ][ SEO ]
+//
+// Two columns at 991px (the featured card keeps its span, so it still leads),
+// one column at 767px.
+// ---------------------------------------------------------------------------
+
+.services_grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 1rem;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mobile-landscape {
+    grid-template-columns: 1fr;
+  }
+}
+
+.service-card {
+  display: flex;
+  position: relative;
+  flex-flow: column;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 15rem;
+  padding: 2rem;
+  background-image: linear-gradient(112deg, #d2ddf0, #f6f9fe);
+  overflow: hidden;
+
+  // The featured card leads the grid: two tracks wide, and inverted so it reads
+  // as the primary surface rather than one of five equals.
+  &.is-featured {
+    grid-column: span 2;
+    background-image: linear-gradient(
+      112deg,
+      var(--base-color-brand--blue-darker),
+      var(--base-color-brand--blue)
+    );
+
+    .service-card_title,
+    .service-card_body {
+      color: var(--base-color-neutral--white);
+    }
+
+    .service-card_body {
+      opacity: 0.85;
+    }
+
+    .service-card_index {
+      color: rgb(255 255 255 / 55%);
+    }
+
+    @include mobile-landscape {
+      grid-column: span 1;
+    }
+  }
+
+  @include tablet {
+    min-height: 13rem;
+    padding: 1.5rem;
+  }
+
+  @include mobile-portrait {
+    padding: 1.25rem;
+  }
+}
+
+// Small monospaced-feeling index in the display face, top of each card.
+.service-card_index {
+  color: var(--base-color-neutral--neutral);
+  font-family: $font-display;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.service-card_title {
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.72px;
+
+  @include mobile-landscape {
+    font-size: 1.25rem;
+  }
+}
+
+.service-card_body {
+  margin-top: 0.5rem;
+  opacity: 0.8;
+  color: var(--base-color-neutral--neutral-darker);
+  font-family: $font-body;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+// Header row inside a card: index left, bracketed glyph right.
+.service-card_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}

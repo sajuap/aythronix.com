@@ -23,7 +23,6 @@ import { initNavMenu, initNavScroll } from './animations/nav.js';
 import { initMarquees } from './animations/marquee.js';
 import { initButtonBrackets } from './animations/button-brackets.js';
 import { initReveals } from './animations/reveals.js';
-import { initTeamToggle } from './components/team-toggle.js';
 import { initLottieIcons } from './components/lottie-icons.js';
 import { initAnchors } from './components/anchors.js';
 import { initContactForm } from './components/contact-form.js';
@@ -71,7 +70,6 @@ function boot() {
   // Static/idempotent wiring that does not depend on the intro.
   initNavMenu();
   initButtonBrackets();
-  initTeamToggle();
   initAnchors();
   initContactForm();
 

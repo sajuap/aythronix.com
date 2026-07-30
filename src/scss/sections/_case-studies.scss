@@ -1,0 +1,74 @@
+// ---------------------------------------------------------------------------
+// Case studies
+//
+// Two panels, metric-first. The number is the headline — it is what a prospect
+// scans for — with the narrative underneath it. Same bordered, softly shadowed
+// surface as the contact panel so the page keeps one vocabulary of "panel".
+// ---------------------------------------------------------------------------
+
+.case-studies_grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+}
+
+.case-card {
+  display: flex;
+  position: relative;
+  flex-flow: column;
+  gap: 1.5rem;
+  padding: 3rem 2.5rem;
+  background-color: var(--base-color-neutral--neutral-lightest);
+  border: 1px solid var(--base-color-neutral--neutral-lighter);
+  box-shadow: var(--shadow--ambient-wide);
+
+  @include tablet {
+    padding: 2.5rem 1.5rem;
+  }
+
+  @include mobile-portrait {
+    padding: 2rem 1.25rem;
+  }
+}
+
+// The metric. Set at H2 scale in the brand blue so it carries the panel.
+.case-card_metric {
+  color: var(--base-color-brand--blue);
+  font-family: $font-body;
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -1.56px;
+
+  @include tablet {
+    font-size: 2.5rem;
+  }
+
+  @include mobile-landscape {
+    font-size: 2rem;
+  }
+}
+
+.case-card_title {
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.72px;
+
+  @include mobile-landscape {
+    font-size: 1.25rem;
+  }
+}
+
+.case-card_divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--base-color-neutral--neutral-lighter);
+}

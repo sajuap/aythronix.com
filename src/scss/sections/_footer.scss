@@ -10,18 +10,33 @@
   min-width: 100%;
 }
 
+// Brand block plus three link columns. The brand track is wide enough to hold
+// the lockup, the divider and the tagline on one line at 1440.
 .footer_grid {
   display: grid;
   width: 100%;
-  grid-auto-columns: 1fr;
-  grid-template-columns: 5fr 1fr;
+  grid-template-columns: 2.4fr 1fr 1fr 1fr;
   grid-template-rows: auto;
-  gap: 16px;
+  gap: 2rem;
 
   @include tablet {
-    grid-template-columns: 5fr;
-    grid-template-rows: auto auto;
-    gap: 3rem;
+    // Brand spans the full width, then the three link columns sit under it.
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem 2rem;
+
+    > *:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @include mobile-landscape {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 1.5rem;
+  }
+
+  @include mobile-portrait {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 }
 
