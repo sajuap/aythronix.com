@@ -1,12 +1,88 @@
-// Custom.scss
-@import "src/scss/modules/custom";
-// @import "src/scss/modules/parallax.scss";
+// ===========================================================================
+// Botronics — main stylesheet
+//
+// Load order matters:
+//   1. tokens   — custom properties, no output dependencies
+//   2. mixins   — breakpoint + helper mixins used by every file below
+//   3. fonts    — @font-face and the $font-body / $font-display stacks
+//   4. bootstrap — grid + utilities API only (see note below)
+//   5. reset → typography → layout → components → sections → utilities
+//
+// Bootstrap is deliberately partial. Reboot is *not* imported: it would
+// overwrite the heading scale, paragraph opacity and letter-spacing that define
+// the design, and we would only be fighting it back. What we take is the grid,
+// the breakpoint/utility mixins, and the utilities API — configured below to
+// the same breakpoints the design actually uses.
+// ===========================================================================
 
+@use 'sass:math';
 
-// Option A: Include all of Bootstrap
+// --- 1. Tokens -------------------------------------------------------------
+@import 'base/tokens';
 
-@import "node_modules/bootstrap/scss/bootstrap";
-@import url("../../node_modules/bootstrap-icons/font/bootstrap-icons.css");
+// --- 2. Mixins -------------------------------------------------------------
+@import 'base/mixins';
 
+// --- 3. Fonts --------------------------------------------------------------
+@import 'base/fonts';
 
-//============== Font Styles=============
+// --- 4. Bootstrap (grid + utilities only) ----------------------------------
+// Breakpoints are aligned to the design's own boundaries so `media-breakpoint-*`
+// and the max-width mixins above agree with each other.
+$grid-breakpoints: (
+  xs: 0,
+  sm: 480px,
+  md: 768px,
+  lg: 992px,
+  xl: 1440px,
+  xxl: 1920px,
+);
+
+// `$container-max-widths` is deliberately left at Bootstrap's defaults. The
+// design's own column is `.container-large-bordered` (80rem, with the hairline
+// border), so Bootstrap's `.container` is never used here — overriding it only
+// produced a non-ascending map warning for no benefit.
+
+$grid-gutter-width: 2rem;
+$enable-dark-mode: false;
+
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+@import 'bootstrap/scss/grid';
+@import 'bootstrap/scss/utilities/api';
+
+// --- 5. Base ---------------------------------------------------------------
+@import 'base/reset';
+@import 'base/typography';
+
+// --- Layout ----------------------------------------------------------------
+@import 'layout/containers';
+@import 'layout/spacing';
+@import 'layout/display';
+
+// --- Components ------------------------------------------------------------
+@import 'components/button';
+@import 'components/nav';
+@import 'components/preloader';
+@import 'components/marquee';
+@import 'components/form';
+@import 'components/reveals';
+
+// --- Sections --------------------------------------------------------------
+@import 'sections/hero';
+@import 'sections/logos';
+@import 'sections/projects';
+@import 'sections/mission';
+@import 'sections/technology';
+@import 'sections/milestones';
+@import 'sections/team';
+@import 'sections/contact';
+@import 'sections/footer';
+@import 'sections/legal';
+
+// --- Utilities (last, so they can win) -------------------------------------
+@import 'utilities/helpers';

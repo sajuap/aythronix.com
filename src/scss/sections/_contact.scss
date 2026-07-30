@@ -1,0 +1,68 @@
+// ---------------------------------------------------------------------------
+// Contact
+//
+// A bordered two-panel card: intro copy on a 5%-black wash, form on solid white
+// with a 2rem offset that lets the wash show through on the left. Stacks at
+// 992px, where the dividing rule moves from the left edge to the top.
+// ---------------------------------------------------------------------------
+
+.contact-section_form-wrapper {
+  display: grid;
+  position: relative;
+  z-index: 1;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 1.25fr;
+  grid-template-rows: auto;
+  background-color: var(--base-color-neutral--neutral-lightest);
+  border: 1px solid var(--base-color-neutral--neutral-lighter);
+  box-shadow: var(--shadow--ambient-wide);
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+}
+
+.contact-section_left-wrapper {
+  display: flex;
+  padding: 3.5rem;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  place-self: stretch stretch;
+
+  @include tablet {
+    padding: 4rem 1.5rem 2.5rem;
+  }
+
+  @include mobile-portrait {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.contact-section_right-wrapper {
+  display: grid;
+  margin-left: 2rem;
+  padding: 3.5rem;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  justify-content: space-between;
+  place-items: end stretch;
+  gap: 2rem;
+  background-color: var(--base-color-neutral--white);
+  border-left: 1px solid var(--base-color-neutral--neutral-lighter);
+  place-self: stretch stretch;
+
+  @include tablet {
+    margin-left: 0;
+    padding: 1.5rem 1.5rem 4rem;
+    border-left-style: none;
+    border-top: 1px solid var(--base-color-neutral--neutral-lighter);
+  }
+
+  @include mobile-portrait {
+    padding: 1rem 1rem 2rem;
+  }
+}

@@ -1,0 +1,81 @@
+// ---------------------------------------------------------------------------
+// Marquees
+//
+// Three of these on the page: the press logos, the core-values words, and a
+// faded logo strip inside the contact panel. Each is one long flex row that
+// GSAP translates leftwards forever, with a white gradient masking both ends.
+// ---------------------------------------------------------------------------
+
+.logo-section_logos-wrapper {
+  display: flex;
+  position: relative;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  @include mobile-portrait {
+    overflow: hidden;
+  }
+}
+
+.logo-section_logos-display {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4rem;
+  @include will-animate(transform);
+
+  &.is-values-section {
+    gap: 5.5rem;
+  }
+}
+
+.logo-section_logo {
+  width: auto;
+  height: 2rem;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+// End masks. 150px of white-to-transparent on the left, mirrored on the right.
+.logo-section_gradient {
+  position: absolute;
+  inset: 0% auto 0% 0%;
+  width: 150px;
+  background-image: linear-gradient(90deg, var(--base-color-neutral--white), #fff0);
+  pointer-events: none;
+
+  &.is-right {
+    inset: 0% 0% 0% auto;
+    background-image: linear-gradient(90deg, #fff0, var(--base-color-neutral--white));
+  }
+
+  // Pulled 1px past the container's hairline border so no seam shows through.
+  @include tablet {
+    left: -1px;
+
+    &.is-right {
+      right: -1px;
+      left: auto;
+    }
+  }
+}
+
+// The contact panel's strip: same mechanics, knocked back to 20%.
+.contact-section_logos-wrapper {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.contact-section_logos-display {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4rem;
+  opacity: 0.2;
+  @include will-animate(transform);
+}

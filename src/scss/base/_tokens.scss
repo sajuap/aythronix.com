@@ -1,0 +1,78 @@
+// ---------------------------------------------------------------------------
+// Design tokens
+// The full colour system, exposed as custom properties so runtime animations
+// (nav background, blur overlays) can interpolate against the same values the
+// stylesheet uses.
+// ---------------------------------------------------------------------------
+
+:root {
+  // --- Brand -------------------------------------------------------------
+  --base-color-brand--white: #fff;
+  --base-color-brand--black: #000;
+  --base-color-brand--pink: #dd23bb;
+  --base-color-brand--pink-light: #ffaefe;
+  --base-color-brand--pink-dark: #3c043b;
+
+  // --- Neutrals ----------------------------------------------------------
+  --base-color-neutral--white: #fff;
+  --base-color-neutral--black: #000;
+  --base-color-neutral--neutral-darkest: #000;
+  --base-color-neutral--neutral-darker: #000000b3; // 70%
+  --base-color-neutral--neutral-dark: #00000080; // 50%
+  --base-color-neutral--neutral: #0000004d; // 30%
+  --base-color-neutral--neutral-light: #0003; // 20%
+  --base-color-neutral--neutral-lighter: #0000001a; // 10%
+  --base-color-neutral--neutral-lightest: #0000000d; // 5%
+
+  // --- System ------------------------------------------------------------
+  --base-color-system--success-green: #cef5ca;
+  --base-color-system--success-green-dark: #114e0b;
+  --base-color-system--warning-yellow: #fcf8d8;
+  --base-color-system--warning-yellow-dark: #5e5515;
+  --base-color-system--error-red: #f8e4e4;
+  --base-color-system--error-red-dark: #3b0b0b;
+  --base-color-system--focus-state: #277bff;
+
+  // --- Semantic: text ----------------------------------------------------
+  --text-color--text-primary: var(--base-color-neutral--black);
+  --text-color--text-secondary: var(--base-color-neutral--neutral-darker);
+  --text-color--text-alternate: var(--base-color-neutral--white);
+  --text-color--text-success: var(--base-color-system--success-green-dark);
+  --text-color--text-warning: var(--base-color-system--warning-yellow-dark);
+  --text-color--text-error: var(--base-color-system--error-red-dark);
+
+  // --- Semantic: background ---------------------------------------------
+  --background-color--background-primary: var(--base-color-neutral--black);
+  --background-color--background-secondary: var(--base-color-brand--white);
+  --background-color--background-tertiary: var(--base-color-brand--pink);
+  --background-color--background-alternate: var(--base-color-neutral--white);
+  --background-color--background-success: var(--base-color-system--success-green);
+  --background-color--background-warning: var(--base-color-system--warning-yellow);
+  --background-color--background-error: var(--base-color-system--error-red);
+
+  // --- Semantic: border --------------------------------------------------
+  --border-color--border-primary: var(--base-color-neutral--neutral-lightest);
+  --border-color--border-secondary: var(--base-color-brand--white);
+  --border-color--border-alternate: var(--base-color-neutral--neutral-darker);
+
+  // --- Semantic: link ----------------------------------------------------
+  --link-color--link-primary: var(--base-color-brand--white);
+  --link-color--link-secondary: var(--base-color-neutral--black);
+  --link-color--link-alternate: var(--base-color-neutral--white);
+
+  // --- Elevation ---------------------------------------------------------
+  // The button's long, soft, top-left-cast shadow and the wide ambient shadow
+  // shared by the project card and the contact panel.
+  --shadow--button: -5px 5px 17px #0000001a, -22px 22px 31px #00000017,
+    -49px 49px 41px #0000000d, -87px 87px 49px #00000003, -136px 136px 54px #0000;
+  --shadow--ambient-wide: -644px 644px 250px #0000, -412px 412px 233px #00000003,
+    -232px 232px 197px #00000005, -103px 103px 146px #0000000a, -26px 26px 80px #0000000d;
+
+  // --- Layout ------------------------------------------------------------
+  --container-max: 80rem; // 1280px
+  --nav-height: 4.5rem;
+
+  // Real viewport height, kept in sync by js/utils/viewport.js so 100vh does
+  // not jump when mobile browser chrome collapses.
+  --vh: 1vh;
+}

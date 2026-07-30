@@ -1,0 +1,83 @@
+// ---------------------------------------------------------------------------
+// Breakpoint mixins
+//
+// These mirror the reference site's boundaries exactly. They are max-width
+// (desktop-first) because the whole design system cascades downward, and one
+// off-by-one pixel here shifts an entire section.
+//
+//   desktop   : 992px and up          (base, unwrapped)
+//   tablet    : <= 991px
+//   mobile-l  : <= 767px
+//   mobile-p  : <= 479px
+//   wide      : >= 1440px
+//   xwide     : >= 1920px
+// ---------------------------------------------------------------------------
+
+$bp-tablet: 991px;
+$bp-mobile-landscape: 767px;
+$bp-mobile-portrait: 479px;
+$bp-wide: 1440px;
+$bp-xwide: 1920px;
+
+@mixin tablet {
+  @media screen and (max-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin mobile-landscape {
+  @media screen and (max-width: $bp-mobile-landscape) {
+    @content;
+  }
+}
+
+@mixin mobile-portrait {
+  @media screen and (max-width: $bp-mobile-portrait) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $bp-tablet + 1) {
+    @content;
+  }
+}
+
+@mixin wide {
+  @media screen and (min-width: $bp-wide) {
+    @content;
+  }
+}
+
+@mixin xwide {
+  @media screen and (min-width: $bp-xwide) {
+    @content;
+  }
+}
+
+// Respect users who ask for less motion.
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+// Hint the compositor for transform/opacity animation.
+// Variadic so `will-animate(transform, opacity)` reads naturally at call sites.
+@mixin will-animate($props...) {
+  @if length($props) > 0 {
+    will-change: join((), $props, comma);
+  } @else {
+    will-change: transform;
+  }
+  backface-visibility: hidden;
+}
+
+@mixin cover-absolute {
+  position: absolute;
+  inset: 0;
+}

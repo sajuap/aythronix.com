@@ -1,0 +1,115 @@
+// ---------------------------------------------------------------------------
+// Contact form
+//
+// Two-column grid; Company and Message span both tracks. Everything collapses
+// to a single column at 767px.
+// ---------------------------------------------------------------------------
+
+// Wraps the form plus its status panels. The 15px bottom margin is the
+// reference's — it separates the form from the faded logo strip below it, and
+// leaving it off makes the whole contact panel 15px short.
+.form-wrapper {
+  margin-bottom: 15px;
+}
+
+.form-grid {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.75rem;
+}
+
+.form-input,
+.form_input {
+  display: block;
+  width: 100%;
+  // Fixed 38px, matching the reference. The 12px padding and 1.5 line-height
+  // would otherwise compute to 48px and add 10px to every row.
+  height: 38px;
+  vertical-align: middle;
+  margin-bottom: 0;
+  padding: 12px;
+  background-color: var(--base-color-neutral--neutral-lightest);
+  color: var(--base-color-neutral--neutral-darkest);
+  border: 0;
+  border-radius: 0;
+  font-family: $font-body;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  transition: box-shadow 0.2s;
+
+  &::placeholder {
+    color: var(--base-color-neutral--neutral);
+    font-family: $font-body;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 1px var(--base-color-neutral--neutral-light);
+  }
+}
+
+// The textarea sizes to its `rows` (2), which is where its 72px comes from.
+// No min-height here — one would push the whole panel taller.
+textarea.form_input,
+textarea.form-input {
+  height: auto;
+  resize: vertical;
+}
+
+// Company and Message run the full width at every breakpoint.
+.form-field-span-2 {
+  grid-column: span 2;
+}
+
+// On desktop the submit sits in a single column, as it does in the reference;
+// it only goes full width once the layout tightens (see below).
+.form-submit {
+  grid-column: span 1;
+  justify-self: stretch;
+}
+
+// --- Status messages -------------------------------------------------------
+
+.form-done,
+.form-fail {
+  display: none;
+  padding: 20px;
+  font-family: $font-body;
+  font-size: 1rem;
+}
+
+.form-done {
+  background-color: var(--background-color--background-success);
+  color: var(--text-color--text-success);
+}
+
+.form-fail {
+  background-color: var(--background-color--background-error);
+  color: var(--text-color--text-error);
+}
+
+.is-visible {
+  display: block;
+}
+
+// The grid keeps its two tracks at every width; what changes is how many tracks
+// each field spans. Collapsing to a single track instead would make the
+// `span 2` fields generate a phantom second column.
+@include tablet {
+  .form-submit {
+    grid-column: span 2;
+  }
+}
+
+@include mobile-landscape {
+  // Firstname / Lastname / Email / Phone go full width too.
+  .form-field-half {
+    grid-column: span 2;
+  }
+}

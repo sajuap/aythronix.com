@@ -1,0 +1,49 @@
+// ---------------------------------------------------------------------------
+// Hero
+//
+// Full-viewport frame: centred copy on top, the interactive particle sphere
+// filling the remaining space below. The sphere is a 2D canvas on desktop; at
+// 991px and under the canvas is dropped entirely and a pre-rendered still takes
+// its place, which is what keeps the section cheap on phones.
+// ---------------------------------------------------------------------------
+
+.hero-section_background-image {
+  min-height: 100vh;
+  color: var(--base-color-neutral--white);
+  overflow: hidden;
+}
+
+.hero_sphere-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+// Deliberately `overflow: visible` — the sphere is wider than its box and is
+// meant to bleed past the frame.
+.hero_sphere-code {
+  height: 100%;
+  overflow: visible;
+
+  @include tablet {
+    display: none;
+  }
+}
+
+#nebula-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// The still that replaces the canvas below 992px.
+.hero-sphere-picture {
+  display: none;
+
+  @include tablet {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 0%;
+  }
+}

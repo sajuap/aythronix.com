@@ -1,0 +1,139 @@
+// ---------------------------------------------------------------------------
+// Preloader
+//
+// Structure and choreography are lifted from the reference loader: a fixed
+// full-viewport white panel holding two stacked layers — a full-bleed
+// progress-driven visual (layer 1) and a centred logo (layer 2) — which then
+// slides the whole panel up out of frame to hand over to the hero.
+//
+// Timings live in js/components/preloader.js. Everything here is static state;
+// GSAP owns transform and opacity from the first frame.
+// ---------------------------------------------------------------------------
+
+.preloader {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 102;
+  width: 100vw;
+  height: 100vh;
+  // Fall back to the JS-measured unit on mobile, where 100vh overshoots.
+  height: calc(var(--vh, 1vh) * 100);
+  background-color: var(--base-color-neutral--white);
+  // The panel travels on Y; keep it off the main thread.
+  @include will-animate(transform);
+}
+
+// Clips both layers while the panel slides away.
+.preloader_layers {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+// Layer 1 — full-bleed, progress-driven.
+.preloader_layer-1 {
+  display: flex;
+  position: absolute;
+  inset: 0%;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+// Layer 2 — the centred mark, above layer 1.
+.preloader_layer-2 {
+  display: flex;
+  position: relative;
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.preloader_logo {
+  width: 9rem;
+  @include will-animate(transform, opacity);
+
+  @include mobile-landscape {
+    width: 7rem;
+  }
+}
+
+// The particle field that assembles as the page loads. Sized by its parent so
+// the canvas backing store can be set from clientWidth/Height.
+.preloader_canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// Thin progress rule pinned to the bottom of the panel — the readable form of
+// the same 0→100 value that drives the particle assembly.
+.preloader_progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  height: 1px;
+  background-color: var(--base-color-neutral--neutral-lighter);
+}
+
+.preloader_progress-bar {
+  width: 100%;
+  height: 100%;
+  background-color: var(--base-color-neutral--black);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+// Numeric readout, bottom-right, in the display face.
+.preloader_count {
+  position: absolute;
+  right: 2.5rem;
+  bottom: 1.5rem;
+  z-index: 3;
+  color: var(--base-color-neutral--neutral-dark);
+  font-family: $font-display;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+
+  @include mobile-landscape {
+    right: 1.25rem;
+    bottom: 1.25rem;
+  }
+}
+
+// Set by JS once the reveal has finished, so the panel stops being a hit target
+// even if a transform leaves it technically on-screen.
+.preloader.is-done {
+  display: none;
+}
+
+// ---------------------------------------------------------------------------
+// Elements the preloader hands over to
+//
+// Hidden up front so nothing flashes before the reveal. `.is-preload-hidden`
+// is removed by JS after the intro timeline is built, which means a visitor
+// with JS disabled still sees a fully readable page.
+// ---------------------------------------------------------------------------
+
+.is-preload-hidden {
+  opacity: 0;
+}
+
+html.no-js .is-preload-hidden {
+  opacity: 1;
+}
+
+html.no-js .preloader {
+  display: none;
+}

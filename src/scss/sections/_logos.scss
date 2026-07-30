@@ -1,0 +1,18 @@
+// ---------------------------------------------------------------------------
+// Press-logo strip ("They Talk About Us") and core-values strip
+//
+// Both are label-on-the-left, marquee-on-the-right rows. The label drops out
+// entirely below 768px and the marquee takes the full width.
+// ---------------------------------------------------------------------------
+
+// The 1px tick that brackets every eyebrow label.
+.subtitle-line {
+  width: 1px;
+  height: 0.8rem;
+  background-color: var(--base-color-neutral--neutral);
+  flex: 0 0 auto;
+
+  &.is-higher {
+    height: 1.2rem;
+  }
+}

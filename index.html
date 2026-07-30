@@ -1,0 +1,1099 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Botronics | Autonomous Robotics &amp; Embedded AI for Everyday Objects</title>
+    <meta
+      name="description"
+      content="Botronics brings AI-driven autonomy to the everyday objects people already use and trust. Discover iXi, our first autonomous golf trolley, and the embedded intelligence behind it."
+    />
+    <link rel="canonical" href="https://www.botronics.be/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.botronics.be/" />
+    <meta
+      property="og:title"
+      content="Botronics | Autonomous Robotics &amp; Embedded AI for Everyday Objects"
+    />
+    <meta
+      property="og:description"
+      content="Autonomy, designed for everyday life. Botronics turns today's hardware into autonomous intelligence."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="icon" type="image/svg+xml" href="/src/assets/icons/logo.svg" />
+
+    <!--
+      Preload the two faces that paint above the fold. Overused Grotesk Medium
+      carries the H1; Mondwest carries the "autonomous" word beside it. Without
+      these the hero re-flows the moment the webfonts land, right as the
+      preloader hands over.
+    -->
+    <link
+      rel="preload"
+      href="/src/assets/fonts/overusedgrotesk-medium.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/src/assets/fonts/ppmondwest-regular.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Botronics",
+        "url": "https://www.botronics.be/",
+        "description": "Botronics brings AI-driven autonomy to everyday objects.",
+        "sameAs": ["https://www.linkedin.com/company/botronics/"]
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#Hero">Skip to content</a>
+
+    <!--
+      Preloader. Layer 1 holds the progress-driven particle field, layer 2 the
+      centred mark. The whole panel lifts out of frame to hand over to the hero.
+    -->
+    <div class="preloader" aria-hidden="true">
+      <div class="preloader_layers">
+        <div class="preloader_layer-1">
+          <canvas class="preloader_canvas"></canvas>
+        </div>
+        <div class="preloader_layer-2">
+          <img
+            src="/src/assets/icons/logo.svg"
+            alt=""
+            class="preloader_logo"
+            width="144"
+            height="32"
+          />
+        </div>
+        <div class="preloader_progress"><div class="preloader_progress-bar"></div></div>
+        <div class="preloader_count">000</div>
+      </div>
+    </div>
+
+    <div class="page-wrapper">
+      <!-- ================================================================ -->
+      <!-- Navigation                                                        -->
+      <!-- ================================================================ -->
+      <header class="nav_component is-preload-hidden" role="banner">
+        <div class="padding-global">
+          <div class="nav_container">
+            <a href="#Hero" class="nav_logo" aria-label="Botronics — home">
+              <img
+                src="/src/assets/icons/logo.svg"
+                loading="eager"
+                alt="Botronics"
+                class="nav_logo"
+                width="128"
+                height="28"
+              />
+            </a>
+
+            <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Main">
+              <a href="#Projects" class="nav_link">Projects</a>
+              <a href="#Mission" class="nav_link">Vision &amp; Mission</a>
+              <a href="#Technology" class="nav_link">Technology</a>
+              <a href="#Milestones" class="nav_link">Milestones</a>
+              <a href="#Team" class="nav_link">Team</a>
+
+              <!-- Tablet/mobile copy of the CTA, shown once the menu collapses. -->
+              <div class="display-horizontal-left is-hidden-desktop">
+                <a href="#Contact" class="button is-secondary is-small is-tab-only">
+                  <div>Contact us</div>
+                  <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
+                  <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
+                  <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-left" />
+                  <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-right" />
+                </a>
+              </div>
+            </nav>
+
+            <button
+              class="menu-button"
+              type="button"
+              aria-label="Toggle navigation menu"
+              aria-expanded="false"
+              aria-controls="nav-menu"
+            >
+              <span class="menu-button_icon" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </span>
+            </button>
+
+            <a href="#Contact" class="button is-secondary is-small">
+              <div>Contact us</div>
+              <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
+              <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
+              <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-left" />
+              <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-right" />
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- ============================================================== -->
+        <!-- Hero                                                            -->
+        <!-- ============================================================== -->
+        <section id="Hero" class="hero-section">
+          <div class="hero-section_background-image">
+            <div class="padding-global is-height-100">
+              <div class="container-large-bordered is-hero">
+                <div class="padding-global">
+                  <!-- Moved and faded in as one block by the preloader. -->
+                  <div
+                    class="display-vertical-center text-align-center is-preload-hidden"
+                    data-hero-copy
+                  >
+                    <div class="margin-bottom margin-small">
+                      <div class="margin-top margin-small">
+                        <h1>
+                          We turn today’s hardware<br />into
+                          <span class="heading-style-h1-pixel">autonomous</span> intelligence.
+                        </h1>
+                      </div>
+                    </div>
+
+                    <div class="max-width-large">
+                      <div class="margin-bottom margin-medium">
+                        <p class="max-width-xmedium">
+                          The world is changing faster than ever, and everyone can see it
+                          through the rise of AI. But the next big shift won’t just happen on
+                          screens — it will happen in the objects around us.
+                        </p>
+                      </div>
+                    </div>
+
+                    <a href="#Mission" class="button is-icon" data-brackets>
+                      <div>Learn more</div>
+                      <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right is-ext" />
+                      <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left is-ext" />
+                      <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-left is-ext" />
+                      <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-right is-ext" />
+                    </a>
+                  </div>
+                </div>
+
+                <!--
+                  The particle sphere. Canvas on desktop; below 992px the canvas
+                  is hidden by CSS and the pre-rendered still below takes over.
+                -->
+                <div class="hero_sphere-wrapper">
+                  <div class="hero_sphere-code"><canvas id="nebula-canvas"></canvas></div>
+                  <img
+                    src="/src/assets/images/sphere.png"
+                    srcset="
+                      /src/assets/images/sphere-p-500.png   500w,
+                      /src/assets/images/sphere-p-800.png   800w,
+                      /src/assets/images/sphere-p-1080.png 1080w,
+                      /src/assets/images/sphere-p-1600.png 1600w,
+                      /src/assets/images/sphere-p-2000.png 2000w,
+                      /src/assets/images/sphere.png        2070w
+                    "
+                    sizes="100vw"
+                    loading="lazy"
+                    alt="Botronics dynamic particle sphere"
+                    class="hero-sphere-picture"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Press logos                                                     -->
+        <!-- ============================================================== -->
+        <section id="Logo" class="logo-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-xsmall">
+                <div class="padding-horizontal padding-medium">
+                  <div class="display-horizontal-space-btw is-grap-4rem is-still-horizontal">
+                    <div class="text-style-subtitle is-logo-section">They Talk About Us</div>
+
+                    <div class="logo-section_logos-wrapper">
+                      <!--
+                        One authored copy of the set. marquee.js measures it and
+                        clones it as many times as the viewport needs, so the
+                        loop is seamless at any width.
+                      -->
+                      <div class="logo-section_logos-display" data-marquee>
+                        <img src="/src/assets/icons/forbes-logo.svg" loading="lazy" alt="Forbes" class="logo-section_logo" />
+                        <img src="/src/assets/images/ces-logo.avif" loading="lazy" alt="CES" class="logo-section_logo" />
+                        <img src="/src/assets/images/fox-logo.avif" loading="lazy" alt="FOX Business" class="logo-section_logo" />
+                        <img src="/src/assets/images/mygolfspy-logo.avif" loading="lazy" alt="MyGolfSpy" class="logo-section_logo" />
+                        <img src="/src/assets/images/golfdigest-logo.avif" loading="lazy" alt="Golf Digest" class="logo-section_logo" />
+                        <img src="/src/assets/icons/lecho-logo.svg" loading="lazy" alt="L’Echo" class="logo-section_logo" />
+                        <img src="/src/assets/images/la-libre-logo.avif" loading="lazy" alt="La Libre" class="logo-section_logo" />
+                        <img src="/src/assets/icons/nieuwsblad-logo.svg" loading="lazy" alt="Nieuwsblad" class="logo-section_logo" />
+                        <img src="/src/assets/icons/de-tijd-logo.svg" loading="lazy" alt="De Tijd" class="logo-section_logo" />
+                      </div>
+                      <div class="logo-section_gradient is-right"></div>
+                      <div class="logo-section_gradient"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Projects — iXi                                                  -->
+        <!-- ============================================================== -->
+        <section id="Projects" class="ixi-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-small is-less">
+                <div class="ixi-section_image-background">
+                  <div class="w-layout-grid fs-styleguide_2-col is-no-gap">
+                    <div class="ixi-section_grid-content">
+                      <div class="margin-bottom margin-medium">
+                        <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                          <div class="subtitle-line"></div>
+                          <div class="text-style-subtitle">Ongoing project</div>
+                          <div class="subtitle-line"></div>
+                        </div>
+                        <h2 data-reveal="text">Discover Our Latest Project</h2>
+                      </div>
+
+                      <div class="margin-bottom margin-medium">
+                        <div class="display-vertical-left is-gap-1rem" data-reveal="fade">
+                          <p>
+                            We believe innovation starts with solving a simple, human problem.
+                            For us, that began on a golf course.
+                          </p>
+                          <blockquote class="block-quote">
+                            iXi is our first showcase of autonomy brought into the real world:
+                            iXi is a trolley that follows you naturally, anticipates your
+                            movement, and navigates the course as if it had a mind of its own —
+                            no remote, no effort. And beyond carrying your gear, it gives you
+                            meaningful insights that help you understand your game and make
+                            smarter decisions on the course.
+                          </blockquote>
+                          <p>
+                            It isn’t just a product — it’s proof that everyday objects can
+                            become intelligent companions that elevate our lives.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div class="display-horizontal-left">
+                        <a
+                          id="cta_project_ixi"
+                          href="https://www.ixi.golf/?utm_source=website&amp;utm_campaign=botronics"
+                          target="_blank"
+                          rel="noopener"
+                          class="button is-icon"
+                          data-brackets
+                        >
+                          <div>Meet iXi</div>
+                          <img src="/src/assets/icons/arrow-ext.svg" loading="lazy" alt="" class="icon-1x1-xxxsmall" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- Keeps the right half of the panel clear of the product shot. -->
+                    <div class="ixi-section_div-empty"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Mission & Vision                                                -->
+        <!-- ============================================================== -->
+        <section id="Mission" class="mission-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-medium">
+                <div class="padding-horizontal padding-medium">
+                  <div>
+                    <div class="mission-section_image-wrapper">
+                      <div class="margin-bottom margin-medium">
+                        <div class="max-width-medium">
+                          <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                            <div class="subtitle-line"></div>
+                            <div class="text-style-subtitle">Mission &amp; Vision</div>
+                            <div class="subtitle-line"></div>
+                          </div>
+                          <h2 data-reveal="text">Autonomy, Designed for Everyday Life</h2>
+                        </div>
+                      </div>
+
+                      <img
+                        src="/src/assets/images/mission-and-vision.avif"
+                        loading="lazy"
+                        alt="Illustration of the evolution of robotics into everyday objects"
+                        class="is-absolute is-mission-image"
+                      />
+
+                      <div class="display-horizontal-left">
+                        <a href="#Contact" class="button is-icon" data-brackets>
+                          <div>Get in Touch</div>
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                        </a>
+                      </div>
+                    </div>
+
+                    <div class="w-layout-grid fs-styleguide_2-col is-gap-1remm-tab" data-reveal="fade">
+                      <p>
+                        We believe the next significant technological leap won’t come from
+                        futuristic machines, but from the everyday objects people already use
+                        and trust. Our mission is to bring AI-driven autonomy to these familiar
+                        objects in a way that feels natural, effortless, and beautifully
+                        integrated into daily life.
+                      </p>
+                      <p>
+                        At Botronics, we imagine a world where autonomous objects quietly
+                        support us, where intelligence blends into the background, and where
+                        technology adapts to people. By giving everyday objects the ability to
+                        understand, move, and act with purpose, we aim to make life simpler,
+                        smoother, and more human.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Core values                                                     -->
+        <!-- ============================================================== -->
+        <section id="Values" class="values-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-xsmall">
+                <div class="padding-horizontal padding-medium">
+                  <div class="display-horizontal-space-btw is-grap-4rem is-still-horizontal">
+                    <div class="text-style-subtitle is-logo-section">Our core values</div>
+
+                    <div class="logo-section_logos-wrapper">
+                      <div class="logo-section_logos-display is-values-section" data-marquee>
+                        <div class="heading-style-values">Simplicity</div>
+                        <div class="heading-style-values">Pleasure</div>
+                        <div class="heading-style-values">Innovation</div>
+                        <div class="heading-style-values">Mastery</div>
+                      </div>
+                      <div class="logo-section_gradient is-right"></div>
+                      <div class="logo-section_gradient"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Technology                                                      -->
+        <!-- ============================================================== -->
+        <section id="Technology" class="technology-section">
+          <div class="padding-global">
+            <div class="container-large-bordered is-overflow-hidden">
+              <div class="padding-top padding-huge">
+                <div class="w-layout-grid fs-styleguide_2-col is-technology-grid">
+                  <img
+                    src="/src/assets/images/technology.avif"
+                    srcset="
+                      /src/assets/images/technology-p-500.avif  500w,
+                      /src/assets/images/technology.avif       1188w
+                    "
+                    sizes="100vw"
+                    loading="lazy"
+                    alt="The folded iXi golf trolley"
+                    class="technology-section_image"
+                  />
+
+                  <div class="technology-section_content-wrapper">
+                    <div class="margin-bottom margin-large">
+                      <div class="padding-right padding-medium">
+                        <div class="display-horizontal-right is-left-tab">
+                          <div class="max-width-medium">
+                            <div class="text-align-right is-left-tab">
+                              <div class="display-horizontal-right is-gap-025rem is-left-tab">
+                                <div class="subtitle-line"></div>
+                                <div class="text-style-subtitle">Scalable Technology</div>
+                                <div class="subtitle-line"></div>
+                              </div>
+                              <h2 data-reveal="text">
+                                Seamless Intelligence.<br />Scalable by Design.
+                              </h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="margin-bottom margin-large">
+                      <div class="display-horizontal-right is-still-horizontal">
+                        <div
+                          class="line-divider max-width-70"
+                          data-reveal="line"
+                          data-reveal-origin="right center"
+                        ></div>
+                      </div>
+                    </div>
+
+                    <div class="margin-bottom margin-large">
+                      <div class="padding-right padding-medium is-left-tab">
+                        <div class="display-vertical-left is-gap-1rem" data-reveal="fade">
+                          <p>
+                            We believe great technology should feel invisible. The intelligence
+                            behind iXi lives inside a small, discreet module — a compact box
+                            that holds everything needed for autonomy. It is powerful,
+                            affordable, and designed to scale beyond a single product. iXi
+                            proves that AI can be elegant, quiet, and deeply capable, enhancing
+                            the experience without ever drawing attention to itself.
+                          </p>
+                          <p>
+                            Our technology is the cornerstone of every project we undertake,
+                            enabling us to transform any concept into a reality. Whether it's a
+                            wheelbarrow or a sophisticated electric vehicle, our embedded
+                            intelligence can make objects smarter and autonomous. We deliver
+                            tangible value, turning everyday items into intelligent companions.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="display-horizontal-left">
+                      <a href="#Contact" class="button is-icon" data-brackets>
+                        <div>Get in Touch</div>
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Milestones                                                      -->
+        <!-- ============================================================== -->
+        <section id="Milestones" class="milestones-section">
+          <div class="padding-global">
+            <div class="container-large-bordered is-relative">
+              <div class="padding-top padding-huge is-bottom-tab-added">
+                <div class="padding-left padding-medium">
+                  <div class="padding-right-tab">
+                    <div class="margin-bottom margin-huge">
+                      <div class="max-width-large">
+                        <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                          <div class="subtitle-line"></div>
+                          <div class="text-style-subtitle">Milestones</div>
+                          <div class="subtitle-line"></div>
+                        </div>
+                        <h2 data-reveal="text">
+                          Intelligence Seamlessly Integrated. Technology Built to Scale.
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="fs-styleguide_2-col">
+                    <div class="padding-right-tab">
+                      <div class="padding-bottom padding-huge is-no-tab">
+                        <!-- 1 — funding -->
+                        <div class="margin-bottom margin-medium">
+                          <div data-reveal="fade">
+                            <div class="margin-bottom margin-small">
+                              <div class="icon-container">
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                                <div class="arrow-icon" data-lottie="icon-1"></div>
+                              </div>
+                            </div>
+                            <p>
+                              Our journey began with a remarkable signal: we raised €800k in a
+                              record time with our first project, confirming that people believe
+                              in a future where everyday objects become autonomous.
+                              Additionally, more than €2.6 million from investors has further
+                              fueled our mission.
+                            </p>
+                          </div>
+                        </div>
+
+                        <!-- 2 — iXi and the ROS community -->
+                        <div class="margin-bottom margin-medium">
+                          <div data-reveal="fade">
+                            <div class="margin-bottom margin-small">
+                              <div class="icon-container">
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                                <div class="arrow-icon" data-lottie="icon-3"></div>
+                              </div>
+                            </div>
+                            <p>
+                              Since then, our mission has been further propelled, enabling us to
+                              bring iXi to life as a pioneering example of embedded
+                              intelligence. We continue to foster the robotics community through
+                              initiatives like ROS and the ROS Meetup Belgium, driving forward a
+                              vision where intelligent objects seamlessly integrate into our
+                              daily lives.
+                            </p>
+                          </div>
+                        </div>
+
+                        <!-- 3 — competence centre -->
+                        <div class="margin-bottom margin-medium">
+                          <div data-reveal="fade">
+                            <div class="margin-bottom margin-small">
+                              <div class="icon-container">
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                                <div class="arrow-icon" data-lottie="built-icon"></div>
+                              </div>
+                            </div>
+                            <p>
+                              We are building a European competence center in Belgium focused on
+                              ROS2 and Nav2, strengthening the robotics community through
+                              open-source innovation. Our goal is a world where intelligent,
+                              autonomous objects feel natural and effortless.
+                            </p>
+                          </div>
+                        </div>
+
+                        <!-- 4 — press -->
+                        <div data-reveal="fade">
+                          <div class="margin-bottom margin-small">
+                            <div class="icon-container">
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                              <div class="arrow-icon" data-lottie="icon-2"></div>
+                            </div>
+                          </div>
+                          <p>
+                            Our vision has earned attention from leading media and industry
+                            voices — from Forbes and FOX Business to L’Écho, La Libre, De Tijd,
+                            and specialized tech and golf publications — reinforcing the
+                            growing belief in the future we are shaping.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <img
+                      src="/src/assets/images/side-shpere.avif"
+                      srcset="
+                        /src/assets/images/side-shpere-p-500.avif   500w,
+                        /src/assets/images/side-shpere-p-800.avif   800w,
+                        /src/assets/images/side-shpere-p-1080.avif 1080w,
+                        /src/assets/images/side-shpere-p-1600.avif 1600w,
+                        /src/assets/images/side-shpere.avif        3728w
+                      "
+                      sizes="100vw"
+                      loading="lazy"
+                      alt="Partial view of a 3D sphere formed by interconnected black and grey dots"
+                      class="sphere-clip"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Team                                                            -->
+        <!-- ============================================================== -->
+        <section id="Team" class="team-section">
+          <div class="padding-global">
+            <div class="container-large-bordered is-relative">
+              <div class="padding-section-medium">
+                <div class="padding-horizontal padding-medium">
+                  <div class="team-section_grid">
+                    <div class="team-section_sticky-wrapper-left">
+                      <div class="is-sticky team-wrapper-left">
+                        <div class="margin-bottom margin-huge">
+                          <div class="max-width-large">
+                            <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                              <div class="subtitle-line"></div>
+                              <div class="text-style-subtitle">Our team</div>
+                              <div class="subtitle-line"></div>
+                            </div>
+                            <h2 data-reveal="text">The People Behind the Intelligence</h2>
+                          </div>
+                        </div>
+
+                        <div class="margin-bottom margin-medium">
+                          <div class="display-vertical-left is-gap-1rem" data-reveal="fade">
+                            <p>
+                              Our team is made of builders, engineers, and innovators who
+                              believe technology should feel effortless. We combine deep
+                              expertise in robotics, AI, and embedded systems with a shared
+                              ambition to make autonomy intuitive, seamless, and naturally
+                              integrated into everyday life.
+                            </p>
+                            <p>
+                              As active contributors to the ROS ecosystem and organizers of the
+                              ROS Meetup Belgium, we help drive the ideas and innovations
+                              shaping the future of intelligent objects. Above all, we are
+                              united by curiosity, precision, and the desire to create
+                              technologies that quietly make the world smarter, easier, and
+                              better for the people who use them.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <!-- Always visible -->
+                      <div class="team-section_cards-wrapper is-first">
+                        <div class="display-vertical-stretch is-gap-1rem">
+                          <article class="team-card">
+                            <div class="team-grid">
+                              <div class="margin-bottom margin-medium display-vertical-space-btw">
+                                <div class="margin-bottom margin-small">
+                                  <div class="heading-style-h3 margin-bottom margin-tiny">Éric Piraux</div>
+                                  <div class="text-style-subtitle">Co-founder &amp; CEO</div>
+                                </div>
+                                <p class="team-section_p-max-width">
+                                  “While driving my Tesla, I wondered why my golf trolley
+                                  couldn’t self-drive on the course. Four years later, after
+                                  countless hours of development, we are proud to reveal our
+                                  prototype, iXi — the start of a new generation of intelligent,
+                                  autonomous objects.”
+                                </p>
+                              </div>
+                              <img
+                                src="/src/assets/images/eric-piraux.avif"
+                                srcset="
+                                  /src/assets/images/eric-piraux-p-500.avif   500w,
+                                  /src/assets/images/eric-piraux-p-800.avif   800w,
+                                  /src/assets/images/eric-piraux-p-1080.avif 1080w,
+                                  /src/assets/images/eric-piraux-p-1600.avif 1600w,
+                                  /src/assets/images/eric-piraux.avif        1970w
+                                "
+                                sizes="100vw"
+                                loading="lazy"
+                                alt="Éric Piraux"
+                                class="team-picture"
+                              />
+                            </div>
+                          </article>
+
+                          <article class="team-card">
+                            <div class="team-grid">
+                              <div class="margin-bottom margin-medium display-vertical-space-btw">
+                                <div class="margin-bottom margin-small">
+                                  <div class="heading-style-h3 margin-bottom margin-tiny">Antoine Van Malleghem</div>
+                                  <div class="text-style-subtitle">Co-founder &amp; CTO</div>
+                                </div>
+                                <p class="team-section_p-max-width">
+                                  “I’ve been passionate about technology from a young age. At
+                                  Botronics, I focus on combining AI and robotics to create
+                                  practical and impactful solutions. My goal is to align
+                                  technical expertise with strategic insight to build the next
+                                  generation of autonomous golf trolleys.”
+                                </p>
+                              </div>
+                              <img
+                                src="/src/assets/images/antoine.avif"
+                                srcset="
+                                  /src/assets/images/antoine-p-500.avif  500w,
+                                  /src/assets/images/antoine-p-800.avif  800w,
+                                  /src/assets/images/antoine.avif       1005w
+                                "
+                                sizes="100vw"
+                                loading="lazy"
+                                alt="Antoine Van Malleghem"
+                                class="team-picture"
+                              />
+                            </div>
+                          </article>
+                        </div>
+
+                        <!-- Fade hinting at the collapsed cards below. -->
+                        <div class="is-absolute is-blur-white-bottom"></div>
+                      </div>
+
+                      <!-- Revealed by "Show more" -->
+                      <div class="team-section_cards-wrapper is-second">
+                        <div class="display-vertical-stretch is-gap-1rem">
+                          <article class="team-card">
+                            <div class="team-grid">
+                              <div class="margin-bottom margin-medium display-vertical-space-btw">
+                                <div class="margin-bottom margin-small">
+                                  <div class="heading-style-h3 margin-bottom margin-tiny">Laetitia Fraikin</div>
+                                  <div class="text-style-subtitle">Business Engineer</div>
+                                </div>
+                                <p class="team-section_p-max-width">
+                                  “My ambition is to make iXi the benchmark for high-end tech
+                                  trolleys. I focus on delivering innovative solutions that
+                                  provide real value to golfers and elevate the experience with
+                                  a truly premium approach.”
+                                </p>
+                              </div>
+                              <img
+                                src="/src/assets/images/laeticia.avif"
+                                srcset="
+                                  /src/assets/images/laeticia-p-500.avif  500w,
+                                  /src/assets/images/laeticia-p-800.avif  800w,
+                                  /src/assets/images/laeticia.avif       1005w
+                                "
+                                sizes="100vw"
+                                loading="lazy"
+                                alt="Laetitia Fraikin"
+                                class="team-picture"
+                              />
+                            </div>
+                          </article>
+
+                          <article class="team-card">
+                            <div class="team-grid">
+                              <div class="margin-bottom margin-medium display-vertical-space-btw">
+                                <div class="margin-bottom margin-small">
+                                  <div class="heading-style-h3 margin-bottom margin-tiny">Enzo Ghisoni</div>
+                                  <div class="text-style-subtitle">Robotics Engineer</div>
+                                </div>
+                                <p class="team-section_p-max-width">
+                                  “I joined Botronics to challenge myself, push my skills
+                                  further, and explore the start-up world. The iXi project has
+                                  been an incredible journey, especially in teaching the trolley
+                                  to navigate autonomously. After countless hours of
+                                  problem-solving, seeing iXi avoid bunkers and water hazards is
+                                  incredibly rewarding.”
+                                </p>
+                              </div>
+                              <img
+                                src="/src/assets/images/enzo.avif"
+                                srcset="
+                                  /src/assets/images/enzo-p-500.avif  500w,
+                                  /src/assets/images/enzo-p-800.avif  800w,
+                                  /src/assets/images/enzo.avif       1005w
+                                "
+                                sizes="100vw"
+                                loading="lazy"
+                                alt="Enzo Ghisoni"
+                                class="team-picture"
+                              />
+                            </div>
+                          </article>
+
+                          <article class="team-card">
+                            <div class="team-grid">
+                              <div class="margin-bottom margin-medium display-vertical-space-btw">
+                                <div class="margin-bottom margin-small">
+                                  <div class="heading-style-h3 margin-bottom margin-tiny">Christophe Simon</div>
+                                  <div class="text-style-subtitle">Robotics Engineer</div>
+                                </div>
+                                <p class="team-section_p-max-width">
+                                  “I’m passionate about perfecting the interaction between
+                                  golfers and the iXi trolley. My goal is a seamless product
+                                  experience where simple gestures or commands are instantly
+                                  understood, enabling iXi to respond intuitively and enhance
+                                  every moment on the course.”
+                                </p>
+                              </div>
+                              <img
+                                src="/src/assets/images/christophe.avif"
+                                srcset="
+                                  /src/assets/images/christophe-p-500.avif  500w,
+                                  /src/assets/images/christophe-p-800.avif  800w,
+                                  /src/assets/images/christophe.avif       1005w
+                                "
+                                sizes="100vw"
+                                loading="lazy"
+                                alt="Christophe Simon"
+                                class="team-picture"
+                              />
+                            </div>
+                          </article>
+
+                          <article class="team-card">
+                            <div class="team-grid">
+                              <div class="margin-bottom margin-medium display-vertical-space-btw">
+                                <div class="margin-bottom margin-small">
+                                  <div class="heading-style-h3 margin-bottom margin-tiny">Nicolas Daube</div>
+                                  <div class="text-style-subtitle">Software Engineer</div>
+                                </div>
+                                <p class="team-section_p-max-width">
+                                  “What excites me most is seeing software come alive inside a
+                                  real product. With iXi, the code I write becomes something
+                                  concrete and meaningful, placed directly into the hands of
+                                  golfers around the world.”
+                                </p>
+                              </div>
+                              <img
+                                src="/src/assets/images/nicolas.avif"
+                                srcset="
+                                  /src/assets/images/nicolas-p-500.avif  500w,
+                                  /src/assets/images/nicolas-p-800.avif  800w,
+                                  /src/assets/images/nicolas.avif       1031w
+                                "
+                                sizes="100vw"
+                                loading="lazy"
+                                alt="Nicolas Daube"
+                                class="team-picture"
+                              />
+                            </div>
+                          </article>
+
+                          <article class="team-card">
+                            <div class="team-grid">
+                              <div class="margin-bottom margin-medium display-vertical-space-btw">
+                                <div class="margin-bottom margin-small">
+                                  <div class="heading-style-h3 margin-bottom margin-tiny">Alexandre Vanhaver</div>
+                                  <div class="text-style-subtitle">Mechatronics Engineer</div>
+                                </div>
+                                <p class="team-section_p-max-width">
+                                  “What excites me most about iXi is contributing to its journey
+                                  from a rough prototype to a refined and reliable product. As a
+                                  passionate golfer, I’m committed to ensuring the final
+                                  solution feels genuinely designed by golfers, for golfers.”
+                                </p>
+                              </div>
+                              <img
+                                src="/src/assets/images/alexandre.avif"
+                                srcset="
+                                  /src/assets/images/alexandre-p-500.avif  500w,
+                                  /src/assets/images/alexandre-p-800.avif  800w,
+                                  /src/assets/images/alexandre.avif       1005w
+                                "
+                                sizes="100vw"
+                                loading="lazy"
+                                alt="Alexandre Vanhaver"
+                                class="team-picture"
+                              />
+                            </div>
+                          </article>
+
+                          <article class="team-card">
+                            <div class="team-grid">
+                              <div class="margin-bottom margin-medium display-vertical-space-btw">
+                                <div class="margin-bottom margin-small">
+                                  <div class="heading-style-h3 margin-bottom margin-tiny">David Moli</div>
+                                  <div class="text-style-subtitle">Robotics Engineer</div>
+                                </div>
+                                <p class="team-section_p-max-width">
+                                  “I joined Botronics to challenge myself, grow my skills, and
+                                  dive into the start-up world. On the iXi project, I put my
+                                  robotics studies into practice by teaching the trolley to
+                                  navigate the course, avoid bunkers, and stay clear of the
+                                  ultimate golfer’s nightmare: water hazards.”
+                                </p>
+                              </div>
+                              <img
+                                src="/src/assets/images/david.avif"
+                                srcset="
+                                  /src/assets/images/david-p-500.avif  500w,
+                                  /src/assets/images/david-p-800.avif  800w,
+                                  /src/assets/images/david.avif       1005w
+                                "
+                                sizes="100vw"
+                                loading="lazy"
+                                alt="David Moli"
+                                class="team-picture"
+                              />
+                            </div>
+                          </article>
+                        </div>
+                      </div>
+
+                      <div class="display-show-button" data-team-toggle>
+                        <button type="button" class="button is-secondary is-small is-see" aria-expanded="false">
+                          Show more
+                        </button>
+                        <button type="button" class="button is-secondary is-small is-hide" aria-expanded="false">
+                          Show less
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- Contact                                                         -->
+        <!-- ============================================================== -->
+        <section id="Contact" class="contact-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-small is-less">
+                <div class="contact-section_form-wrapper">
+                  <div class="contact-section_left-wrapper">
+                    <div class="margin-bottom margin-xhuge is-less-tab">
+                      <div class="max-width-large">
+                        <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                          <div class="subtitle-line"></div>
+                          <div class="text-style-subtitle">Get in touch</div>
+                          <div class="subtitle-line"></div>
+                        </div>
+                        <h2 data-reveal="text">Let’s Shape the Future Together</h2>
+                      </div>
+                    </div>
+                    <p>
+                      Whether you are an investor who believes in the future of autonomous
+                      objects or someone with a question, an idea, or a project in mind, we
+                      would love to hear from you. Reach out to us and let’s explore how we can
+                      build the next chapter of intelligent everyday objects. If you’re a
+                      robotics engineer looking to build real products inside a fast-moving
+                      deep-tech startup, we’d be also excited to meet you.
+                    </p>
+                  </div>
+
+                  <div class="contact-section_right-wrapper">
+                    <div class="form-wrapper">
+                      <form class="form-grid" name="contact" data-contact-form novalidate>
+                        <input class="form-input form-field-half" type="text" name="Firstname" id="Firstname" placeholder="Firstname" maxlength="256" required />
+                        <input class="form-input form-field-half" type="text" name="Lastname" id="Lastname" placeholder="Lastname" maxlength="256" required />
+                        <input class="form-input form-field-half" type="email" name="Email" id="Email" placeholder="Email" maxlength="256" required />
+                        <input class="form-input form-field-half" type="text" name="Phone" id="Phone" placeholder="Phone" maxlength="256" />
+                        <input class="form-input form-field-span-2" type="text" name="Company" id="Company" placeholder="Company" maxlength="256" />
+                        <textarea class="form_input form-field-span-2" name="Message" id="Message" placeholder="Enter your message ..." maxlength="5000"></textarea>
+                        <input class="button is-no-shadow form-submit" type="submit" value="Send Message" data-wait="Please wait..." />
+                        <!--
+                          Reserved cell for the anti-spam widget, which the
+                          reference form also keeps as the final grid cell. It is
+                          empty until a provider is mounted into it; on desktop it
+                          shares the submit's row, and below 992px — where the
+                          submit goes full width — it becomes the last row.
+                        -->
+                        <div class="form-captcha-slot" data-captcha-slot></div>
+                      </form>
+
+                      <div class="form-done" data-form-done role="status">
+                        <div class="text-align-left">
+                          Thank you! Your submission has been received!
+                        </div>
+                      </div>
+                      <div class="form-fail" data-form-fail role="alert">
+                        <div>Something went wrong while submitting the form. Try again.</div>
+                      </div>
+                    </div>
+
+                    <div class="contact-section_logos-wrapper">
+                      <div class="contact-section_logos-display" data-marquee>
+                        <img src="/src/assets/icons/forbes-logo.svg" loading="lazy" alt="" class="logo-section_logo" />
+                        <img src="/src/assets/images/ces-logo.avif" loading="lazy" alt="" class="logo-section_logo" />
+                        <img src="/src/assets/images/fox-logo.avif" loading="lazy" alt="" class="logo-section_logo" />
+                        <img src="/src/assets/images/mygolfspy-logo.avif" loading="lazy" alt="" class="logo-section_logo" />
+                        <img src="/src/assets/images/golfdigest-logo.avif" loading="lazy" alt="" class="logo-section_logo" />
+                        <img src="/src/assets/icons/lecho-logo.svg" loading="lazy" alt="" class="logo-section_logo" />
+                        <img src="/src/assets/images/la-libre-logo.avif" loading="lazy" alt="" class="logo-section_logo" />
+                        <img src="/src/assets/icons/nieuwsblad-logo.svg" loading="lazy" alt="" class="logo-section_logo" />
+                        <img src="/src/assets/icons/de-tijd-logo.svg" loading="lazy" alt="" class="logo-section_logo" />
+                      </div>
+                      <div class="logo-section_gradient is-right"></div>
+                      <div class="logo-section_gradient"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ================================================================ -->
+      <!-- Footer                                                            -->
+      <!-- ================================================================ -->
+      <footer class="footer_section">
+        <div class="padding-global">
+          <div class="container-large-bordered is-footer">
+            <div class="padding-top padding-large">
+              <div class="padding-horizontal padding-medium">
+                <div class="margin-bottom margin-huge">
+                  <div class="footer_grid">
+                    <div>
+                      <div class="margin-bottom margin-small">
+                        <div class="display-horizontal-left is-gap-1rem">
+                          <a href="#Hero" class="nav_brand" aria-label="Botronics — home">
+                            <img src="/src/assets/icons/logo.svg" loading="lazy" alt="Botronics" class="nav_logo" />
+                          </a>
+                          <div class="subtitle-line is-higher is-hidden-mob"></div>
+                          <div class="text-style-paragraph">
+                            Autonomy, Designed for Everyday Life.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="margin-bottom margin-medium">
+                        <div class="display-horizontal-left is-gap-1rem is-still-horizontal">
+                          <a
+                            id="cta_social_linkedin"
+                            href="https://www.linkedin.com/company/botronics/"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="Botronics on LinkedIn"
+                          >
+                            <img src="/src/assets/icons/linkedin.svg" loading="lazy" alt="" class="footer_icon" />
+                          </a>
+                        </div>
+                      </div>
+
+                      <div class="footer_copyright-text">
+                        © <span data-year>2025</span> Botronics | Webdesigned by
+                        <a
+                          href="https://www.we-r.co/?utm_source=website&amp;utm_medium=client&amp;utm_campaign=botronics"
+                          target="_blank"
+                          rel="noopener"
+                          ><strong class="footer_copyright-text is-link">We-R</strong></a
+                        >
+                        | All rights reserved
+                      </div>
+                    </div>
+
+                    <nav class="display-vertical-left is-gap-1rem" aria-label="Legal">
+                      <div class="footer_link text-color-primary">Information</div>
+                      <a href="/legal-notice.html" class="footer_link">Legal Notice</a>
+                      <a href="/policy.html" class="footer_link">Cookie Policy</a>
+                    </nav>
+                  </div>
+                </div>
+
+                <img src="/src/assets/icons/footer-logo.svg" loading="lazy" alt="" class="footer_logo" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

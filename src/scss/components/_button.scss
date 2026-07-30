@@ -1,0 +1,170 @@
+// ---------------------------------------------------------------------------
+// Buttons
+//
+// The signature detail is the four 8px corner brackets. On `.is-ext` buttons
+// they sit 4px outside the box and animate a further 4px outward on hover
+// (handled in js/animations/button-brackets.js, because the rotation each
+// corner needs has to be preserved while x/y animate).
+// ---------------------------------------------------------------------------
+
+.button {
+  position: relative;
+  z-index: 1;
+  padding: 0.875rem 1.5rem;
+  background-color: var(--background-color--background-primary);
+  color: var(--base-color-brand--white);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  border-radius: 0;
+  box-shadow: var(--shadow--button);
+
+  &.is-small {
+    padding: 0.625rem 1.5rem;
+  }
+
+  &.is-secondary {
+    background-color: var(--base-color-neutral--neutral-lighter);
+    color: var(--text-color--text-primary);
+    box-shadow: none;
+
+    &.is-small {
+      transition: all 0.2s;
+
+      &:active {
+        opacity: 0.8;
+      }
+
+      // Lives in the collapsed nav menu only.
+      &.is-tab-only {
+        display: none;
+      }
+    }
+  }
+
+  &.is-icon {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: all 0.2s;
+
+    &:active {
+      opacity: 0.8;
+    }
+  }
+
+  &.is-no-shadow {
+    box-shadow: none;
+    transition: opacity 0.2s;
+
+    &:active {
+      opacity: 0.8;
+    }
+  }
+
+  @include tablet {
+    // Below 992px the header CTA moves inside the menu, so the header copy
+    // hides and the menu copy takes over.
+    &.is-secondary.is-small {
+      display: none;
+
+      &.is-tab-only {
+        display: block;
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Corner brackets
+//
+// One SVG, rotated per corner. `.is-ext` offsets it 4px outside the edge.
+// ---------------------------------------------------------------------------
+
+.select-button-vector {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+
+  &.is-top-right {
+    inset: 0% 0% auto auto;
+
+    &.is-ext {
+      inset: -4px -4px auto auto;
+    }
+  }
+
+  &.is-bottom-left {
+    inset: auto auto 0% 0%;
+    transform: rotate(180deg);
+
+    &.is-ext {
+      inset: auto auto -4px -4px;
+    }
+  }
+
+  &.is-top-left {
+    inset: 0% auto auto 0%;
+    transform: rotate(270deg);
+
+    &.is-ext {
+      inset: -4px auto auto -4px;
+    }
+  }
+
+  &.is-bottom-right {
+    inset: auto 0% 0% auto;
+    transform: rotate(90deg);
+
+    &.is-ext {
+      inset: auto -4px -4px auto;
+    }
+  }
+}
+
+// The small arrow that sits inside "MEET IXI".
+.icon-1x1-xxxsmall {
+  width: 0.6rem;
+  height: 0.6rem;
+}
+
+// Bracketed 3rem square holding a looping Lottie glyph (milestones list).
+.icon-container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.5rem;
+  overflow: hidden;
+}
+
+.arrow-icon {
+  padding-top: 6px;
+}
+
+// The "Show more / Show less" pair under the team grid.
+.display-show-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include mobile-landscape {
+    flex-flow: column;
+  }
+
+  @include mobile-portrait {
+    flex-flow: column;
+  }
+}

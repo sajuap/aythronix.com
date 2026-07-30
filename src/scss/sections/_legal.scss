@@ -1,0 +1,74 @@
+// ---------------------------------------------------------------------------
+// Legal / policy pages
+//
+// A single prose column inside the same bordered container as the homepage
+// sections. The margins below are the reference's own: bottom-only, no top
+// margin on headings. It runs tight on purpose, so headings read as attached to
+// the paragraph they introduce.
+// ---------------------------------------------------------------------------
+
+.padding-section-large {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+
+  @include tablet {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+// Legal pages have no hero, so the fixed header needs clearing.
+.is-legal-page .nav_component {
+  background-color: var(--base-color-neutral--white);
+  border-bottom-color: var(--base-color-neutral--neutral-lighter);
+}
+
+.legal-section {
+  padding-top: var(--nav-height);
+}
+
+.legal-rich-text {
+  h1 {
+    margin-bottom: 1rem;
+  }
+
+  h2,
+  h3,
+  p {
+    margin-bottom: 0.5rem;
+  }
+
+  h4 {
+    margin-bottom: 0.5rem;
+  }
+
+  ul,
+  ol {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+  }
+
+  li {
+    opacity: 0.8;
+    color: var(--base-color-neutral--neutral-darker);
+    font-family: $font-body;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  strong {
+    color: var(--base-color-neutral--neutral-darkest);
+    font-weight: 500;
+  }
+
+  a {
+    color: var(--base-color-neutral--neutral-darkest);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}

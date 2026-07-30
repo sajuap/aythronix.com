@@ -1,0 +1,73 @@
+// ---------------------------------------------------------------------------
+// Utilities
+//
+// Loaded last so these can override component styles when applied directly.
+// ---------------------------------------------------------------------------
+
+.is-height-100 {
+  height: 100%;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+// Locks body scroll while the preloader is up and while the mobile menu is open.
+// Lenis is stopped alongside this in JS; the class handles the native fallback.
+html.is-locked,
+body.is-locked {
+  overflow: hidden;
+  height: 100%;
+}
+
+// Screen-reader-only, for the skip link and the icon-button labels.
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Keyboard skip link — visible only when focused.
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 200;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--base-color-neutral--black);
+  color: var(--base-color-neutral--white);
+  font-family: $font-body;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+
+  &:focus {
+    top: 1rem;
+  }
+}
+
+// Lenis requirements. `html.lenis` disables native smooth scrolling so the two
+// do not fight; `.lenis-stopped` is what Lenis sets when we pause it.
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+// Anchor targets need to clear the fixed header. Lenis handles the offset for
+// script-driven scrolls; this covers a hard page load onto a #hash.
+[id] {
+  scroll-margin-top: 6rem;
+}

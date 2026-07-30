@@ -1,0 +1,332 @@
+// ---------------------------------------------------------------------------
+// Spacing scale
+//
+// The pattern: a size class sets padding/margin on all four sides, then a
+// direction class zeroes the three sides you do not want. So
+// `.padding-top.padding-huge` = padding-top: 6rem and nothing else.
+//
+// It reads oddly but it is what the markup is built around, and the scale
+// steps down at 991px and again at 767px.
+// ---------------------------------------------------------------------------
+
+// --- Size steps ------------------------------------------------------------
+
+.padding-tiny {
+  padding: 0.125rem;
+}
+.padding-small {
+  padding: 1rem;
+
+  &.is-less {
+    padding: 0.75rem;
+  }
+}
+.padding-medium {
+  padding: 2rem;
+}
+.padding-large {
+  padding: 3rem;
+}
+.padding-huge {
+  padding: 6rem;
+}
+.padding-xhuge {
+  padding: 8rem;
+}
+
+.margin-tiny {
+  margin: 0.125rem;
+}
+.margin-small {
+  margin: 1rem;
+}
+.margin-medium {
+  margin: 2rem;
+}
+.margin-large {
+  margin: 3rem;
+}
+.margin-huge {
+  margin: 6rem;
+}
+.margin-xhuge {
+  margin: 8rem;
+}
+
+// --- Direction filters -----------------------------------------------------
+
+.padding-top {
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+.padding-bottom {
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+.padding-left {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+}
+.padding-right {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+.padding-horizontal {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.padding-vertical {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.margin-top {
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+.margin-bottom {
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+.margin-left {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 0;
+}
+.margin-right {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+}
+.margin-horizontal {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.margin-vertical {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+// --- Section rhythm --------------------------------------------------------
+
+.padding-section-xsmall {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.padding-section-medium {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+// Tablet-only right gutter used by the milestones column and its heading.
+.padding-right-tab {
+  padding-right: 0;
+}
+
+// --- Responsive scale ------------------------------------------------------
+
+@include tablet {
+  .padding-medium {
+    padding: 1.5rem;
+  }
+  .padding-large {
+    padding: 2.5rem;
+  }
+  .padding-huge {
+    padding: 5rem;
+  }
+
+  .margin-medium {
+    margin: 1.5rem;
+  }
+  .margin-large {
+    margin: 2.5rem;
+  }
+  .margin-huge {
+    margin: 5rem;
+  }
+  .margin-xhuge {
+    margin: 6rem;
+  }
+
+  .padding-section-medium {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  // Re-assert the direction filters after the size overrides above, otherwise
+  // the reset side of the pattern loses to the new all-sides value.
+  .padding-top {
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+
+    &.padding-huge.is-bottom-tab-added {
+      padding-bottom: 5rem;
+    }
+  }
+  .padding-bottom {
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+
+    &.padding-huge.is-no-tab {
+      padding-bottom: 0;
+    }
+  }
+  .padding-left {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+  }
+  .padding-right {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+  }
+  .padding-horizontal {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .margin-top {
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .margin-bottom {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+
+    &.margin-xhuge.is-less-tab {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .padding-right-tab {
+    padding-right: 1.5rem;
+  }
+}
+
+@include mobile-landscape {
+  .padding-medium {
+    padding: 1.25rem;
+  }
+  .padding-large {
+    padding: 1.5rem;
+  }
+  .padding-huge {
+    padding: 3.5rem;
+  }
+
+  .margin-medium {
+    margin: 1.25rem;
+  }
+  .margin-large {
+    margin: 1.5rem;
+  }
+  .margin-huge {
+    margin: 3.5rem;
+  }
+  .margin-xhuge {
+    margin: 4rem;
+  }
+
+  .padding-section-medium {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .padding-section-xsmall {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .padding-top {
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+
+    &.padding-huge.is-bottom-tab-added {
+      padding-bottom: 3.5rem;
+    }
+  }
+  .padding-bottom {
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .padding-left {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+  }
+  .padding-right {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+  }
+  .padding-horizontal {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .margin-top {
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .margin-bottom {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@include mobile-portrait {
+  .padding-top {
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .padding-bottom {
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .padding-left {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+  }
+  .padding-right {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+  }
+  .padding-horizontal {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    &.padding-medium {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  .margin-top {
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .margin-bottom {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

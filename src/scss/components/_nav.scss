@@ -1,0 +1,154 @@
+// ---------------------------------------------------------------------------
+// Navigation
+//
+// Fixed, transparent over the hero, then flips to solid white with a 10%-black
+// hairline the moment the page leaves scroll position 0. That flip is driven by
+// js/animations/nav.js so it can be a real interpolation rather than a class
+// swap.
+// ---------------------------------------------------------------------------
+
+.nav_component {
+  position: fixed;
+  inset: 0% 0% auto;
+  z-index: 1000;
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: rgba(255, 255, 255, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+
+.nav_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+
+  @include mobile-portrait {
+    padding-left: 1rem;
+    padding-right: 0;
+  }
+}
+
+.nav_logo {
+  width: 8rem;
+
+  @include mobile-landscape {
+    padding-left: 0;
+  }
+}
+
+.nav_brand {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+}
+
+.nav_link {
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 7px 10px;
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.25px;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #1a1b1fbf;
+  }
+}
+
+// --- Collapsed menu (below 992px) ------------------------------------------
+
+.menu-button {
+  display: none;
+  padding: 12px;
+  color: var(--base-color-brand--black);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+// Three-bar glyph, drawn rather than pulled from an icon font.
+.menu-button_icon {
+  display: block;
+  position: relative;
+  width: 22px;
+  height: 16px;
+
+  span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+
+    &:nth-child(1) {
+      top: 0;
+    }
+    &:nth-child(2) {
+      top: 7px;
+    }
+    &:nth-child(3) {
+      top: 14px;
+    }
+  }
+}
+
+.menu-button.is-open .menu-button_icon span {
+  &:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  &:nth-child(2) {
+    opacity: 0;
+  }
+  &:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+@include tablet {
+  .menu-button {
+    display: block;
+  }
+
+  .nav-menu {
+    display: none;
+    position: absolute;
+    inset: 100% 0% auto;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: auto;
+    min-height: 100vh;
+    padding: 1rem;
+    background-color: var(--base-color-neutral--white);
+  }
+
+  .nav_component.is-menu-open .nav-menu {
+    display: flex;
+  }
+
+  .nav_link {
+    padding: 1rem;
+    font-size: 1rem;
+    text-align: left;
+  }
+}

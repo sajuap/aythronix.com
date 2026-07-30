@@ -1,0 +1,42 @@
+// ---------------------------------------------------------------------------
+// Mission & Vision
+//
+// A fixed-height band with the robotics-evolution illustration pinned to its
+// bottom-right corner at z-index -1, so the heading and button sit over it. The
+// illustration widens as the viewport narrows (75% → 100%) rather than shrinking
+// with it.
+// ---------------------------------------------------------------------------
+
+.mission-section_image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  margin-bottom: 2rem;
+
+  @include mobile-portrait {
+    height: 410px;
+  }
+}
+
+.is-absolute.is-mission-image {
+  inset: 0% 0% 0% auto;
+  z-index: -1;
+  width: auto;
+  min-width: auto;
+  max-width: 75%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 100% 100%;
+
+  @include tablet {
+    max-width: 90%;
+  }
+
+  @include mobile-landscape {
+    max-width: 95%;
+  }
+
+  @include mobile-portrait {
+    max-width: 100%;
+  }
+}

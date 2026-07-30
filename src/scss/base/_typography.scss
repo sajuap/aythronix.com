@@ -1,0 +1,244 @@
+// ---------------------------------------------------------------------------
+// Typography
+//
+// Sizes are in rem against a 16px root. The negative letter-spacing values are
+// absolute px on purpose — they were authored that way and they do not scale
+// with the font size, which is what keeps the large headings tight and the
+// small ones from collapsing.
+// ---------------------------------------------------------------------------
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 4rem;
+  line-height: 1;
+  letter-spacing: -2.16px;
+}
+
+h2 {
+  font-size: 3rem;
+  line-height: 1;
+  letter-spacing: -1.56px;
+}
+
+h3 {
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: -0.96px;
+}
+
+h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.72px;
+}
+
+h5 {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
+}
+
+h6 {
+  font-size: 1rem;
+  line-height: 1.2;
+  letter-spacing: -0.48px;
+}
+
+p {
+  margin: 0;
+  opacity: 0.8;
+  color: var(--base-color-neutral--neutral-darker);
+  font-family: $font-body;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--link-color--link-secondary);
+  font-weight: 500;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: var(--base-color-neutral--neutral-darker);
+}
+
+li {
+  opacity: 0.8;
+}
+
+strong,
+b {
+  color: var(--base-color-neutral--black);
+  font-weight: 500;
+}
+
+label {
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+blockquote {
+  margin: 0;
+  padding: 0 1.25rem;
+  border-left: 1.5px solid var(--base-color-neutral--neutral-light);
+  opacity: 0.8;
+  color: var(--base-color-neutral--neutral-darker);
+  font-family: $font-body;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+figure {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+figcaption {
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+// --- Named type styles -----------------------------------------------------
+
+// Eyebrow label: uppercase Mondwest, sat between two 1px ticks.
+.text-style-subtitle {
+  font-family: $font-display;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  &.is-logo-section {
+    color: var(--base-color-neutral--neutral);
+    font-size: 1.25rem;
+  }
+}
+
+.text-style-paragraph {
+  opacity: 0.8;
+  color: var(--base-color-neutral--neutral-darker);
+  text-decoration: none;
+}
+
+// Standalone H3 scale for elements that are not headings semantically
+// (team member names, marquee words).
+.heading-style-h3 {
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.96px;
+}
+
+.heading-style-values {
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.96px;
+}
+
+// The word "autonomous" in the hero: Mondwest, set larger than the
+// surrounding H1, with two hand-drawn underline SVGs pinned behind it.
+.heading-style-h1-pixel {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-image: url('/src/assets/icons/text-decoration-1.svg'),
+    url('/src/assets/icons/text-decoration.svg');
+  background-position: 100% 100%, 2px 8px;
+  background-repeat: no-repeat, no-repeat;
+  background-size: auto, auto;
+  font-family: $font-display;
+  font-size: 4.6rem;
+  font-weight: 400;
+}
+
+.text-align-left {
+  text-align: left;
+}
+.text-align-center {
+  text-align: center;
+}
+.text-align-right {
+  text-align: right;
+}
+
+.text-color-primary {
+  color: var(--text-color--text-primary);
+}
+
+// --- Responsive type -------------------------------------------------------
+
+@include mobile-landscape {
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
+  h5,
+  h6 {
+    font-size: 1rem;
+  }
+
+  .heading-style-h3 {
+    font-size: 1.5rem;
+  }
+
+  .heading-style-values {
+    font-size: 1.5rem;
+  }
+
+  .heading-style-h1-pixel {
+    background-position: 100% 100%, 2px 3px;
+    font-size: 3.1rem;
+    line-height: 1;
+  }
+
+  .text-style-subtitle.is-logo-section {
+    display: none;
+  }
+
+  .text-align-right.is-left-tab {
+    text-align: left;
+  }
+}
+
+@include tablet {
+  .text-align-right.is-left-tab {
+    text-align: left;
+  }
+}
+
+@include mobile-portrait {
+  .heading-style-h1-pixel {
+    background-position: 100% 100%, 3px 4px;
+  }
+}

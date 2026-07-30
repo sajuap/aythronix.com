@@ -1,0 +1,117 @@
+// ---------------------------------------------------------------------------
+// Team
+//
+// Sticky intro column on the left, scrolling card stack on the right. The first
+// two members are always visible; the remaining six live in a second wrapper
+// that starts hidden, with a white bottom fade over the first group hinting
+// there is more. "Show more" swaps the two.
+// ---------------------------------------------------------------------------
+
+.team-section_grid {
+  display: grid;
+  width: 100%;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 1.25fr;
+  grid-template-rows: auto;
+  gap: 4rem;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.team-section_sticky-wrapper-left {
+  position: relative;
+  top: 0;
+}
+
+.is-sticky.team-wrapper-left {
+  position: sticky;
+  top: 8rem;
+}
+
+.team-card {
+  display: flex;
+  width: 100%;
+  padding: 2rem 1rem 0 2rem;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: stretch;
+  background-image: linear-gradient(112deg, #dadada, #fafafa);
+  overflow: hidden;
+
+  @include tablet {
+    padding-top: 1.5rem;
+    padding-left: 1.5rem;
+  }
+}
+
+.team-grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 0.75fr;
+  grid-template-rows: auto;
+  gap: 0rem;
+
+  > * {
+    place-self: stretch stretch;
+  }
+
+  @include tablet {
+    place-items: stretch stretch;
+  }
+
+  @include mobile-landscape {
+    grid-template-columns: 1.25fr;
+    grid-template-rows: auto auto;
+  }
+}
+
+.team-picture {
+  min-height: 310px;
+  object-fit: contain;
+  object-position: 50% 100%;
+
+  @include tablet {
+    height: 350px;
+    min-height: 250px;
+  }
+
+  @include mobile-landscape {
+    padding-left: 4rem;
+  }
+
+  @include mobile-portrait {
+    padding-left: 0;
+  }
+}
+
+.team-section_p-max-width {
+  max-width: 95%;
+}
+
+.team-section_cards-wrapper {
+  margin-bottom: 1rem;
+
+  &.is-first {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &.is-second {
+    display: none;
+  }
+}
+
+// The fade that sits over the bottom of the first two cards while the rest are
+// collapsed. Pulled 1px past the edge so no hairline shows.
+.is-absolute.is-blur-white-bottom {
+  inset: auto 0% -1px;
+  min-width: 100%;
+  min-height: 100px;
+  background-image: linear-gradient(360deg, var(--base-color-neutral--white), #fff0);
+  pointer-events: none;
+}

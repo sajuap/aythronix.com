@@ -1,0 +1,153 @@
+// ---------------------------------------------------------------------------
+// Reset
+//
+// Only the normalisation the layout actually depends on. `img` keeps the
+// inline-block + vertical-align:middle behaviour of the reference, because the
+// press-logo marquee and the corner brackets are laid out against that
+// baseline; switching to `display:block` shifts them.
+// ---------------------------------------------------------------------------
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background-color: var(--base-color-neutral--white);
+
+  // A single soft smoke plume pinned to the top of the document, sized to the
+  // full viewport width. It sits behind the hero and fades out naturally as the
+  // page scrolls past it — there is no separate hero background layer.
+  background-image: url('/src/assets/images/hero-background-smoke.avif');
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+  color: #000;
+  font-family: $font-body;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+
+  // The site's cursor treatment: a native crosshair across the whole document.
+  cursor: crosshair;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+audio,
+canvas,
+progress,
+video {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+[hidden],
+template {
+  display: none;
+}
+
+img {
+  max-width: 100%;
+  border: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+}
+
+button {
+  overflow: visible;
+  text-transform: none;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+input {
+  line-height: normal;
+}
+
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+// Accessible focus ring, matching the reference's focus colour.
+:focus-visible {
+  outline: 2px solid #0050bd;
+  outline-offset: 0;
+  border-radius: 4px;
+}
+
+// The page never scrolls sideways — the marquees are the only wide content and
+// they clip themselves.
+body {
+  overflow-x: hidden;
+}
+
+@include reduced-motion {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

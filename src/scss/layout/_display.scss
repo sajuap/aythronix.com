@@ -1,0 +1,183 @@
+// ---------------------------------------------------------------------------
+// Flex display utilities
+//
+// `is-still-horizontal` is the important modifier: horizontal rows collapse to
+// columns at 767px, and anything tagged `is-still-horizontal` opts out. It is
+// what keeps the eyebrow labels (tick — text — tick) on one line at every size.
+// ---------------------------------------------------------------------------
+
+// --- Vertical --------------------------------------------------------------
+
+.display-vertical-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  &.is-gap-1rem {
+    gap: 1rem;
+  }
+}
+
+.display-vertical-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &.is-gap-1rem {
+    gap: 1rem;
+  }
+
+  @include tablet {
+    justify-content: center;
+    align-items: flex-start;
+
+    &.text-align-center {
+      text-align: left;
+    }
+  }
+}
+
+.display-vertical-stretch {
+  display: flex;
+  flex-direction: column;
+
+  &.is-gap-1rem {
+    gap: 1rem;
+  }
+}
+
+.display-vertical-space-btw {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+// The team card's text column needs to fill its grid track.
+.margin-bottom.margin-medium.display-vertical-space-btw {
+  width: 100%;
+}
+
+// --- Horizontal ------------------------------------------------------------
+
+.display-horizontal-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  &.is-gap-0-3rem {
+    gap: 0.3rem;
+  }
+
+  &.is-gap-1rem {
+    gap: 1rem;
+  }
+
+  // The tablet-only "Contact us" button that lives inside the mobile menu.
+  &.is-hidden-desktop {
+    display: none;
+  }
+
+  @include tablet {
+    &.is-hidden-desktop {
+      display: flex;
+      margin-top: 1rem;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
+
+  @include mobile-landscape {
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    &.is-gap-0-3rem.is-still-horizontal,
+    &.is-gap-1rem.is-still-horizontal {
+      flex-flow: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
+
+  @include mobile-portrait {
+    flex-flow: column;
+  }
+}
+
+.display-horizontal-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  &.is-gap-025rem {
+    gap: 0.25rem;
+  }
+
+  @include tablet {
+    &.is-left-tab {
+      flex-flow: row;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+  }
+
+  @include mobile-landscape {
+    flex-flow: column;
+
+    &.is-gap-025rem.is-left-tab {
+      flex-flow: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    &.is-left-tab {
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    &.is-still-horizontal {
+      flex-flow: row;
+    }
+  }
+
+  @include mobile-portrait {
+    flex-flow: column;
+  }
+}
+
+.display-horizontal-space-btw {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.is-grap-4rem {
+    gap: 4rem;
+  }
+
+  @include mobile-landscape {
+    flex-flow: column;
+
+    &.is-grap-4rem.is-still-horizontal {
+      flex-flow: row;
+    }
+  }
+}
+
+.display-horizontal-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include mobile-portrait {
+    flex-flow: column;
+  }
+}
+
+// --- Visibility ------------------------------------------------------------
+
+.is-hidden-mob {
+  @include mobile-landscape {
+    display: none;
+  }
+}
