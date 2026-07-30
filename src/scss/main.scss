@@ -1,0 +1,12 @@
+// Custom.scss
+@import "src/scss/modules/custom";
+// @import "src/scss/modules/parallax.scss";
+
+
+// Option A: Include all of Bootstrap
+
+@import "node_modules/bootstrap/scss/bootstrap";
+@import url("../../node_modules/bootstrap-icons/font/bootstrap-icons.css");
+
+
+//============== Font Styles=============
