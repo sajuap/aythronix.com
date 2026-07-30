@@ -184,10 +184,18 @@ and measured geometry against `https://www.botronics.be/`.
 
 | Viewport | Sections matching | Total height (local = live) |
 | --- | --- | --- |
-| 1440 × 900 | 10 / 10 | 6024px |
-| 1280 × 800 | 10 / 10 | 5972px |
-| 834 × 1112 | 10 / 10 | 7502px |
-| 390 × 844 | 10 / 10 | 8361px |
+| 1440 × 900 | 10 / 10 | 6420px |
+| 1280 × 800 | 10 / 10 | 6270px |
+| 834 × 1112 | 10 / 10 | 8346px |
+| 390 × 844 | 10 / 10 | 8731px |
+
+Measured *after* walking the page so every lazy image has loaded and decoded. This
+matters more than it sounds: an image with no intrinsic size yet collapses its grid row,
+and the Technology section reads 638px unloaded against 857px loaded. Comparing two
+unloaded states agrees, but it agrees about the wrong thing — the harness now forces the
+loaded state on both sides before measuring. Individual sub-elements (the iXi copy block,
+both contact panels, the form grid, textarea, submit, mission image band, technology copy,
+team card stack, footer grid) also match to the pixel.
 
 Computed styles also match on the H1, the Mondwest display span (373px wide on both
 sides), body copy, eyebrow labels, nav links, buttons, containers and team cards. All
