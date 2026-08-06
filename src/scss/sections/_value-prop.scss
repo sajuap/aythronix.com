@@ -45,22 +45,28 @@
 }
 
 // ---------------------------------------------------------------------------
-// Tech stack ribbon
+// Ticker items — the capability strip and the tech stack ribbon
 //
-// Set typographically rather than with brand logos. Two of the six marks (AWS,
-// OpenAI) are not available under a licence that permits redistribution, and
-// mixing four real logos with two text labels looks like an oversight. A single
-// consistent treatment is the better answer; drop in real marks later if the
-// brand guidelines allow it.
+// Same row either way: eyebrow label left, marquee right, same gap, same end
+// masks. Separation between items is the marquee's own 4rem gap, so neither has
+// to draw a divider that could double up at the seam where marquee.js joins a
+// clone to the original.
+//
+// They part company on type, and deliberately. The stack ribbon is a list of
+// other people's product names — supporting evidence, set quietly in the
+// interface face. The capability strip is our own offer, so it takes the display
+// face at full-strength navy and is meant to be read first.
+//
+// The ribbon is set typographically rather than with brand logos: two of the six
+// marks (AWS, OpenAI) are not available under a licence that permits
+// redistribution, and mixing four real logos with two text labels looks like an
+// oversight. Drop in real marks later if the brand guidelines allow it.
 // ---------------------------------------------------------------------------
 
+.capability_item,
 .tech-ribbon_item {
-  color: var(--base-color-neutral--neutral-dark);
-  font-family: $font-body;
   font-size: 1.5rem;
-  font-weight: 500;
   line-height: 1.2;
-  letter-spacing: -0.5px;
   white-space: nowrap;
   transition: color 0.2s;
 
@@ -69,42 +75,17 @@
   }
 }
 
-// ---------------------------------------------------------------------------
-// Capability ticker (hero underline)
-//
-// The bullet separators are generated rather than typed, so the marquee can be
-// cloned without ever producing two bullets in a row at the seam.
-// ---------------------------------------------------------------------------
-
-.capability_item {
-  display: inline-flex;
-  align-items: center;
-  gap: 2.5rem;
-  color: var(--base-color-neutral--neutral-darkest);
+.tech-ribbon_item {
+  color: var(--base-color-neutral--neutral-dark);
   font-family: $font-body;
-  font-size: 2rem;
   font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.96px;
-  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
 
-  &::after {
-    content: '';
-    display: block;
-    width: 0.5rem;
-    height: 0.5rem;
-    background-color: var(--base-color-brand--blue);
-    border-radius: 50%;
-    flex: 0 0 auto;
-  }
-
-  @include mobile-landscape {
-    gap: 1.5rem;
-    font-size: 1.5rem;
-
-    &::after {
-      width: 0.375rem;
-      height: 0.375rem;
-    }
-  }
+// Mondwest, solid navy. No negative tracking here — the -0.5px on the ribbon is
+// tuned for Overused Grotesk, and Mondwest's serifs need the room.
+.capability_item {
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-display;
+  font-weight: 700;
 }

@@ -35,8 +35,13 @@ export default defineConfig({
     assetsInlineLimit: 2048,
     target: 'es2019',
     rollupOptions: {
+      // Every page has to be listed here — a multi-page Rollup build only emits
+      // the entries it is given, so an HTML file left out of this map is simply
+      // absent from dist and 404s in production while working fine in dev.
       input: {
         main: resolve(__dirname, 'index.html'),
+        services: resolve(__dirname, 'services.html'),
+        about: resolve(__dirname, 'about.html'),
         legal: resolve(__dirname, 'legal-notice.html'),
         policy: resolve(__dirname, 'policy.html'),
       },

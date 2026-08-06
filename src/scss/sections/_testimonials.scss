@@ -1,34 +1,133 @@
 // ---------------------------------------------------------------------------
 // Testimonials
 //
-// Three equal cards. Deliberately text-only: there are no portraits for these
-// people, and dressing the quotes with stock faces or with photographs of
-// unrelated people would misrepresent them. The quote carries the card.
+// One row of cards drifting steadily across the section, fading out into the
+// edges rather than being cut off at them.
+//
+// Deliberately text-only: there are no portraits for these people, and dressing
+// the quotes with stock faces would put a photograph of a real person next to
+// words they never said. The quote and the mark behind it carry the card.
+//
+// The card is a plain rectangle, square-cornered like everything else here —
+// the buttons and the form fields both zero their radius on purpose, and a
+// rounded card would be the only softened corner on the page.
 // ---------------------------------------------------------------------------
 
-.testimonials_grid {
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+// The window the track runs behind.
+//
+// The edges are a mask rather than two gradient overlays. An overlay has to be
+// painted the same colour as whatever is behind it, so it only works while the
+// section background stays flat white — change the background and the overlays
+// become two visible white smears. A mask takes the card's own alpha down
+// instead, so the cards dissolve into whatever is behind them and there is
+// nothing to keep in sync.
+//
+// Vertical padding, so the hover lift and its shadow have somewhere to go
+// inside the horizontal clip.
+.testimonials_row {
+  --edge-fade: 7rem;
 
-  @include tablet {
-    grid-template-columns: 1fr;
+  position: relative;
+  width: 100%;
+  padding: 1rem 0;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--edge-fade),
+    #000 calc(100% - var(--edge-fade)),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--edge-fade),
+    #000 calc(100% - var(--edge-fade)),
+    transparent 100%
+  );
+
+  // A 7rem fade either side of a phone screen would be most of the row.
+  @include mobile-landscape {
+    --edge-fade: 2.5rem;
   }
 }
 
-.testimonial-card {
+.testimonials_track {
   display: flex;
+  justify-content: flex-start;
+  // Every card takes the height of the tallest, so the row has one baseline
+  // along the bottom however long the individual quotes run.
+  align-items: stretch;
+  gap: 1rem;
+  @include will-animate(transform);
+}
+
+// --- The card --------------------------------------------------------------
+
+.testimonial-card {
+  --card-width: 24rem;
+
+  display: flex;
+  position: relative;
+  flex: 0 0 auto;
   flex-flow: column;
   justify-content: space-between;
   gap: 2rem;
+  width: var(--card-width);
+  // `figure` carries `margin: 1em 40px` from the UA stylesheet and the reset
+  // does not zero it, which would inset every card inside its own track slot.
+  margin: 0;
   padding: 2rem;
   background-image: linear-gradient(112deg, #d2ddf0, #f6f9fe);
-  overflow: hidden;
+  box-shadow: 0 0.25rem 0.75rem rgb(4 23 58 / 4%);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  @include will-animate(transform);
 
-  @include tablet {
+  // Capped against the viewport so the smallest phones still get a sliver of the
+  // next card, which is what tells the visitor the row moves.
+  @include mobile-landscape {
+    --card-width: min(20rem, 84vw);
+
+    gap: 1.5rem;
     padding: 1.5rem;
   }
+
+  &:hover {
+    transform: translateY(-4px) scale(1.015);
+    box-shadow: 0 1rem 2rem rgb(4 23 58 / 12%);
+  }
+}
+
+// The mark sits behind the quote rather than beside it — at this weight it
+// reads as a watermark, and holding a column clear for it would cost the copy
+// more width than the decoration is worth.
+.testimonial-card_mark {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.5rem;
+  z-index: 0;
+  width: 5rem;
+  height: auto;
+  aspect-ratio: 64 / 40;
+  opacity: 0.14;
+  color: var(--base-color-brand--blue);
+  pointer-events: none;
+
+  @include mobile-landscape {
+    top: 1rem;
+    left: 1rem;
+    width: 4.25rem;
+  }
+}
+
+// Both sit above the mark. Only the stacking order changes — no offset, so the
+// copy keeps the full width of the card.
+.testimonial-card_quote,
+.testimonial-card_author {
+  position: relative;
+  z-index: 1;
 }
 
 .testimonial-card_quote {
@@ -42,6 +141,10 @@
   @include mobile-landscape {
     font-size: 1rem;
   }
+}
+
+.testimonial-card_author {
+  text-align: left;
 }
 
 .testimonial-card_name {

@@ -2,6 +2,14 @@
 <html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
+    <!--
+      Drop the no-js class here, not from the bundle. The stylesheet hides the
+      page-transition panel while `no-js` is set, and the bundle that used to
+      clear it is a deferred module — so the browser painted the page with the
+      cover still hidden and it appeared a beat later. Inline and
+      parser-blocking, this runs before the first paint.
+    -->
+    <script>document.documentElement.classList.remove('no-js');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Legal Notice, Privacy & Security | Aythronix</title>
@@ -16,6 +24,13 @@
 
   <body class="is-legal-page">
     <a class="skip-link" href="#content">Skip to content</a>
+
+    <!--
+      Page transition. Covers the viewport from CSS and is lifted away on load;
+      there is no preloader on this page, so this is what stops the visitor
+      seeing an unpainted frame. js/components/page-transition.js drives it.
+    -->
+    <div class="page-transition" aria-hidden="true"></div>
 
     <div class="page-wrapper">
 
@@ -149,7 +164,7 @@
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Company">
                       <div class="footer_link text-color-primary">Company</div>
-                      <a href="index.html#About" class="footer_link">About Us</a>
+                      <a href="about.html" class="footer_link">About Us</a>
                       <a href="index.html#Process" class="footer_link">Process</a>
                       <a href="index.html#Work" class="footer_link">Gallery</a>
                       <a href="index.html#Contact" class="footer_link">Careers</a>
@@ -157,10 +172,10 @@
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Services">
                       <div class="footer_link text-color-primary">Services</div>
-                      <a href="index.html#Services" class="footer_link">Web Development</a>
-                      <a href="index.html#Services" class="footer_link">Mobile Apps</a>
-                      <a href="index.html#Services" class="footer_link">AI Solutions</a>
-                      <a href="index.html#Services" class="footer_link">SEO Strategy</a>
+                      <a href="services.html" class="footer_link">Web Development</a>
+                      <a href="services.html" class="footer_link">Mobile Apps</a>
+                      <a href="services.html" class="footer_link">AI Solutions</a>
+                      <a href="services.html" class="footer_link">SEO Strategy</a>
                     </nav>
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Connect">

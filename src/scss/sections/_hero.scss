@@ -5,12 +5,121 @@
 // filling the remaining space below. The sphere is a 2D canvas on desktop; at
 // 991px and under the canvas is dropped entirely and a pre-rendered still takes
 // its place, which is what keeps the section cheap on phones.
+//
+// Behind both sits the glass — a Three.js scene of transmissive slabs standing
+// in front of an animated field of blue light (js/three/glass-slabs.js). It is
+// the only dark section on the page, so everything below re-states the colours
+// the copy, the frame and the sphere still need against it.
 // ---------------------------------------------------------------------------
 
 .hero-section_background-image {
+  position: relative;
   min-height: 100vh;
   color: var(--base-color-neutral--white);
   overflow: hidden;
+
+  // Two jobs. It scopes the backdrop's stacking to the hero, and it closes the
+  // blend group so the mobile still's `mix-blend-mode` below reaches the sheet
+  // and stops there instead of picking up the white page behind it.
+  isolation: isolate;
+}
+
+// --- Glass backdrop --------------------------------------------------------
+
+.hero_glass {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  // Behind the hero's own content but inside its stacking context. Negative
+  // rather than giving the content a positive z-index: a positioned content
+  // wrapper would open a stacking context of its own, and the mobile still
+  // would then have nothing to blend against.
+  z-index: -1;
+
+  // What paints before the first WebGL frame, and the entire backdrop if the
+  // context never comes up: the same pools of light the shader builds, minus
+  // the refraction.
+  background-color: #02091b;
+  background-image:
+    radial-gradient(120% 78% at 56% 74%, rgb(11 55 146 / 90%) 0%, rgb(4 23 58 / 0%) 62%),
+    radial-gradient(62% 48% at 88% 12%, rgb(11 55 146 / 55%) 0%, rgb(4 23 58 / 0%) 65%),
+    radial-gradient(70% 42% at 6% 96%, rgb(7 60 160 / 45%) 0%, rgb(2 9 27 / 0%) 70%),
+    linear-gradient(180deg, #02091b 0%, #041531 52%, #010613 100%);
+
+  // The fallback's own slats, so a machine without WebGL still gets glass
+  // rather than a plain gradient. Dropped the moment the canvas is live, or the
+  // two would double up.
+  &::after {
+    display: none;
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgb(255 255 255 / 6%) 0,
+      rgb(255 255 255 / 0%) 12px,
+      rgb(0 0 0 / 16%) 28px,
+      rgb(0 0 0 / 0%) 34px
+    );
+  }
+
+  &.is-live::after {
+    display: none;
+  }
+}
+
+.hero_glass-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  // Held back until the renderer has a frame, then crossfaded over the gradient
+  // underneath. Both are built from the same colours, so the handover is a lift
+  // in depth rather than a change of scene.
+  opacity: 0;
+  transition: opacity 0.9s ease;
+
+  .hero_glass.is-live & {
+    opacity: 1;
+  }
+}
+
+// --- Copy on the sheet -----------------------------------------------------
+//
+// Type scale, weight, spacing and alignment are untouched — only the colour the
+// dark backdrop now demands.
+
+.hero-section {
+  h1 {
+    color: var(--base-color-neutral--white);
+
+    // Wide, weak and dark: it never reads as a shadow, it just stops the
+    // lightest bands of the sheet from lifting the counters of the letterforms.
+    text-shadow: 0 2px 30px rgb(1 7 22 / 45%);
+  }
+
+  p {
+    color: var(--base-color-neutral--white);
+
+    // A shade under the global 0.8: pure white at full strength next to a white
+    // H1 flattens the hierarchy the original had.
+    opacity: 0.78;
+  }
+
+  // The two hairline ticks behind the word are brand blue, which all but
+  // disappears against the sheet. Brightness lifts them back; the word itself is
+  // white and already clamped, so it comes through unchanged.
+  .heading-style-h1-pixel {
+    filter: brightness(1.9) saturate(0.85);
+  }
+
+  // The frame's hairline is an alpha of the navy — invisible here. Same weight
+  // and position, inverted so it still draws.
+  .container-large-bordered.is-hero {
+    // border-color: #000 rgb(255 255 255 / 14%) rgb(255 255 255 / 12%);
+  }
 }
 
 .hero_sphere-wrapper {
@@ -37,10 +146,12 @@
 
 // The still that replaces the canvas below 992px.
 //
-// The source render is black dots, so it is recoloured at paint time by the
-// `brand-tint` filter declared inline in each page. That maps input black to the
-// brand blue and leaves white/transparent alone, which keeps the still matching
-// the live canvas without regenerating six raster variants per breakpoint.
+// The source render is black dots on an opaque white plate (only the 2070w
+// original carries alpha — every srcset variant is indexed and flat). Against a
+// white section the plate was invisible and `#brand-tint` was enough to recolour
+// the dots. On the sheet that plate would be a white block, so it is inverted
+// and screened instead: the plate goes black and screens out to nothing, and the
+// dots come back as light. Still no extra raster variants.
 .hero-sphere-picture {
   display: none;
 
@@ -50,6 +161,7 @@
     height: 100%;
     object-fit: cover;
     object-position: 50% 0%;
-    filter: url('#brand-tint');
+    filter: invert(1) opacity(0.62);
+    mix-blend-mode: screen;
   }
 }

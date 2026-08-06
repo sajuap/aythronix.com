@@ -2,6 +2,21 @@
 <html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
+    <!--
+      Drop the no-js class here, not from the bundle.
+
+      The stylesheet hides the preloader and the page-transition panel while
+      `no-js` is set, so that a visitor without JavaScript gets the plain page
+      instead of a permanent cover. main.js used to be what cleared it — but a
+      module script is deferred, so it does not run until after the document is
+      parsed, and the browser paints in the meantime. That painted the real page
+      with both covers still hidden, and the preloader then appeared over the top
+      a beat later. Measured at ~665ms of exposed page on a throttled load.
+
+      Inline and parser-blocking, it runs before the first paint, so the very
+      first frame the visitor sees is already the covered one.
+    -->
+    <script>document.documentElement.classList.remove('no-js');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Aythronix | Web, Mobile, AI &amp; E-Commerce Engineering Agency</title>
@@ -218,26 +233,82 @@
           <feFuncB type="table" tableValues="0.92157 1" />
         </feComponentTransfer>
       </filter>
+
+      <!--
+        The decorative quotation mark behind every testimonial. One definition,
+        instanced per card with <use>, so the geometry is downloaded and parsed
+        once however many cards the marquee ends up cloning.
+
+        Two blocks, each with a quarter-round notch cut from the upper left. It
+        is drawn square rather than as a pair of soft serif commas on purpose:
+        the buttons and the form fields on this site both zero their radius, and
+        a rounded ornament would be the only soft corner on the page. The one
+        curve in it is the notch, which is what stops it reading as a bracket.
+
+        `currentColor` rather than a literal, so the colour is set in CSS next to
+        the opacity it is paired with — see scss/sections/_testimonials.scss.
+      -->
+      <symbol id="quote-mark" viewBox="0 0 64 40">
+        <path
+          fill="currentColor"
+          d="M0 40V22C0 9.85 9.85 0 22 0H28V10H22C15.37 10 10 15.37 10 22H28V40H0Z
+             M36 40V22C36 9.85 45.85 0 58 0H64V10H58C51.37 10 46 15.37 46 22H64V40H36Z"
+        />
+      </symbol>
     </svg>
 
     <!--
-      Preloader. Layer 1 holds the progress-driven particle field, layer 2 the
-      centred mark. The whole panel lifts out of frame to hand over to the hero.
+      Page transition. Sits one level under the preloader (z-101 against 102) and
+      covers the viewport from CSS alone, so there is never a frame of unstyled
+      page on arrival. js/components/page-transition.js drives it.
+    -->
+    <div class="page-transition" aria-hidden="true"></div>
+
+    <!--
+      Preloader.
+
+      The mark is inline rather than an <img> because it is drawn: every path is
+      a dash-offset outline that fills in, icon first and then the wordmark one
+      letter at a time. Groups are split so the two halves can be paced
+      separately — see js/components/preloader.js, which owns every timing.
+
+      One copy of the mark, one colour axis. The paths paint from currentColor,
+      so the brand reveal is two tweens against each other: the panel's
+      background white→blue, and the stage's colour blue→white.
     -->
     <div class="preloader" aria-hidden="true">
       <div class="preloader_layers">
-        <div class="preloader_layer-1">
-          <canvas class="preloader_canvas"></canvas>
-        </div>
-        <div class="preloader_layer-2">
-          <img
-            src="/src/assets/icons/logo.svg"
-            alt=""
+        <div class="preloader_bloom"></div>
+        <div class="preloader_stage">
+          <svg
             class="preloader_logo"
-            width="144"
-            height="29"
-          />
+            viewBox="0 0 397.03 80.17"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <g
+              class="preloader_logo-icon"
+              transform="translate(0 0) scale(1.18421) translate(-114.32 0)"
+            >
+              <path d="M135.83,54.02l23.89-41.04c1.63-2.79,5.88-2.34,7.68-.85,2.6,2.16,2.85,4.9,1.18,7.8l-22.29,38.72c-4.98,8.65-15.45,11.63-23.93,6.54-8.55-5.13-10.26-15.79-5.21-24.42l17.59-30.04c1.76-3.01,5.19-4.29,8.26-4.3,3.29-.02,6.57,1.58,8.35,4.55l2.88,4.8-6.53,11.18-4.78-8.04-16.84,29.25c-1.47,2.56-.18,5.87,1.93,7.27,2.31,1.54,6.16,1.41,7.81-1.43h.01Z"/>
+              <path d="M169.56,64.87l-11.58-20.01,6.51-11.2,14.49,24.98c1.62,2.79,1.39,6.07-1.24,7.96s-6.4,1.36-8.18-1.72h0Z"/>
+              <path d="M168.78,2.02l3.57-1.78c1.55-.77,3.35.44,3.21,2.17l-.32,3.98-.27,4.41c-.09,1.54-1.83,2.38-3.1,1.51l-2.04-1.85c-.96-.87-2.04-1.58-3.21-2.13l-2.09-.97c-1.29-.85-1.15-2.78.24-3.44l3.99-1.9h.02Z"/>
+            </g>
+            <!-- One path per letter of "Aythronix", in reading order. -->
+            <g class="preloader_logo-word" transform="translate(101.113 -71.019)">
+              <path d="M35.54,135.31h-9.08l-.33-4.51c-2.12,3.32-5.84,5.37-10.41,5.37-9.08,0-15.72-7.43-15.72-17.44s6.7-17.44,15.72-17.44c4.58,0,8.29,2.06,10.41,5.37l.33-4.51h9.08v33.16ZM9.35,118.73c0,5.24,3.32,8.69,8.42,8.69s8.49-3.32,8.49-8.69-3.51-8.69-8.49-8.69-8.42,3.45-8.42,8.69Z"/>
+              <path d="M49.47,102.15l7.49,21.55,6.56-21.55h10.74l-12.33,31.96c-3.98,10.34-7.23,14.46-14.72,14.46-2.19,0-4.24-.2-6.76-1.06l-.6-8.49.6-.33c2.32,1.13,3.78,1.53,6.3,1.53,1.99,0,4.18-1.06,5.17-3.58l.8-1.99-13.99-32.49h10.74Z"/>
+              <path d="M76.8,111.03v-8.89h5.97v-6.83h9.42v6.83h8.09v8.89h-8.09v12.07c0,2.65,1.13,3.85,3.58,3.85,1.19,0,2.59-.27,4.38-.86l.66.53-.53,8.55c-2.39.4-4.44.66-6.3.66-7.23,0-11.21-2.59-11.21-10.15v-14.66h-5.97Z"/>
+              <path d="M106.44,86.9h9.42v19.56c2.19-3.25,5.37-5.17,9.95-5.17,7.49,0,12.2,4.71,12.2,13.53v20.49h-9.42v-18.77c0-4.24-1.79-6.43-5.97-6.43-4.84,0-6.76,2.92-6.76,7.56v17.64h-9.42v-48.41Z"/>
+              <path d="M154.19,109.64c1.59-5.24,6.17-8.09,10.68-8.09l.53.66-.53,9.68c-.4,0-.8-.07-1.19-.07-6.23,0-9.48,4.04-9.48,9.81v13.66h-9.42v-33.16h9.09l.33,7.49Z"/>
+              <path d="M203.47,118.73c0,9.95-7.56,17.44-17.64,17.44s-17.51-7.49-17.51-17.44,7.49-17.44,17.51-17.44,17.64,7.49,17.64,17.44ZM177.8,118.73c0,4.97,3.25,8.42,8.02,8.42s8.16-3.52,8.16-8.42-3.25-8.42-8.16-8.42-8.02,3.45-8.02,8.42Z"/>
+              <path d="M218.06,102.15l.33,4.31c1.92-3.45,5.37-5.17,9.88-5.17,7.23,0,12.2,5.04,12.2,14.06v19.96h-9.35v-18.77c0-4.11-2.32-6.43-5.97-6.43-4.31,0-6.76,2.92-6.76,7.56v17.64h-9.42v-33.16h9.08Z"/>
+              <path d="M257.52,92.53c0,3.38-2.45,5.11-5.57,5.11-2.92,0-5.44-1.72-5.44-5.11s2.52-5.17,5.44-5.17c3.12,0,5.57,1.79,5.57,5.17ZM247.3,135.31v-33.16h9.42v33.16h-9.42Z"/>
+              <path d="M260.7,135.31l12-16.91-11.47-16.25h10.88l6.17,9.88,6.23-9.88h10.88l-11.47,16.25,12,16.91h-10.94l-6.7-10.54-6.7,10.54h-10.88Z"/>
+            </g>
+          </svg>
         </div>
+
         <div class="preloader_progress"><div class="preloader_progress-bar"></div></div>
         <div class="preloader_count">000</div>
       </div>
@@ -308,6 +379,18 @@
         <!-- ============================================================== -->
         <section id="Hero" class="hero-section">
           <div class="hero-section_background-image">
+            <!--
+              The glass. The canvas is a Three.js scene — transmissive slabs in
+              front of an animated light field. The wrapper carries a CSS gradient
+              in the same colours, which is what paints while the Three chunk is
+              still loading and the whole backdrop on a machine that cannot run
+              it. `is-live` is added by the renderer on its first frame and fades
+              the canvas over the top.
+            -->
+            <div class="hero_glass" aria-hidden="true">
+              <canvas class="hero_glass-canvas"></canvas>
+            </div>
+
             <div class="padding-global is-height-100">
               <div class="container-large-bordered is-hero">
                 <div class="padding-global">
@@ -382,21 +465,27 @@
             <div class="container-large-bordered">
               <div class="padding-section-xsmall">
                 <div class="padding-horizontal padding-medium">
-                  <div class="logo-section_logos-wrapper">
-                    <!--
-                      One authored copy of the set. marquee.js measures it and
-                      clones it as many times as the viewport needs, so the loop
-                      is seamless at any width.
-                    -->
-                    <div class="logo-section_logos-display is-values-section" data-marquee>
-                      <div class="capability_item">Web Development</div>
-                      <div class="capability_item">Mobile Apps</div>
-                      <div class="capability_item">AI Solutions</div>
-                      <div class="capability_item">E-Commerce</div>
-                      <div class="capability_item">SEO</div>
+                  <div class="display-horizontal-space-btw is-grap-4rem is-still-horizontal">
+                    <div class="text-style-subtitle is-logo-section">
+                      Building Across Every Digital Discipline
                     </div>
-                    <div class="logo-section_gradient is-right"></div>
-                    <div class="logo-section_gradient"></div>
+
+                    <div class="logo-section_logos-wrapper">
+                      <!--
+                        One authored copy of the set. marquee.js measures it and
+                        clones it as many times as the viewport needs, so the loop
+                        is seamless at any width.
+                      -->
+                      <div class="logo-section_logos-display" data-marquee>
+                        <div class="capability_item">Web Development</div>
+                        <div class="capability_item">Mobile Apps</div>
+                        <div class="capability_item">AI Solutions</div>
+                        <div class="capability_item">E-Commerce</div>
+                        <div class="capability_item">SEO</div>
+                      </div>
+                      <div class="logo-section_gradient is-right"></div>
+                      <div class="logo-section_gradient"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -428,7 +517,7 @@
                       <img
                         src="/src/assets/images/mission-and-vision.avif"
                         loading="lazy"
-                        alt="Abstract particle figures representing a unified full-stack engineering team"
+                        alt="Four figures walking in an evolutionary progression, from a stooped ape to an upright human, each one taller and more defined than the last, drawn in fine stippled dots"
                         class="is-absolute is-value-prop-image"
                       />
 
@@ -742,42 +831,147 @@
                     </div>
                   </div>
 
-                  <div class="testimonials_grid" data-reveal="fade">
-                    <figure class="testimonial-card">
-                      <blockquote class="testimonial-card_quote">
-                        “Aythronix rebuilt our transaction pipeline in under eight weeks. Zero
-                        dropped payments since launch, and their engineers actually explained the
-                        architecture instead of hiding behind jargon.”
-                      </blockquote>
-                      <figcaption class="text-align-left">
-                        <div class="testimonial-card_name">Marcus Reyes</div>
-                        <div class="testimonial-card_role">CTO, Ledgerline FinTech</div>
-                      </figcaption>
-                    </figure>
+                  <!--
+                    ============================================================
+                    PLACEHOLDER CONTENT — NOT REAL CLIENTS.
 
-                    <figure class="testimonial-card">
-                      <blockquote class="testimonial-card_quote">
-                        “Our checkout latency dropped from 3.2s to under a second. Cart abandonment
-                        fell almost overnight. This is the first agency that treated performance as
-                        a business metric, not a vanity number.”
-                      </blockquote>
-                      <figcaption class="text-align-left">
-                        <div class="testimonial-card_name">Sara Chen</div>
-                        <div class="testimonial-card_role">Head of E-Commerce, Norling Goods</div>
-                      </figcaption>
-                    </figure>
+                    Every quote, name and company below is invented. None of
+                    these people exist and none of them said this. They are here
+                    to carry the layout only, and must be replaced with real,
+                    attributable, permissioned testimonials before this section
+                    goes in front of customers — or the section removed until
+                    there are some.
+                    ============================================================
 
-                    <figure class="testimonial-card">
-                      <blockquote class="testimonial-card_quote">
-                        “We came in needing a mobile app and left with a full automation layer we
-                        didn't know we needed. Aythronix thinks in systems, not tickets. Genuinely
-                        rare in this industry.”
-                      </blockquote>
-                      <figcaption class="text-align-left">
-                        <div class="testimonial-card_name">David Anwar</div>
-                        <div class="testimonial-card_role">Founder, Pathwise Health</div>
-                      </figcaption>
-                    </figure>
+                    One row. marquee.js measures a single authored copy of it,
+                    clones that until it covers the viewport twice over, and
+                    wraps the x value at the copy's width — so the loop has no
+                    seam and survives a resize. Speed and the hover pause are set
+                    on the data attributes.
+                  -->
+                  <div class="testimonials_row" data-reveal="fade">
+                    <div
+                      class="testimonials_track"
+                      data-marquee
+                      data-marquee-speed="40"
+                      data-marquee-pause
+                    >
+                      <figure class="testimonial-card">
+                        <svg class="testimonial-card_mark" aria-hidden="true" focusable="false">
+                          <use href="#quote-mark" />
+                        </svg>
+                        <blockquote class="testimonial-card_quote">
+                          “Aythronix rebuilt our transaction pipeline in under eight weeks. Zero
+                          dropped payments since launch, and their engineers actually explained
+                          the architecture instead of hiding behind jargon.”
+                        </blockquote>
+                        <figcaption class="testimonial-card_author">
+                          <div class="testimonial-card_name">Marcus Reyes</div>
+                          <div class="testimonial-card_role">CTO, Ledgerline FinTech</div>
+                        </figcaption>
+                      </figure>
+
+                      <figure class="testimonial-card">
+                        <svg class="testimonial-card_mark" aria-hidden="true" focusable="false">
+                          <use href="#quote-mark" />
+                        </svg>
+                        <blockquote class="testimonial-card_quote">
+                          “Our checkout latency dropped from 3.2s to under a second. Cart abandonment
+                          fell almost overnight. This is the first agency that treated performance
+                          as a business metric, not a vanity number.”
+                        </blockquote>
+                        <figcaption class="testimonial-card_author">
+                          <div class="testimonial-card_name">Sara Chen</div>
+                          <div class="testimonial-card_role">Head of E-Commerce, Norling Goods</div>
+                        </figcaption>
+                      </figure>
+
+                      <figure class="testimonial-card">
+                        <svg class="testimonial-card_mark" aria-hidden="true" focusable="false">
+                          <use href="#quote-mark" />
+                        </svg>
+                        <blockquote class="testimonial-card_quote">
+                          “We came in needing a mobile app and left with a full automation layer we
+                          didn't know we needed. Aythronix thinks in systems, not tickets.
+                          Genuinely rare in this industry.”
+                        </blockquote>
+                        <figcaption class="testimonial-card_author">
+                          <div class="testimonial-card_name">David Anwar</div>
+                          <div class="testimonial-card_role">Founder, Pathwise Health</div>
+                        </figcaption>
+                      </figure>
+
+                      <figure class="testimonial-card">
+                        <svg class="testimonial-card_mark" aria-hidden="true" focusable="false">
+                          <use href="#quote-mark" />
+                        </svg>
+                        <blockquote class="testimonial-card_quote">
+                          “Six months on, the automation layer they built is still running untouched.
+                          No babysitting, no surprise invoices.”
+                        </blockquote>
+                        <figcaption class="testimonial-card_author">
+                          <div class="testimonial-card_name">Hannah Osei</div>
+                          <div class="testimonial-card_role">Operations Lead, Verdant Supply</div>
+                        </figcaption>
+                      </figure>
+
+                      <figure class="testimonial-card">
+                        <svg class="testimonial-card_mark" aria-hidden="true" focusable="false">
+                          <use href="#quote-mark" />
+                        </svg>
+                        <blockquote class="testimonial-card_quote">
+                          “We'd been through three agencies before this. Aythronix is the first that
+                          read our codebase before quoting, and the estimate they gave was the
+                          estimate we paid.”
+                        </blockquote>
+                        <figcaption class="testimonial-card_author">
+                          <div class="testimonial-card_name">Daniel Kwok</div>
+                          <div class="testimonial-card_role">CEO, Meridian Labs</div>
+                        </figcaption>
+                      </figure>
+
+                      <figure class="testimonial-card">
+                        <svg class="testimonial-card_mark" aria-hidden="true" focusable="false">
+                          <use href="#quote-mark" />
+                        </svg>
+                        <blockquote class="testimonial-card_quote">
+                          “They killed two features we'd asked for and showed us the data on why. That
+                          one conversation saved us a quarter of work.”
+                        </blockquote>
+                        <figcaption class="testimonial-card_author">
+                          <div class="testimonial-card_name">Tomás Ferreira</div>
+                          <div class="testimonial-card_role">Product Director, Brightline</div>
+                        </figcaption>
+                      </figure>
+
+                      <figure class="testimonial-card">
+                        <svg class="testimonial-card_mark" aria-hidden="true" focusable="false">
+                          <use href="#quote-mark" />
+                        </svg>
+                        <blockquote class="testimonial-card_quote">
+                          “The migration didn't take the site down once. Not for a minute. I still
+                          don't entirely understand how they managed it.”
+                        </blockquote>
+                        <figcaption class="testimonial-card_author">
+                          <div class="testimonial-card_name">Priya Nandakumar</div>
+                          <div class="testimonial-card_role">VP Engineering, Corvid Logistics</div>
+                        </figcaption>
+                      </figure>
+
+                      <figure class="testimonial-card">
+                        <svg class="testimonial-card_mark" aria-hidden="true" focusable="false">
+                          <use href="#quote-mark" />
+                        </svg>
+                        <blockquote class="testimonial-card_quote">
+                          “Organic traffic is up 140% year on year, and not one of those visits came
+                          from a tactic I'd be embarrassed to explain to our board.”
+                        </blockquote>
+                        <figcaption class="testimonial-card_author">
+                          <div class="testimonial-card_name">Ines Vargas</div>
+                          <div class="testimonial-card_role">CMO, Atlas Interiors</div>
+                        </figcaption>
+                      </figure>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -923,7 +1117,7 @@
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Company">
                       <div class="footer_link text-color-primary">Company</div>
-                      <a href="#About" class="footer_link">About Us</a>
+                      <a href="about.html" class="footer_link">About Us</a>
                       <a href="#Process" class="footer_link">Process</a>
                       <a href="#Work" class="footer_link">Gallery</a>
                       <a href="#Contact" class="footer_link">Careers</a>
@@ -931,10 +1125,10 @@
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Services">
                       <div class="footer_link text-color-primary">Services</div>
-                      <a href="#Services" class="footer_link">Web Development</a>
-                      <a href="#Services" class="footer_link">Mobile Apps</a>
-                      <a href="#Services" class="footer_link">AI Solutions</a>
-                      <a href="#Services" class="footer_link">SEO Strategy</a>
+                      <a href="services.html" class="footer_link">Web Development</a>
+                      <a href="services.html" class="footer_link">Mobile Apps</a>
+                      <a href="services.html" class="footer_link">AI Solutions</a>
+                      <a href="services.html" class="footer_link">SEO Strategy</a>
                     </nav>
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Connect">

@@ -18,6 +18,16 @@ export function initNavScroll() {
   const nav = document.querySelector('.nav_component');
   if (!nav) return;
 
+  // While the header is transparent it sits on the hero's dark glass sheet,
+  // where navy links and a blue mark have almost nothing to read against. The
+  // ink is inverted for exactly that stretch and reverts with the white fill.
+  // Only pages that actually open on the hero qualify — the legal pages have a
+  // white page under the header from the first pixel.
+  const hasDarkHero = Boolean(document.querySelector('.hero-section'));
+  const setInk = (over) => nav.classList.toggle('is-over-hero', hasDarkHero && over);
+
+  setInk(true);
+
   gsap.fromTo(
     nav,
     {
@@ -35,6 +45,14 @@ export function initNavScroll() {
         end: () => Math.max(1, ScrollTrigger.maxScroll(window) * 0.01),
         scrub: true,
         invalidateOnRefresh: true,
+        // The fill is a real interpolation; the ink is a swap at the halfway
+        // point with a short CSS transition behind it. Over 1% of the page they
+        // land together, and a colour-by-colour scrub of a mark, four links and
+        // a button would cost far more than it could show.
+        onUpdate: (self) => setInk(self.progress < 0.5),
+        onRefresh: (self) => setInk(self.progress < 0.5),
+        onLeave: () => setInk(false),
+        onEnterBack: () => setInk(true),
       },
     }
   );

@@ -74,6 +74,66 @@
   }
 }
 
+// --- Over the hero ---------------------------------------------------------
+//
+// Set by js/animations/nav.js for as long as the header is still transparent,
+// which is only ever over the hero's dark glass sheet. Colour only: nothing here
+// moves, resizes or reflows, and it all reverts as the white fill scrubs in.
+
+.nav_component.is-over-hero {
+  .nav_logo img,
+  .nav_link,
+  .menu-button,
+  .nav_container > .button.is-secondary {
+    transition: color 0.25s ease, background-color 0.25s ease, filter 0.25s ease;
+  }
+
+  .nav_link {
+    color: var(--base-color-neutral--white);
+
+    &:hover {
+      color: rgb(255 255 255 / 70%);
+    }
+  }
+
+  .menu-button {
+    color: var(--base-color-neutral--white);
+  }
+
+  // The mark is a flat blue lockup, so it flattens to white rather than being
+  // swapped for a second file — one less asset to keep in sync.
+  .nav_logo img {
+    filter: brightness(0) invert(1);
+  }
+
+  // The header CTA is a navy wash with navy text. Same weights, mirrored.
+  .nav_container > .button.is-secondary {
+    background-color: rgb(255 255 255 / 12%);
+    color: var(--base-color-neutral--white);
+
+    &:hover {
+      background-color: rgb(255 255 255 / 20%);
+    }
+
+    .select-button-vector {
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  // Below 992px the links live in a white panel that opens under the header, so
+  // they keep their own colour there. The mark and the button stay inverted —
+  // those sit on the transparent bar, over the hero.
+  @include tablet {
+    .nav_link {
+      color: var(--base-color-neutral--neutral-darkest);
+
+      &:hover {
+        color: #1a1b1fbf;
+      }
+    }
+  }
+}
+
 // --- Collapsed menu (below 992px) ------------------------------------------
 
 .menu-button {

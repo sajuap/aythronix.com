@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <!--
+      Drop the no-js class here, not from the bundle. The stylesheet hides the
+      page-transition panel while `no-js` is set, and the bundle that used to
+      clear it is a deferred module — so the browser painted the page with the
+      cover still hidden and it appeared a beat later. Inline and
+      parser-blocking, this runs before the first paint.
+    -->
+    <script>document.documentElement.classList.remove('no-js');</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Services | Aythronix</title>
+    <meta name="description" content="Placeholder copy. Enterprise web, mobile, AI, e-commerce and SEO engineering delivered by one accountable team." />
+    <link rel="canonical" href="https://www.aythronix.com/services" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0765eb" />
+
+    <link rel="icon" type="image/svg+xml" href="/src/assets/icons/logo-mark.svg" />
+    <link rel="preload" href="/src/assets/fonts/overusedgrotesk-medium.otf" as="font" type="font/otf" crossorigin />
+  </head>
+
+  <body class="is-inner-page">
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <!--
+      Page transition. Covers the viewport from CSS and is lifted away on load;
+      there is no preloader on this page, so this is what stops the visitor
+      seeing an unpainted frame. js/components/page-transition.js drives it.
+    -->
+    <div class="page-transition" aria-hidden="true"></div>
+
+    <div class="page-wrapper">
+
+      <header class="nav_component" role="banner">
+        <div class="padding-global">
+          <div class="nav_container">
+            <a href="index.html#Hero" class="nav_logo" aria-label="Aythronix — home">
+              <img
+                src="/src/assets/icons/logo.svg"
+                loading="eager"
+                alt="Aythronix"
+                class="nav_logo"
+                width="128"
+                height="26"
+              />
+            </a>
+
+            <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Main">
+              <a href="index.html#Services" class="nav_link">Services</a>
+              <a href="index.html#Work" class="nav_link">Case Studies</a>
+              <a href="index.html#Process" class="nav_link">Process</a>
+              <a href="index.html#Reviews" class="nav_link">Testimonials</a>
+
+              <!-- Tablet/mobile copy of the CTA, shown once the menu collapses. -->
+              <div class="display-horizontal-left is-hidden-desktop">
+                <a href="index.html#Contact" class="button is-secondary is-small is-tab-only">
+                  <div>Book a consultation</div>
+                  <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
+                  <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
+                  <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-left" />
+                  <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-right" />
+                </a>
+              </div>
+            </nav>
+
+            <button
+              class="menu-button"
+              type="button"
+              aria-label="Toggle navigation menu"
+              aria-expanded="false"
+              aria-controls="nav-menu"
+            >
+              <span class="menu-button_icon" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </span>
+            </button>
+
+            <a href="index.html#Contact" class="button is-secondary is-small">
+              <div>Book a consultation</div>
+              <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
+              <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
+              <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-left" />
+              <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-right" />
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main id="content">
+      <!--
+        ============================================================
+        PLACEHOLDER CONTENT. Every line of copy on this page is here
+        to hold the layout, not to be published. Replace it before
+        this page goes in front of customers.
+        ============================================================
+
+        Structure is lifted from the homepage sections on purpose —
+        same section shell, same card and step components, same
+        eyebrow/heading rhythm — so these pages need no CSS of their
+        own and cannot drift from the home theme.
+      -->
+        <section id="Services" class="services-section inner-page_top">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-medium">
+                <div class="padding-horizontal padding-medium">
+                  <div class="margin-bottom margin-huge">
+                    <div class="max-width-large">
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Services</div>
+                        <div class="subtitle-line"></div>
+                      </div>
+                      <h1 data-reveal="text">Everything We Build, Under One Roof</h1>
+                      <div class="margin-top margin-small">
+                        <p>Placeholder copy. Five disciplines, one accountable team, and no handoffs between vendors when something needs fixing at three in the morning.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="services_grid" data-reveal="fade">
+                    <article class="service-card is-featured">
+                      <div class="service-card_head">
+                        <div class="service-card_index">01</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">Enterprise Web Development</h3>
+                        <p class="service-card_body">Placeholder copy. High-performance architectures designed to stay fast under load and stay maintainable long after launch.</p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">02</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">Mobile Applications</h3>
+                        <p class="service-card_body">Placeholder copy. Native-feel applications across iOS and Android from a single shared codebase.</p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">03</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">AI &amp; Automation</h3>
+                        <p class="service-card_body">Placeholder copy. Machine learning pipelines that remove the manual steps your team repeats every day.</p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">04</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">E-Commerce Platforms</h3>
+                        <p class="service-card_body">Placeholder copy. Secure transactional systems tuned for conversion and built to survive a peak trading day.</p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">05</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">Data-Driven SEO</h3>
+                        <p class="service-card_body">Placeholder copy. Technical optimisation grounded in measurement rather than in tactics nobody wants to explain.</p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">06</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">Platform &amp; Cloud</h3>
+                        <p class="service-card_body">Placeholder copy. Infrastructure, observability and release pipelines, so the thing you shipped keeps running.</p>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="Process" class="lifecycle-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-medium">
+                <div class="padding-horizontal padding-medium">
+                  <div class="margin-bottom margin-huge">
+                    <div class="max-width-large">
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">How We Work</div>
+                        <div class="subtitle-line"></div>
+                      </div>
+                      <h2 data-reveal="text">From Brief to Production</h2>
+                      <div class="margin-top margin-small">
+                        <p>Placeholder copy. The same four stages on every engagement, so you always know what is happening and what comes next.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="lifecycle_grid" data-reveal="fade">
+                    <div class="lifecycle-step">
+                      <div class="icon-container">
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                        <div class="arrow-icon" data-lottie="icon-1"></div>
+                      </div>
+                      <div class="lifecycle-step_index">01</div>
+                      <h3 class="lifecycle-step_title">Discovery</h3>
+                      <div class="lifecycle-step_rule"></div>
+                      <p>Placeholder copy. We map the technical requirements and the operational constraints around them.</p>
+                    </div>
+
+                    <div class="lifecycle-step">
+                      <div class="icon-container">
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                        <div class="arrow-icon" data-lottie="icon-3"></div>
+                      </div>
+                      <div class="lifecycle-step_index">02</div>
+                      <h3 class="lifecycle-step_title">Blueprinting</h3>
+                      <div class="lifecycle-step_rule"></div>
+                      <p>Placeholder copy. Architecture, data model and interface decisions, agreed before anyone writes code.</p>
+                    </div>
+
+                    <div class="lifecycle-step">
+                      <div class="icon-container">
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                        <div class="arrow-icon" data-lottie="icon-2"></div>
+                      </div>
+                      <div class="lifecycle-step_index">03</div>
+                      <h3 class="lifecycle-step_title">Delivery</h3>
+                      <div class="lifecycle-step_rule"></div>
+                      <p>Placeholder copy. Short cycles, working software at the end of each one, and no surprises at the demo.</p>
+                    </div>
+
+                    <div class="lifecycle-step">
+                      <div class="icon-container">
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                        <div class="arrow-icon" data-lottie="built-icon"></div>
+                      </div>
+                      <div class="lifecycle-step_index">04</div>
+                      <h3 class="lifecycle-step_title">Operate</h3>
+                      <div class="lifecycle-step_rule"></div>
+                      <p>Placeholder copy. Monitoring, iteration and the unglamorous maintenance that keeps a system healthy.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="value-prop-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-medium">
+                <div class="padding-horizontal padding-medium">
+                  <div class="margin-bottom margin-huge">
+                    <div class="max-width-large">
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Next Step</div>
+                        <div class="subtitle-line"></div>
+                      </div>
+                      <h2 data-reveal="text">Tell Us What You Are Building</h2>
+                      <div class="margin-top margin-small">
+                        <p>Placeholder copy. A short conversation is usually enough to tell whether we are the right team for the problem.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="display-horizontal-left" data-reveal="fade">
+                    <a href="index.html#Contact" class="button is-icon" data-brackets>
+                      <div>Book a consultation</div>
+                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer_section">
+        <div class="padding-global">
+          <div class="container-large-bordered is-footer">
+            <div class="padding-top padding-large">
+              <div class="padding-horizontal padding-medium">
+                <div class="margin-bottom margin-huge">
+                  <div class="footer_grid">
+                    <div>
+                      <div class="margin-bottom margin-small">
+                        <div class="display-horizontal-left is-gap-1rem">
+                          <a href="index.html#Hero" class="nav_brand" aria-label="Aythronix — home">
+                            <img src="/src/assets/icons/logo.svg" loading="lazy" alt="Aythronix" class="nav_logo" />
+                          </a>
+                          <div class="subtitle-line is-higher is-hidden-mob"></div>
+                          <div class="text-style-paragraph">
+                            One Technical Partner. Endless Capabilities.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="margin-bottom margin-medium">
+                        <div class="display-horizontal-left is-gap-1rem is-still-horizontal">
+                          <a
+                            id="cta_social_linkedin"
+                            href="https://www.linkedin.com/company/aythronix/"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="Aythronix on LinkedIn"
+                          >
+                            <img src="/src/assets/icons/linkedin.svg" loading="lazy" alt="" class="footer_icon" />
+                          </a>
+                        </div>
+                      </div>
+
+                      <!--
+                        The legal pages are reachable from here rather than from a
+                        fourth link column: the content brief specifies exactly
+                        three (Company / Services / Connect), and a cookie policy
+                        nothing links to is worse than an untidy footer.
+
+                        Relative hrefs, not root-absolute — these have to resolve
+                        both at a domain root and under a project subpath such as
+                        GitHub Pages' /<repo>/.
+                      -->
+                      <div class="footer_copyright-text">
+                        © <span data-year>2026</span> Aythronix |
+                        <a href="legal-notice.html"
+                          ><span class="footer_copyright-text is-link">Legal Notice</span></a
+                        >
+                        |
+                        <a href="policy.html"
+                          ><span class="footer_copyright-text is-link">Cookie Policy</span></a
+                        >
+                        | All rights reserved
+                      </div>
+                    </div>
+
+                    <nav class="display-vertical-left is-gap-1rem" aria-label="Company">
+                      <div class="footer_link text-color-primary">Company</div>
+                      <a href="about.html" class="footer_link">About Us</a>
+                      <a href="index.html#Process" class="footer_link">Process</a>
+                      <a href="index.html#Work" class="footer_link">Gallery</a>
+                      <a href="index.html#Contact" class="footer_link">Careers</a>
+                    </nav>
+
+                    <nav class="display-vertical-left is-gap-1rem" aria-label="Services">
+                      <div class="footer_link text-color-primary">Services</div>
+                      <a href="services.html" class="footer_link">Web Development</a>
+                      <a href="services.html" class="footer_link">Mobile Apps</a>
+                      <a href="services.html" class="footer_link">AI Solutions</a>
+                      <a href="services.html" class="footer_link">SEO Strategy</a>
+                    </nav>
+
+                    <nav class="display-vertical-left is-gap-1rem" aria-label="Connect">
+                      <div class="footer_link text-color-primary">Connect</div>
+                      <a href="https://www.linkedin.com/company/aythronix/" target="_blank" rel="noopener" class="footer_link">LinkedIn</a>
+                      <a href="https://x.com/aythronix" target="_blank" rel="noopener" class="footer_link">Twitter / X</a>
+                      <a href="index.html#Contact" class="footer_link">Contact Support</a>
+                      <a href="index.html#Contact" class="footer_link">Book Consultation</a>
+                    </nav>
+                  </div>
+                </div>
+
+                <img src="/src/assets/icons/footer-logo.svg" loading="lazy" alt="" class="footer_logo" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

@@ -25,10 +25,6 @@
   align-items: center;
   gap: 4rem;
   @include will-animate(transform);
-
-  &.is-values-section {
-    gap: 5.5rem;
-  }
 }
 
 .logo-section_logo {
