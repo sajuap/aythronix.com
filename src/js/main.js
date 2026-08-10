@@ -1,5 +1,5 @@
 /**
- * Botronics — application entry point.
+ * Aythronix — application entry point.
  *
  * Boot order matters:
  *   1. `--vh` is published before anything measures a full-viewport box.
@@ -168,7 +168,7 @@ if (document.readyState === 'loading') {
 
 // Expose a little for debugging without leaking the whole module graph.
 if (import.meta.env.DEV) {
-  window.__botronics = {
+  window.__aythronix = {
     gsap,
     ScrollTrigger,
     get sphere() { return heroSphere; },

@@ -1,5 +1,5 @@
 // ===========================================================================
-// Botronics — main stylesheet
+// Aythronix — main stylesheet
 //
 // Load order matters:
 //   1. tokens   — custom properties, no output dependencies
@@ -83,6 +83,7 @@ $enable-dark-mode: false;
 @import 'sections/contact';
 @import 'sections/footer';
 @import 'sections/legal';
+@import 'sections/pages';
 
 // --- Utilities (last, so they can win) -------------------------------------
 @import 'utilities/helpers';

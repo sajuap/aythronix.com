@@ -1,0 +1,239 @@
+// ---------------------------------------------------------------------------
+// Inner-page components — About, Services, Blog
+//
+// Structure follows the supplied reference: a dark banner carrying the page
+// title, chip-labelled sections, a large two-tone statement, a team grid and a
+// post grid. The *language* stays this site's, deliberately — square corners
+// (the buttons and form fields both zero their radius, so a rounded card here
+// would be the only soft corner on the site), the existing navy/blue tokens,
+// and Mondwest for the small caps labels.
+//
+// Nothing here restyles a homepage component. Where a homepage component
+// already fits — the bento `.service-card`, the section shell — these pages use
+// it as-is rather than growing a parallel copy.
+// ---------------------------------------------------------------------------
+
+// --- Page banner -----------------------------------------------------------
+//
+// Carries the class `.hero-section` in the markup as well, which is the hook
+// js/animations/nav.js looks for: with it present the header starts transparent
+// with inverted ink and fills white on scroll, exactly as it does on the home
+// page. Without it the header would be white-on-white over this dark panel.
+.page-hero {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  min-height: 32rem;
+  padding: calc(var(--nav-height) + 5rem) 0 5rem;
+  overflow: hidden;
+  color: var(--base-color-neutral--white);
+
+  // The same pools of light the hero's WebGL backdrop paints, minus the glass —
+  // so the two read as the same place without loading Three.js on every page.
+  background-color: #02091b;
+  background-image:
+    radial-gradient(120% 78% at 56% 74%, rgb(11 55 146 / 90%) 0%, rgb(4 23 58 / 0%) 62%),
+    radial-gradient(62% 48% at 88% 12%, rgb(11 55 146 / 55%) 0%, rgb(4 23 58 / 0%) 65%),
+    radial-gradient(70% 42% at 6% 96%, rgb(7 60 160 / 45%) 0%, rgb(2 9 27 / 0%) 70%),
+    linear-gradient(180deg, #02091b 0%, #041531 52%, #010613 100%);
+
+  @include mobile-landscape {
+    min-height: 18rem;
+    padding: calc(var(--nav-height) + 2.5rem) 0 2.5rem;
+  }
+}
+
+// The banner is the page. It is sized well past the H1 scale the homepage uses
+// so it reads as the single thing on screen, with one short line under it and
+// nothing else competing.
+.page-hero_title {
+  margin: 0;
+  color: var(--base-color-neutral--white);
+  font-size: clamp(3rem, 1.8rem + 5vw, 6.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+
+.page-hero_lead {
+  max-width: 34rem;
+  margin: 1.5rem auto 0;
+  opacity: 0.7;
+  color: var(--base-color-neutral--white);
+  font-size: 1.125rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+// --- Section label chip ----------------------------------------------------
+//
+// The reference's rounded pill, squared off to match everything else here. It
+// replaces the tick–label–tick eyebrow on these pages only; the homepage keeps
+// its own.
+.label-chip {
+  display: inline-block;
+  padding: 0.4rem 0.85rem;
+  color: var(--base-color-brand--blue);
+  background-color: var(--base-color-brand--blue-lightest);
+  font-family: $font-display;
+  font-size: 1rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+// --- Two-tone statement ----------------------------------------------------
+//
+// One large paragraph where the supporting half is dropped back in tone, so the
+// sentence carries its own emphasis without a second type size.
+.statement {
+  max-width: 46rem;
+  // The section shell's `margin-huge` sits above the statement, not below it,
+  // so without this the sentence butts straight onto the grid beneath.
+  margin-bottom: 3.5rem;
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: clamp(1.5rem, 1rem + 1.6vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+}
+
+.statement_muted {
+  color: var(--base-color-neutral--neutral);
+}
+
+@include mobile-landscape {
+  .statement {
+    margin-bottom: 2.25rem;
+  }
+}
+
+// --- Team ------------------------------------------------------------------
+
+.team_grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mobile-portrait {
+    grid-template-columns: 1fr;
+  }
+}
+
+.team-card_portrait {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  margin-bottom: 1rem;
+  background-image: linear-gradient(112deg, #d2ddf0, #f6f9fe);
+}
+
+// Initials rather than a face. There are photographs of real people in this
+// repo, left over from the reference build, and putting them under invented
+// names would misrepresent them — see the note in the markup.
+.team-card_initials {
+  color: var(--base-color-brand--blue);
+  font-family: $font-display;
+  font-size: clamp(2rem, 1rem + 2.4vw, 3rem);
+  line-height: 1;
+}
+
+.team-card_name {
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+}
+
+.team-card_role {
+  color: var(--base-color-neutral--neutral-dark);
+  font-family: $font-display;
+  font-size: 1rem;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+// --- Blog ------------------------------------------------------------------
+
+.posts_grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mobile-landscape {
+    grid-template-columns: 1fr;
+  }
+}
+
+.post-card {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  padding: 1rem 1rem 1.75rem;
+  background-image: linear-gradient(112deg, #d2ddf0, #f6f9fe);
+  text-decoration: none;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  @include will-animate(transform);
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+// Stands in for a cover image. Flat brand tint rather than a stock photograph,
+// for the same reason the team cards carry initials.
+.post-card_thumb {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  margin-bottom: 1.25rem;
+  color: var(--base-color-neutral--white);
+  background-image: linear-gradient(
+    112deg,
+    var(--base-color-brand--blue-darker),
+    var(--base-color-brand--blue)
+  );
+  font-family: $font-display;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+}
+
+.post-card_meta {
+  margin-bottom: 0.5rem;
+  color: var(--base-color-neutral--neutral-dark);
+  font-family: $font-display;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.post-card_title {
+  margin-bottom: 0.5rem;
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+}
+
+.post-card_excerpt {
+  opacity: 0.85;
+  color: var(--base-color-neutral--neutral-darker);
+  font-family: $font-body;
+  font-size: 1rem;
+  line-height: 1.5;
+}

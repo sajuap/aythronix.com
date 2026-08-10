@@ -40,8 +40,9 @@ export default defineConfig({
       // absent from dist and 404s in production while working fine in dev.
       input: {
         main: resolve(__dirname, 'index.html'),
-        services: resolve(__dirname, 'services.html'),
         about: resolve(__dirname, 'about.html'),
+        services: resolve(__dirname, 'services.html'),
+        blog: resolve(__dirname, 'blog.html'),
         legal: resolve(__dirname, 'legal-notice.html'),
         policy: resolve(__dirname, 'policy.html'),
       },

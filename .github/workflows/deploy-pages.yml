@@ -3,7 +3,7 @@
 # One-time setup in the repo: Settings → Pages → Build and deployment → Source →
 # "GitHub Actions". Without that the workflow runs green but nothing is served.
 #
-# Deploys from `aythronix-website`. `botronics-clone` is deliberately *not* built
+# Deploys from `aythronix-website`is deliberately *not* built
 # here — it is a frozen snapshot for a separate project, and publishing it to the
 # same Pages site would overwrite this one.
 name: Deploy to GitHub Pages

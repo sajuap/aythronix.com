@@ -1,8 +1,8 @@
 {
-  "name": "botronics-website",
+  "name": "aythronix-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Botronics — Autonomous Robotics & Embedded AI for Everyday Objects. Handwritten HTML5 / SCSS / Bootstrap 5 / GSAP / Lenis / Three.js build.",
+  "description": "Aythronix — Web, Mobile, AI & E-Commerce Engineering Agency. Handwritten HTML5 / SCSS / Bootstrap 5 / GSAP / Lenis / Three.js build.",
   "type": "module",
   "author": "Anu Manuel",
   "license": "UNLICENSED",
