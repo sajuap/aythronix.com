@@ -81,3 +81,23 @@ $bp-xwide: 1920px;
   position: absolute;
   inset: 0;
 }
+
+// The site's dark surface: the same pools of light the hero's WebGL backdrop
+// paints, minus the glass — so every dark band reads as the same place without
+// loading Three.js to draw it.
+//
+// One definition because there are four call sites now (the hero, the
+// testimonials band, the inner-page heroes and the case-study panels), and four
+// hand-copied gradient stacks drift the first time one of them is nudged.
+//
+// Opaque, which the case-study panels depend on: they stack, and a panel that
+// covers another has to actually cover it. The linear-gradient at the foot of
+// the list is what guarantees that — the radials above it are all alpha.
+@mixin night-sky {
+  background-color: #02091b;
+  background-image:
+    radial-gradient(120% 78% at 56% 74%, rgb(11 55 146 / 90%) 0%, rgb(4 23 58 / 0%) 62%),
+    radial-gradient(62% 48% at 88% 12%, rgb(11 55 146 / 55%) 0%, rgb(4 23 58 / 0%) 65%),
+    radial-gradient(70% 42% at 6% 96%, rgb(7 60 160 / 45%) 0%, rgb(2 9 27 / 0%) 70%),
+    linear-gradient(180deg, #02091b 0%, #041531 52%, #010613 100%);
+}

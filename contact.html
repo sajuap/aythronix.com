@@ -8,9 +8,9 @@
     <script>document.documentElement.classList.add('is-locked');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Services | Aythronix</title>
-    <meta name="description" content="Web, mobile, AI, e-commerce and SEO engineering." />
-    <link rel="canonical" href="https://www.aythronix.com/services" />
+    <title>Contact | Aythronix</title>
+    <meta name="description" content="Tell Aythronix what you are building. You will hear back from an engineer, not an account manager." />
+    <link rel="canonical" href="https://www.aythronix.com/contact" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0765eb" />
 
@@ -49,14 +49,14 @@
             <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Main">
               <a href="index.html#Hero" class="nav_link">Home</a>
               <a href="about.html" class="nav_link">About</a>
-              <a href="services.html" class="nav_link" aria-current="page">Services</a>
+              <a href="services.html" class="nav_link">Services</a>
               <a href="portfolio.html" class="nav_link">Portfolio</a>
               <a href="blog.html" class="nav_link">Blog</a>
-              <a href="contact.html" class="nav_link">Contact</a>
+              <a href="contact.html" class="nav_link" aria-current="page">Contact</a>
 
               <!-- Tablet/mobile copy of the CTA, shown once the menu collapses. -->
               <div class="display-horizontal-left is-hidden-desktop">
-                <a href="contact.html" class="button is-secondary is-small is-tab-only">
+                <a href="#Contact" class="button is-secondary is-small is-tab-only">
                   <div>Book a consultation</div>
                   <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
                   <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
@@ -78,7 +78,7 @@
               </span>
             </button>
 
-            <a href="contact.html" class="button is-secondary is-small">
+            <a href="#Contact" class="button is-secondary is-small">
               <div>Book a consultation</div>
               <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
               <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
@@ -94,87 +94,78 @@
         <section class="hero-section page-hero">
           <div class="padding-global">
             <div class="container-large">
-              <h1 class="page-hero_title" data-reveal="text">Services</h1>
-              <p class="page-hero_lead" data-reveal="fade">Five disciplines. One accountable team.</p>
+              <h1 class="page-hero_title" data-reveal="text">Contact</h1>
+              <p class="page-hero_lead" data-reveal="fade">Tell us what you are building and where it is stuck.</p>
             </div>
           </div>
         </section>
 
-        <section id="Services" class="value-prop-section">
+        <!-- The homepage's contact panel, reused as-is; only the eyebrow changes to the chip the inner pages use. -->
+        <section id="Contact" class="contact-section">
           <div class="padding-global">
             <div class="container-large-bordered">
-              <div class="padding-section-medium">
-                <div class="padding-horizontal padding-medium">
-                  <div class="margin-bottom">
-                    <div class="max-width-large">
-                      <div class="label-chip">What We Do</div>
+              <div class="padding-small is-less">
+                <div class="contact-section_form-wrapper">
+                  <div class="contact-section_left-wrapper">
+                    <div class="margin-bottom margin-xhuge is-less-tab">
+                      <div class="max-width-large">
+                        <div class="label-chip">Book a consultation</div>
+                        <div class="margin-top margin-small">
+                          <h2 data-reveal="text">Let's Architect Your Next Advantage</h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <p>
+                        You will hear back from an engineer, not an account manager — with a
+                        straight answer on scope, sequencing, and what we would do first. If a
+                        project is not a fit, we will say so and point you somewhere better.
+                      </p>
                       <div class="margin-top margin-small">
+                        <p>
+                          Prefer email? <a href="mailto:hello@aythronix.com">hello@aythronix.com</a>
+                        </p>
                       </div>
                     </div>
                   </div>
 
-                  <div class="statement" data-reveal="fade">Everything under one roof: <span class="statement_muted">one roadmap, one point of contact,</span></div>
+                  <div class="contact-section_right-wrapper">
+                    <div class="form-wrapper">
+                      <form class="form-grid" name="contact" data-contact-form novalidate>
+                        <input class="form-input form-field-half" type="text" name="Firstname" id="Firstname" placeholder="First name" maxlength="256" required />
+                        <input class="form-input form-field-half" type="text" name="Lastname" id="Lastname" placeholder="Last name" maxlength="256" required />
+                        <input class="form-input form-field-half" type="email" name="Email" id="Email" placeholder="Work email" maxlength="256" required />
+                        <input class="form-input form-field-half" type="text" name="Phone" id="Phone" placeholder="Phone" maxlength="256" />
+                        <input class="form-input form-field-span-2" type="text" name="Company" id="Company" placeholder="Company" maxlength="256" />
+                        <textarea class="form_input form-field-span-2" name="Message" id="Message" placeholder="What are you building?" maxlength="5000"></textarea>
+                        <input class="button is-no-shadow form-submit" type="submit" value="Book a consultation" data-wait="Please wait..." />
+                        <!-- Reserved cell for the anti-spam widget; empty until a key is configured. -->
+                        <div class="form-captcha-slot" data-captcha-slot></div>
+                      </form>
 
-                  <div class="services_grid" data-reveal="fade">
-                    <article class="service-card is-featured">
-                      <div class="service-card_head">
-                        <div class="service-card_index">01</div>
+                      <div class="form-done" data-form-done role="status">
+                        <div class="text-align-left">
+                          Thank you — your enquiry is in. We will come back to you within one
+                          business day.
+                        </div>
                       </div>
-                      <div>
-                        <h3 class="service-card_title">Enterprise Web Development</h3>
-                        <p class="service-card_body">Architectures that stay fast under load.</p>
+                      <div class="form-fail" data-form-fail role="alert">
+                        <div>Something went wrong while submitting the form. Try again.</div>
                       </div>
-                    </article>
+                    </div>
 
-                    <article class="service-card">
-                      <div class="service-card_head">
-                        <div class="service-card_index">02</div>
+                    <div class="contact-section_logos-wrapper">
+                      <div class="contact-section_logos-display" data-marquee>
+                        <div class="tech-ribbon_item">AWS</div>
+                        <div class="tech-ribbon_item">React</div>
+                        <div class="tech-ribbon_item">Python</div>
+                        <div class="tech-ribbon_item">OpenAI</div>
+                        <div class="tech-ribbon_item">Google Cloud</div>
+                        <div class="tech-ribbon_item">Next.js</div>
                       </div>
-                      <div>
-                        <h3 class="service-card_title">Mobile Applications</h3>
-                        <p class="service-card_body">iOS and Android from one codebase.</p>
-                      </div>
-                    </article>
-
-                    <article class="service-card">
-                      <div class="service-card_head">
-                        <div class="service-card_index">03</div>
-                      </div>
-                      <div>
-                        <h3 class="service-card_title">AI &amp; Automation</h3>
-                        <p class="service-card_body">Pipelines that remove repeated manual work.</p>
-                      </div>
-                    </article>
-
-                    <article class="service-card">
-                      <div class="service-card_head">
-                        <div class="service-card_index">04</div>
-                      </div>
-                      <div>
-                        <h3 class="service-card_title">E-Commerce Platforms</h3>
-                        <p class="service-card_body">Secure checkout, built for peak days.</p>
-                      </div>
-                    </article>
-
-                    <article class="service-card">
-                      <div class="service-card_head">
-                        <div class="service-card_index">05</div>
-                      </div>
-                      <div>
-                        <h3 class="service-card_title">Data-Driven SEO</h3>
-                        <p class="service-card_body">Optimisation grounded in measurement.</p>
-                      </div>
-                    </article>
-
-                    <article class="service-card">
-                      <div class="service-card_head">
-                        <div class="service-card_index">06</div>
-                      </div>
-                      <div>
-                        <h3 class="service-card_title">Platform &amp; Cloud</h3>
-                        <p class="service-card_body">Infrastructure that keeps it running.</p>
-                      </div>
-                    </article>
+                      <div class="logo-section_gradient is-right"></div>
+                      <div class="logo-section_gradient"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -182,19 +173,16 @@
           </div>
         </section>
 
-        <section id="Process" class="services-section">
+        <section class="services-section">
           <div class="padding-global">
             <div class="container-large-bordered">
               <div class="padding-section-medium">
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">How We Work</div>
+                      <div class="label-chip">Other Ways to Reach Us</div>
                       <div class="margin-top margin-small">
-                      <h2 data-reveal="text">From Brief to Production</h2>
-                      <div class="margin-top margin-small">
-                        <p>The same four stages, every engagement.</p>
-                      </div>
+                      <h2 data-reveal="text">However You Prefer to Start</h2>
                       </div>
                     </div>
                   </div>
@@ -207,12 +195,14 @@
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="discovery"></div>
+                          <div class="arrow-icon" data-lottie="email"></div>
                         </div>
                       </div>
                       <div>
-                        <h3 class="service-card_title">Discovery</h3>
-                        <p class="service-card_body">Requirements and constraints, mapped.</p>
+                        <h3 class="service-card_title">Email</h3>
+                        <p class="service-card_body">
+                          <a href="mailto:hello@aythronix.com">hello@aythronix.com</a>
+                        </p>
                       </div>
                     </article>
 
@@ -223,12 +213,14 @@
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="blueprint"></div>
+                          <div class="arrow-icon" data-lottie="network"></div>
                         </div>
                       </div>
                       <div>
-                        <h3 class="service-card_title">Blueprinting</h3>
-                        <p class="service-card_body">Decisions agreed before any code.</p>
+                        <h3 class="service-card_title">LinkedIn</h3>
+                        <p class="service-card_body">
+                          <a href="https://www.linkedin.com/company/aythronix/" target="_blank" rel="noopener">linkedin.com/company/aythronix</a>
+                        </p>
                       </div>
                     </article>
 
@@ -239,28 +231,12 @@
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="icon-3"></div>
+                          <div class="arrow-icon" data-lottie="icon-1"></div>
                         </div>
                       </div>
                       <div>
-                        <h3 class="service-card_title">Delivery</h3>
-                        <p class="service-card_body">Short cycles. No surprises at the demo.</p>
-                      </div>
-                    </article>
-
-                    <article class="service-card">
-                      <div class="service-card_head">
-                        <div class="icon-container">
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="built-icon"></div>
-                        </div>
-                      </div>
-                      <div>
-                        <h3 class="service-card_title">Operate</h3>
-                        <p class="service-card_body">Monitoring and the upkeep that follows.</p>
+                        <h3 class="service-card_title">Response Time</h3>
+                        <p class="service-card_body">One business day, from a person who read it.</p>
                       </div>
                     </article>
                   </div>
@@ -277,24 +253,43 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">Next Step</div>
+                      <div class="label-chip">What Happens Next</div>
                       <div class="margin-top margin-small">
-                      <h2 data-reveal="text">Tell Us What You Are Building</h2>
-                      <div class="margin-top margin-small">
-                        <p>One conversation is usually enough.</p>
-                      </div>
+                      <h2 data-reveal="text">From Enquiry to First Call</h2>
                       </div>
                     </div>
                   </div>
 
-                  <div class="display-horizontal-left" data-reveal="fade">
-                    <a href="contact.html" class="button is-icon" data-brackets>
-                      <div>Book a consultation</div>
-                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
-                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
-                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
-                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
-                    </a>
+                  <div class="services_grid" data-reveal="fade">
+                    <article class="service-card is-featured">
+                      <div class="service-card_head">
+                        <div class="service-card_index">01</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">We Read It</h3>
+                        <p class="service-card_body">An engineer, not a form queue.</p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">02</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">We Reply</h3>
+                        <p class="service-card_body">With a first read on scope and sequencing.</p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="service-card_index">03</div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">We Talk</h3>
+                        <p class="service-card_body">Half an hour, no deck, no obligation.</p>
+                      </div>
+                    </article>
                   </div>
                 </div>
               </div>

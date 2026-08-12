@@ -21,7 +21,22 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 102;
+  // Above the page transition, so a cold load of the home page shows the
+  // preloader and the transition simply clears behind it. See the stacking table
+  // in the page-transition section below.
+  z-index: 1200;
+  // `100vw`, deliberately, where almost everything else on the site uses `100%`.
+  //
+  // `html` carries `scrollbar-gutter: stable` (base/_reset.scss) so that locking
+  // scroll does not change the layout width. That gutter stays reserved while the
+  // lock is on — which is the whole point — but the scrollbar inside it is gone,
+  // so it is an empty track. `100%` on a fixed element resolves against the
+  // initial containing block, which excludes that gutter, and the panel stopped
+  // short of it: a scrollbar-shaped strip of bare page down the right-hand side
+  // of the preloader. `100vw` includes the gutter and covers it.
+  //
+  // It cannot cause a horizontal scrollbar in return: the panel is fixed, so it
+  // contributes nothing to the document's scrollable overflow.
   width: 100vw;
   height: 100vh;
   // Fall back to the JS-measured unit on mobile, where 100vh overshoots.
@@ -198,33 +213,74 @@
 // ---------------------------------------------------------------------------
 // Page transition
 //
-// The panel that sweeps across every internal navigation. One level under the
-// preloader — 101 against 102 — so that on a cold load of the home page the
-// preloader is what the visitor sees and this simply clears behind it.
+// Five full-height columns that drop in from above to cover the viewport on the
+// way out of a page, and lift back out through the top on the way into the next
+// one — each starting a tenth of a second after the one to its left, so the edge
+// reads as a rake rather than a single straight line.
+//
+// This is the reference build's own transition, matched: five panels, the same
+// stagger, the same curve, and the same 0.85s / 1.05s. Only the colour differs —
+// the reference's dark navy against this site's brand blue, which is already what
+// the preloader resolves to.
 //
 // It covers the viewport from CSS, before any script has run. That is the whole
-// point: the panel is already over the page when the document paints, so a slow
-// bundle shows a held brand colour rather than a half-built page. Timings live
-// in js/components/page-transition.js.
+// point: the cover is already over the page when the document paints, so a slow
+// bundle shows a held brand colour rather than a half-built page. The resting
+// state below is therefore the *arriving* state — every column down and covering,
+// about to lift. Timings live in js/components/page-transition.js.
+//
+// Stacking order for the two covers and the things they have to cover:
+//
+//   1000  .nav_component
+//   1100  .page-transition   ← the fixed header has to go under this
+//   1200  .preloader         ← and on a cold home load, under this
+//   1300  .skip-link         (utilities/_helpers.scss)
+//
+// The header being a higher layer than the covers was the bug this ordering
+// fixes: it is `position: fixed`, so it stayed painted on top of a full-screen
+// transition and rode across every navigation.
 // ---------------------------------------------------------------------------
 
 .page-transition {
+  display: flex;
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 101;
-  width: 100%;
+  inset: 0;
+  z-index: 1100;
+
+  // Clips the columns while they are above the fold, and the last column's
+  // overlap (see below) at the right edge.
+  overflow: hidden;
+
+  // Decorative. The navigation is fired by the timeline's `onComplete`, never by
+  // a click landing on the cover, so this never needs to be a hit target — and
+  // without it the container would swallow every click on the page for the whole
+  // visit, since the columns are what travel off-screen, not the container.
+  pointer-events: none;
+}
+
+// One column. `flex: 1 1 0` rather than a 20% width so the five divide whatever
+// the viewport is, with no rounding left over at the right edge.
+//
+// The 1px overlap is for the moment they are all down: five flex items at a
+// fractional width (1366 / 5 = 273.2) land on subpixel boundaries, and a
+// transform animating across those boundaries can leave hairline seams of the
+// page showing through a cover that is supposed to be solid. Overlapping by a
+// pixel costs nothing — the columns are the same flat colour — and the last
+// one's pixel of overhang is clipped by the container.
+.page-transition_panel {
+  flex: 1 1 0;
   height: 100%;
+  margin-right: -1px;
   background-color: var(--base-color-brand--blue);
 
-  // Covering, until JS lifts it. No `will-change`: this runs twice in a session
-  // and holding a full-viewport composited layer for the whole visit to save two
-  // tweens is the wrong trade. GSAP is configured with force3D, so the panel is
-  // promoted for the duration of each sweep and released again after.
+  // Covering, until JS lifts them. No `will-change`: this runs twice in a session
+  // and holding five full-height composited layers for the whole visit to save a
+  // pair of tweens is the wrong trade. GSAP is configured with force3D, so they
+  // are promoted for the duration of each sweep and released again after.
   transform: translateY(0%);
 }
 
-// Without JS there is nothing to lift the panel, so it would sit over the page
+// Without JS there is nothing to lift the cover, so it would sit over the page
 // permanently. Same escape hatch the preloader uses.
 html.no-js .page-transition {
   display: none;

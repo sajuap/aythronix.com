@@ -2,14 +2,10 @@
 <html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
-    <!--
-      Drop the no-js class here, not from the bundle. The stylesheet hides the
-      page-transition panel while `no-js` is set, and the bundle that used to
-      clear it is a deferred module — so the browser painted the page with the
-      cover still hidden and it appeared a beat later. Inline and
-      parser-blocking, this runs before the first paint.
-    -->
+    <!-- Drop no-js before the first paint: the covers are hidden while it is set, and the deferred bundle clears it too late. -->
     <script>document.documentElement.classList.remove('no-js');</script>
+    <!-- Lock scrolling before the first paint; page-transition.js unlocks when the last column leaves. -->
+    <script>document.documentElement.classList.add('is-locked');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>About | Aythronix</title>
@@ -25,12 +21,14 @@
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
 
-    <!--
-      Page transition. Covers the viewport from CSS and is lifted away on load;
-      there is no preloader on this page, so this is what stops the visitor
-      seeing an unpainted frame. js/components/page-transition.js drives it.
-    -->
-    <div class="page-transition" aria-hidden="true"></div>
+    <!-- Page transition: covers from CSS so no unstyled frame shows, lifted on load by js/components/page-transition.js. -->
+    <div class="page-transition" aria-hidden="true">
+      <span class="page-transition_panel"></span>
+      <span class="page-transition_panel"></span>
+      <span class="page-transition_panel"></span>
+      <span class="page-transition_panel"></span>
+      <span class="page-transition_panel"></span>
+    </div>
 
     <div class="page-wrapper">
 
@@ -49,13 +47,16 @@
             </a>
 
             <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Main">
-              <a href="about.html" class="nav_link">About</a>
+              <a href="index.html#Hero" class="nav_link">Home</a>
+              <a href="about.html" class="nav_link" aria-current="page">About</a>
               <a href="services.html" class="nav_link">Services</a>
+              <a href="portfolio.html" class="nav_link">Portfolio</a>
               <a href="blog.html" class="nav_link">Blog</a>
+              <a href="contact.html" class="nav_link">Contact</a>
 
               <!-- Tablet/mobile copy of the CTA, shown once the menu collapses. -->
               <div class="display-horizontal-left is-hidden-desktop">
-                <a href="index.html#Contact" class="button is-secondary is-small is-tab-only">
+                <a href="contact.html" class="button is-secondary is-small is-tab-only">
                   <div>Book a consultation</div>
                   <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
                   <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
@@ -77,7 +78,7 @@
               </span>
             </button>
 
-            <a href="index.html#Contact" class="button is-secondary is-small">
+            <a href="contact.html" class="button is-secondary is-small">
               <div>Book a consultation</div>
               <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right" />
               <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left" />
@@ -89,18 +90,7 @@
       </header>
 
       <main id="content">
-      <!--
-        ============================================================
-        PLACEHOLDER CONTENT. Every line of copy on this page is here
-        to hold the layout, not to be published.
-
-        The team members and blog posts below are invented. Their
-        portraits are initials, not photographs, on purpose: there
-        are pictures of real people in this repo left over from the
-        reference build, and putting them under made-up names would
-        misrepresent them.
-        ============================================================
-      -->
+      <!-- PLACEHOLDER COPY. Invented names and posts; portraits are initials rather than photographs, so no real person is misrepresented. -->
         <section class="hero-section page-hero">
           <div class="padding-global">
             <div class="container-large">
@@ -115,7 +105,7 @@
             <div class="container-large-bordered">
               <div class="padding-section-medium">
                 <div class="padding-horizontal padding-medium">
-                  <div class="margin-bottom margin-huge">
+                  <div class="margin-bottom">
                     <div class="max-width-large">
                       <div class="label-chip">Principles</div>
                       <div class="margin-top margin-small">
@@ -133,7 +123,7 @@
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="icon-1"></div>
+                          <div class="arrow-icon" data-lottie="clarity"></div>
                         </div>
                       </div>
                       <div>
@@ -149,7 +139,7 @@
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="icon-3"></div>
+                          <div class="arrow-icon" data-lottie="adaptability"></div>
                         </div>
                       </div>
                       <div>
@@ -165,7 +155,7 @@
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
                           <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="icon-2"></div>
+                          <div class="arrow-icon" data-lottie="focus"></div>
                         </div>
                       </div>
                       <div>
@@ -173,6 +163,57 @@
                         <p class="service-card_body">One team owns the stack, end to end.</p>
                       </div>
                     </article>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Studio band: wordmark behind at z-0, the cut-out PNG over it at z-1, copy on top at z-2. The PNG is used exactly as supplied. Decorative, alt="". -->
+        <section class="studio-band">
+          <div class="padding-global">
+            <div class="studio-band_inner">
+              <div class="padding-section-medium pt-0">
+                <div class="studio-band_frame">
+                  <div class="studio-band_wordmark" aria-hidden="true">Our Greater Vision</div>
+
+                  <div class="studio-band_media">
+                    <img
+                      src="/src/assets/images/about-banner.png"
+                      width="1536"
+                      height="1024"
+                      loading="lazy"
+                      decoding="async"
+                      alt=""
+                    />
+
+                    <div class="studio-band_scrim" aria-hidden="true"></div>
+                  </div>
+
+                  <div class="studio-band_copy">
+                    <h2 class="studio-band_headline">
+                      Software that outlives the team that built it, and stays cheap to
+                      change
+                    </h2>
+
+                    <div class="studio-band_aside">
+                      <p class="studio-band_lead">
+                        Most systems get replaced because nobody dares change them, not
+                        because they stopped working. We build for whoever inherits this
+                        one — clear seams, decisions written down, and a way back from
+                        each of them.
+                      </p>
+
+                      <!-- Same corner brackets as the other CTAs; _studio-band.scss flips them white over the photograph. -->
+                      <a href="contact.html" class="button is-icon" data-brackets>
+                        <div>Start a project</div>
+                        <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right is-ext" />
+                        <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-left is-ext" />
+                        <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-left is-ext" />
+                        <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-bottom-right is-ext" />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -312,7 +353,7 @@
                   </div>
 
                   <div class="display-horizontal-left" data-reveal="fade">
-                    <a href="index.html#Contact" class="button is-icon" data-brackets>
+                    <a href="contact.html" class="button is-icon" data-brackets>
                       <div>Book a consultation</div>
                       <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
                       <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
@@ -361,16 +402,7 @@
                         </div>
                       </div>
 
-                      <!--
-                        The legal pages are reachable from here rather than from a
-                        fourth link column: the content brief specifies exactly
-                        three (Company / Services / Connect), and a cookie policy
-                        nothing links to is worse than an untidy footer.
-
-                        Relative hrefs, not root-absolute — these have to resolve
-                        both at a domain root and under a project subpath such as
-                        GitHub Pages' /<repo>/.
-                      -->
+                      <!-- Legal pages live here rather than in a fourth column. Relative hrefs, so they resolve under a project subpath too. -->
                       <div class="footer_copyright-text">
                         © <span data-year>2026</span> Aythronix |
                         <a href="legal-notice.html"
@@ -386,10 +418,10 @@
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Company">
                       <div class="footer_link text-color-primary">Company</div>
+                      <a href="index.html#Hero" class="footer_link">Home</a>
                       <a href="about.html" class="footer_link">About Us</a>
-                      <a href="index.html#Process" class="footer_link">Process</a>
-                      <a href="index.html#Work" class="footer_link">Gallery</a>
-                      <a href="index.html#Contact" class="footer_link">Careers</a>
+                      <a href="portfolio.html" class="footer_link">Portfolio</a>
+                      <a href="blog.html" class="footer_link">Blog</a>
                     </nav>
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Services">
@@ -404,8 +436,8 @@
                       <div class="footer_link text-color-primary">Connect</div>
                       <a href="https://www.linkedin.com/company/aythronix/" target="_blank" rel="noopener" class="footer_link">LinkedIn</a>
                       <a href="https://x.com/aythronix" target="_blank" rel="noopener" class="footer_link">Twitter / X</a>
-                      <a href="index.html#Contact" class="footer_link">Contact Support</a>
-                      <a href="index.html#Contact" class="footer_link">Book Consultation</a>
+                      <a href="contact.html" class="footer_link">Contact Support</a>
+                      <a href="contact.html" class="footer_link">Book Consultation</a>
                     </nav>
                   </div>
                 </div>

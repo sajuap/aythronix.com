@@ -58,6 +58,7 @@ $enable-dark-mode: false;
 // --- 5. Base ---------------------------------------------------------------
 @import 'base/reset';
 @import 'base/typography';
+@import 'base/cursor';
 
 // --- Layout ----------------------------------------------------------------
 @import 'layout/containers';
@@ -84,6 +85,8 @@ $enable-dark-mode: false;
 @import 'sections/footer';
 @import 'sections/legal';
 @import 'sections/pages';
+@import 'sections/article';
+@import 'sections/studio-band';
 
 // --- Utilities (last, so they can win) -------------------------------------
 @import 'utilities/helpers';

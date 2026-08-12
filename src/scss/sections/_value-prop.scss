@@ -1,48 +1,16 @@
 // ---------------------------------------------------------------------------
-// Value proposition + tech stack ribbon
+// Value proposition
+//
+// `.value-prop-section` is a bare hook — the pages that carry it get their
+// width and rhythm from `.container-large-bordered` and the padding utilities,
+// and nothing here styles it.
+//
+// The stage that used to sit at the top of this file — a fixed-height box with
+// the dot-dome still, the live particle field crossfading in over it, and the
+// copy lifted above both — went with the Why Aythronix redesign, which puts an
+// arc of photographs there instead. See sections/_why.scss. That took
+// js/animations/pulse.js with it, and left side-shpere*.avif unreferenced.
 // ---------------------------------------------------------------------------
-
-// Reuses the mission band's proportions: a fixed-height stage with the abstract
-// dot artwork anchored bottom-right behind the copy.
-.value-prop_image-wrapper {
-  position: relative;
-  width: 100%;
-  height: 460px;
-  margin-bottom: 2rem;
-
-  @include tablet {
-    height: 420px;
-  }
-
-  @include mobile-portrait {
-    height: 360px;
-  }
-}
-
-.is-absolute.is-value-prop-image {
-  inset: 0% 0% 0% auto;
-  z-index: -1;
-  width: auto;
-  min-width: auto;
-  max-width: 68%;
-  height: 100%;
-  object-fit: contain;
-  object-position: 100% 100%;
-  // Shares the black-to-brand-blue remap used by the spheres.
-  filter: url('#brand-tint');
-
-  @include tablet {
-    max-width: 85%;
-  }
-
-  @include mobile-landscape {
-    max-width: 95%;
-  }
-
-  @include mobile-portrait {
-    max-width: 100%;
-  }
-}
 
 // ---------------------------------------------------------------------------
 // Ticker items — the capability strip and the tech stack ribbon

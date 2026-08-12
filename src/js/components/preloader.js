@@ -169,7 +169,16 @@ function buildDigits(el) {
   });
 }
 
-/** Longest we will wait on `window.load` before starting anyway. */
+/**
+ * Longest we will wait on `window.load` and the webfonts before starting anyway.
+ *
+ * 3s is also, not by coincidence, the block period `font-display: block` gives a
+ * face before it gives up and paints the fallback. The two being equal is what
+ * makes the worst case safe: if a font never arrives, the browser falls back at
+ * the same moment this releases the panel, so the visitor gets a page in Arial
+ * rather than a page with holes in it. Moving one without the other reopens that
+ * gap — see base/_fonts.scss.
+ */
 const LOAD_TIMEOUT = 3000;
 
 /**
@@ -194,8 +203,28 @@ const FALLBACK_DRAW = 1.2;
 /** User units of slack in the dash pattern — must exceed the stroke width. */
 const DASH_CLEARANCE = 4;
 
+/**
+ * Wait for the webfonts as well as the load event.
+ *
+ * `load` does not cover them. A font referenced only by CSS is fetched lazily
+ * and is not a load-event resource, so the hero could — and did — paint in Arial
+ * and Times New Roman, hand over, and only then re-render in Overused Grotesk
+ * and Mondwest. With `font-display: block` (base/_fonts.scss) the text is held
+ * invisible rather than swapped, which turns that flash into a hole unless the
+ * panel stays up for it. This is what keeps the panel up for it.
+ *
+ * Not gated on any individual face: `document.fonts.ready` settles when every
+ * face the document actually uses has resolved, one way or the other. It is
+ * raced against the same timeout as the load event, so a font that never arrives
+ * cannot strand a visitor behind the panel.
+ */
 function waitForLoad() {
-  if (document.readyState === 'complete') return Promise.resolve();
+  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
+
+  if (document.readyState === 'complete') {
+    return Promise.race([fonts, timeout(LOAD_TIMEOUT)]);
+  }
+
   return new Promise((resolve) => {
     let done = false;
     const finish = () => {
@@ -203,9 +232,14 @@ function waitForLoad() {
       done = true;
       resolve();
     };
-    window.addEventListener('load', finish, { once: true });
+    window.addEventListener('load', () => fonts.then(finish, finish), { once: true });
     setTimeout(finish, LOAD_TIMEOUT);
   });
+}
+
+/** A promise that resolves — never rejects — after `ms`. */
+function timeout(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
@@ -339,6 +373,10 @@ export function initPreloader({ onComplete, waitFor } = {}) {
   // make sure nothing is left hidden.
   if (!panel) {
     revealImmediately();
+    // The page-transition is the cover on these pages and it releases the lock
+    // when its last column leaves. Only step in if there is no cover at all,
+    // which would otherwise leave the page locked with nothing to unlock it.
+    if (!document.querySelector('.page-transition')) startScroll();
     onComplete?.();
     return Promise.resolve();
   }
@@ -357,6 +395,9 @@ export function initPreloader({ onComplete, waitFor } = {}) {
   if (prefersReducedMotion()) {
     panel.classList.add('is-done');
     revealImmediately();
+    // This page's cover is gone and the transition will not release it here —
+    // it leaves the lock to whichever page owns a preloader, which is this one.
+    startScroll();
     onComplete?.();
     return Promise.resolve();
   }
@@ -545,7 +586,16 @@ export function initPreloader({ onComplete, waitFor } = {}) {
   );
 }
 
-/** Drop every preload-hidden state without animating. */
+/**
+ * Drop every preload-hidden state without animating.
+ *
+ * Deliberately does not touch the scroll lock. It used to, as a catch-all, which
+ * was harmless while this page was the only one that locked — but every page
+ * locks from its head now, and on the inner pages this runs about 700ms in,
+ * while their page-transition is still covering. Releasing there let the visitor
+ * scroll a screen they could not see past. Each caller below says what should
+ * happen to the lock instead.
+ */
 function revealImmediately() {
   document.querySelectorAll('.is-preload-hidden').forEach((el) => {
     el.classList.remove('is-preload-hidden');
@@ -555,5 +605,4 @@ function revealImmediately() {
   const heroCopy = document.querySelector('[data-hero-copy]');
   if (nav) gsap.set(nav, { opacity: 1 });
   if (heroCopy) gsap.set(heroCopy, { y: 0, opacity: 1 });
-  startScroll();
 }

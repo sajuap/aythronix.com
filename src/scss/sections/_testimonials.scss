@@ -8,10 +8,58 @@
 // the quotes with stock faces would put a photograph of a real person next to
 // words they never said. The quote and the mark behind it carry the card.
 //
-// The card is a plain rectangle, square-cornered like everything else here —
-// the buttons and the form fields both zero their radius on purpose, and a
-// rounded card would be the only softened corner on the page.
+// The section is a full-bleed band, which is the one place on the page where
+// the framed 80rem column is deliberately dropped. Two reasons it earns that:
+// the cards run edge to edge, so hairlines down each side would be cut straight
+// through by the row passing them; and the band's own edges do the framing
+// instead, more strongly than the hairlines ever did.
+//
+// It is dark for contrast, not decoration. The cards are a pale blue-white
+// gradient — on the tinted background this section might otherwise have taken,
+// they and the surface behind them are within a few percent of each other and
+// the row stops reading as cards at all. On the navy they separate completely,
+// and the section picks up the same palette as the hero and the inner-page
+// banners, so the dark bands down the site read as one family.
 // ---------------------------------------------------------------------------
+
+.testimonials-section {
+  position: relative;
+  // Extra air on top of the inner `padding-section-medium`. A dark band needs
+  // more room around its contents than a white section does before it reads as
+  // deliberate rather than cramped.
+  padding-block: 2rem;
+  color: var(--base-color-neutral--white);
+
+  // The hero's palette, minus the glass — the same stack `.page-hero` paints.
+  @include night-sky;
+
+  // The band replaces the frame here. The hairlines are an alpha of the navy and
+  // would be invisible on it anyway, and the full-bleed row crosses where they
+  // used to be.
+  .container-large-bordered {
+    border-style: none;
+  }
+
+  // The heading block, inverted for the band. Everything else in the section is
+  // already light or is a card, which stays as it is.
+  h2 {
+    color: var(--base-color-neutral--white);
+  }
+
+  .text-style-subtitle {
+    color: rgb(255 255 255 / 72%);
+  }
+
+  .subtitle-line {
+    background-color: rgb(255 255 255 / 30%);
+  }
+
+  // Brand blue on navy is barely a step off its own background. The light tint
+  // is the same colour family, read against the dark instead of into it.
+  .rating-badge {
+    color: var(--base-color-brand--blue-light);
+  }
+}
 
 // The window the track runs behind.
 //
@@ -28,9 +76,21 @@
   --edge-fade: 7rem;
 
   position: relative;
-  width: 100%;
   padding: 1rem 0;
   overflow: hidden;
+
+  // Full bleed, out of the padded 80rem column it is nested in and across the
+  // whole band. `margin-left: 50%` finds the centre of the parent — which is the
+  // centre of the page, since the column is centred — and the transform pulls a
+  // viewport-wide box back over it.
+  //
+  // `100vw` includes the scrollbar gutter, so this overhangs by half a gutter
+  // each side. `.page-wrapper` clips it (`overflow-x: clip`), and the overhang
+  // disappears under a 7rem fade regardless.
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
   mask-image: linear-gradient(
     to right,
     transparent 0,
@@ -79,6 +139,7 @@
   margin: 0;
   padding: 2rem;
   background-image: linear-gradient(112deg, #d2ddf0, #f6f9fe);
+  border-radius: var(--radius--medium);
   box-shadow: 0 0.25rem 0.75rem rgb(4 23 58 / 4%);
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),

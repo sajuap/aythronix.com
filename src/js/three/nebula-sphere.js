@@ -42,6 +42,10 @@ export default class NebulaSphere {
       // Brand blue as an "r,g,b" triplet — the per-point alpha is appended in
       // the draw loop, so this is a bare triplet rather than a colour string.
       color: '7,101,235',
+      // `false` builds the field but withholds the loop until `start()`. Same
+      // contract as GlassSlabs: it lets the caller pay for construction behind
+      // the preloader and still keep the ticker off until the panel has gone.
+      autoStart: true,
       ...options,
     };
 
@@ -59,8 +63,17 @@ export default class NebulaSphere {
     // preloader animates this from 0.
     this.gather = this.config.gather ?? 1;
 
+    // Radial breath, independent of `gather`. 1 is the authored radius.
+    this.radiusScale = this.config.radiusScale ?? 1;
+
+    // Travelling wave riding on top of that breath. Amplitude 0 disables it
+    // entirely, which is the default, so the hero is unaffected.
+    this.waveAmp = this.config.waveAmp ?? 0;
+    this.wavePhase = 0;
+
     this._isReady = false;
     this._running = false;
+    this._held = this.config.autoStart === false;
     this._rafId = null;
     this._tick = this._tick.bind(this);
     this._listeners = [];
@@ -102,7 +115,11 @@ export default class NebulaSphere {
     this._isReady = true;
     this.initParticles();
     this._observe();
-    this.start();
+    // Not `start()` — that would lift a hold the caller has not lifted yet.
+    this._maybeStart();
+    // Held: put the resting frame on screen anyway, so there is something to
+    // hand the ticker to rather than something to reveal.
+    if (this._held) this.paintStill();
   }
 
   /**
@@ -131,6 +148,10 @@ export default class NebulaSphere {
         scatterX: (Math.random() - 0.5) * baseRadius * 4,
         scatterY: (Math.random() - 0.5) * baseRadius * 4,
         scatterZ: (Math.random() - 0.5) * baseRadius * 4,
+        // Where this point sits in the travelling wave, 0 at the bottom of the
+        // sphere and 1 at the top. Giving each point its own offset is what
+        // turns a simultaneous contraction into something that sweeps through.
+        wavePhase: (y / baseRadius + 1) * 0.5,
         x,
         y,
         z,
@@ -181,7 +202,7 @@ export default class NebulaSphere {
     // Stop burning frames in a background tab.
     this._on(document, 'visibilitychange', () => {
       if (document.hidden) this.stop();
-      else if (this._inView !== false) this.start();
+      else if (this._inView !== false) this._maybeStart();
     });
   }
 
@@ -194,7 +215,7 @@ export default class NebulaSphere {
     this._io = new IntersectionObserver(
       ([entry]) => {
         this._inView = entry.isIntersecting;
-        if (entry.isIntersecting && !document.hidden) this.start();
+        if (entry.isIntersecting && !document.hidden) this._maybeStart();
         else this.stop();
       },
       { rootMargin: '120px' }
@@ -202,8 +223,25 @@ export default class NebulaSphere {
     this._io.observe(this.canvas);
   }
 
+  /**
+   * Begin animating, and lift the hold if the field was built with
+   * `autoStart: false`.
+   *
+   * That hold is what lets the 3,500-point build happen behind the preloader
+   * without the loop then running flat out behind an opaque panel. The field is
+   * assembled and sitting still until the caller says the panel has gone.
+   */
   start() {
-    if (!this._isReady || this._running) return;
+    this._held = false;
+    this._maybeStart();
+  }
+
+  /**
+   * The internal resumes — scrolling back into view, returning to the tab — all
+   * route through here, so none of them can start the loop out from under a hold.
+   */
+  _maybeStart() {
+    if (this._held || this._running || !this._isReady) return;
     this._running = true;
     this._rafId = requestAnimationFrame(this._tick);
   }
@@ -229,7 +267,12 @@ export default class NebulaSphere {
   }
 
   _tick() {
-    if (!this._running || !this._isReady) return;
+    // `_drawOnce` is how a held field paints its resting frame — see
+    // `paintStill()`. Without it a held sphere is an empty canvas until the
+    // ticker starts, and 3,500 points appear from nothing on the frame the
+    // preloader lifts.
+    if (!this._isReady) return;
+    if (!this._running && !this._drawOnce) return;
 
     const { width, height } = this.canvas;
     const cx = width / 2;
@@ -276,6 +319,10 @@ export default class NebulaSphere {
 
     const g = this.gather;
     const scattered = g < 1;
+    const radiusScale = this.radiusScale;
+    const waveAmp = this.waveAmp;
+    const wavePhase = this.wavePhase;
+    const waveSpread = this.config.waveSpread ?? Math.PI * 2;
 
     for (let i = 0; i < this.particles.length; i++) {
       const p = this.particles[i];
@@ -290,6 +337,28 @@ export default class NebulaSphere {
         bx = p.scatterX + (p.baseX - p.scatterX) * g;
         by = p.scatterY + (p.baseY - p.scatterY) * g;
         bz = p.scatterZ + (p.baseZ - p.scatterZ) * g;
+      }
+
+      // Breathe. Every point is pulled along its own radius from the centre, so
+      // the field contracts and expands as a body rather than each point
+      // drifting somewhere unrelated — which is what `gather` does, and why the
+      // two are separate controls.
+      //
+      // The wave rides on top: each point carries its own phase, so the same
+      // contraction reaches the bottom of the sphere before the top and sweeps
+      // through rather than happening everywhere at once. Amplitude 0 skips it,
+      // and a scale of exactly 1 skips the multiply, so the hero pays nothing.
+      // Named `radial` rather than `scale`: the perspective divide further down
+      // this same block already owns that name.
+      let radial = radiusScale;
+      if (waveAmp !== 0) {
+        radial += waveAmp * Math.sin(wavePhase - p.wavePhase * waveSpread);
+      }
+
+      if (radial !== 1) {
+        bx *= radial;
+        by *= radial;
+        bz *= radial;
       }
 
       // Spin about Y.
@@ -352,10 +421,35 @@ export default class NebulaSphere {
       }
     }
 
-    this._rafId = requestAnimationFrame(this._tick);
+    // Only the running loop schedules another frame. A one-off still does not.
+    if (this._running) this._rafId = requestAnimationFrame(this._tick);
+  }
+
+  /**
+   * Draw the field once, without starting the loop.
+   *
+   * For a sphere built with `autoStart: false`: it is assembled and sitting on
+   * screen behind whatever is covering it, so when the ticker is finally handed
+   * over the field is already there and simply begins to move. Nothing appears.
+   */
+  paintStill() {
+    if (!this._isReady || this._running) return;
+    this._drawOnce = true;
+    this._tick();
+    this._drawOnce = false;
   }
 
   /** Set assembly progress, 0 → 1. Used by the preloader. */
+  /** Pull the whole field in toward its centre, or push it out. 1 is rest. */
+  setRadiusScale(value) {
+    this.radiusScale = value;
+  }
+
+  /** Advance the travelling wave. Radians; wraps naturally through the sine. */
+  setWave(phase) {
+    this.wavePhase = phase;
+  }
+
   setGather(value) {
     this.gather = Math.max(0, Math.min(1, value));
   }

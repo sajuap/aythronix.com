@@ -33,7 +33,9 @@
   background-color: var(--base-color-neutral--neutral-lightest);
   color: var(--base-color-neutral--neutral-darkest);
   border: 0;
-  border-radius: 0;
+  // Matched to the button deliberately: the submit sits in the same grid as
+  // these, so the two disagreeing on their corners is visible at a glance.
+  border-radius: var(--radius--small);
   font-family: $font-body;
   font-size: 1rem;
   font-weight: 400;

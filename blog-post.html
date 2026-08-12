@@ -8,9 +8,12 @@
     <script>document.documentElement.classList.add('is-locked');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Blog | Aythronix</title>
-    <meta name="description" content="Notes on engineering practice and delivery." />
-    <link rel="canonical" href="https://www.aythronix.com/blog" />
+    <title>Rebuilding a system while it is still serving traffic | Aythronix</title>
+    <meta
+      name="description"
+      content="The migration nobody notices is the one planned backwards from the cutover — standing a new service up beside the old one and keeping a way back at every step."
+    />
+    <link rel="canonical" href="https://www.aythronix.com/blog-post" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0765eb" />
 
@@ -18,7 +21,7 @@
     <link rel="preload" href="/src/assets/fonts/overusedgrotesk-medium.otf" as="font" type="font/otf" crossorigin />
   </head>
 
-  <body>
+  <body class="is-inner-page">
     <a class="skip-link" href="#content">Skip to content</a>
 
     <!-- Page transition: covers from CSS so no unstyled frame shows, lifted on load by js/components/page-transition.js. -->
@@ -91,52 +94,164 @@
 
       <main id="content">
       <!-- PLACEHOLDER COPY. Invented names and posts; portraits are initials rather than photographs, so no real person is misrepresented. -->
-        <section class="hero-section page-hero">
-          <div class="padding-global">
-            <div class="container-large">
-              <h1 class="page-hero_title" data-reveal="text">Blog</h1>
-              <p class="page-hero_lead" data-reveal="fade">Notes on engineering practice and delivery.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Filters: data-filter chips against data-category items, matched by js/components/blog-filters.js. The featured post filters on the same terms. -->
-        <section id="Blog" class="value-prop-section">
+        <section class="inner-page_top">
           <div class="padding-global">
             <div class="container-large-bordered">
               <div class="padding-section-medium">
                 <div class="padding-horizontal padding-medium">
-                  <div class="blog-filters" role="group" aria-label="Filter posts by category">
-                    <button type="button" class="blog-filter" data-filter="all" aria-pressed="true">All</button>
-                    <button type="button" class="blog-filter" data-filter="architecture" aria-pressed="false">Architecture</button>
-                    <button type="button" class="blog-filter" data-filter="delivery" aria-pressed="false">Delivery</button>
-                    <button type="button" class="blog-filter" data-filter="performance" aria-pressed="false">Performance</button>
-                    <button type="button" class="blog-filter" data-filter="platform" aria-pressed="false">Platform</button>
-                  </div>
 
-                  <article class="featured-post" data-category="architecture" data-reveal="fade">
-                    <!-- A flat brand tint stands in for the cover image. -->
-                    <div class="featured-post_media"></div>
+                  <div class="article-header">
+                    <a href="blog.html" class="article-back">Go back</a>
 
                     <div>
-                      <div class="label-chip is-small">Architecture</div>
-                      <h2 class="featured-post_title">Rebuilding a system while it is still serving traffic</h2>
-                      <p class="featured-post_excerpt">
+                      <h1 class="article-title">
+                        Rebuilding a system while it is still serving traffic
+                      </h1>
+                      <p class="article-lead">
                         The migration nobody notices is the one planned backwards from the
-                        cutover. How we stand a new service up beside the old one, move
-                        consumers across a few at a time, and keep a way back at every step —
-                        so the risky day is a quiet one.
+                        cutover.
+                      </p>
+                    </div>
+
+                    <aside class="article-meta" aria-label="Article details">
+                      <div>
+                        <div class="article-meta_label">Date</div>
+                        <div class="article-meta_value">Placeholder date</div>
+                      </div>
+                      <div>
+                        <div class="article-meta_label">Category</div>
+                        <div class="article-meta_value">Architecture</div>
+                      </div>
+                      <div>
+                        <div class="article-meta_label">Reading time</div>
+                        <div class="article-meta_value">8 min</div>
+                      </div>
+                    </aside>
+                  </div>
+
+                  <div class="article-cover"></div>
+
+                  <div class="article-body">
+                    <div class="article-prose">
+                      <h2>Start from the cutover, not from the code</h2>
+                      <p>
+                        Most rewrites are planned forwards. Someone lists what the old system
+                        does, sizes the work, and starts at the first item. The trouble is that
+                        the list is finished long before the question that actually decides the
+                        project gets asked: on the day this goes live, what exactly changes, and
+                        what happens if it goes wrong at nine in the morning rather than nine at
+                        night?
+                      </p>
+                      <p>
+                        Planning backwards from that day tends to produce a different shape of
+                        work. It puts the boring things first — the seams, the switches, the
+                        ability to run both systems at once — and it usually reveals that a
+                        third of the original list did not need rebuilding at all.
                       </p>
 
-                      <a href="blog-post.html" class="button is-icon" data-brackets>
-                        <div>Read more</div>
-                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
-                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
-                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
-                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
-                      </a>
+                      <div class="article-pullquote">
+                        A migration is not a rewrite that happens to end in a deployment. It is
+                        a sequence of reversible steps that happens to end with the old system
+                        unused.
+                      </div>
+
+                      <h2>Put a seam in before you put anything behind it</h2>
+                      <p>
+                        The first change is rarely to the system being replaced. It is to
+                        everything that calls it. Consumers that reach directly into a database,
+                        or import a shared library, or know the shape of an internal response,
+                        are consumers that cannot be moved one at a time — and moving them one
+                        at a time is the entire trick.
+                      </p>
+                      <p>
+                        So the first piece of work is a façade: one place every caller goes
+                        through, still serving the old behaviour exactly, changing nothing a
+                        consumer can observe. It looks like an expensive way to achieve nothing.
+                        What it buys is the ability to change the answer behind it without
+                        changing the question, which is what every later step depends on.
+                      </p>
+
+                      <h2>Move consumers, not features</h2>
+                      <p>
+                        With a seam in place, the unit of progress stops being "the new system
+                        supports X" and becomes "this consumer now reads from the new system".
+                        That is a much better unit. It is small, it is individually reversible,
+                        and it produces real evidence — the new path is serving live traffic for
+                        somebody, under real load, with real data.
+                      </p>
+                      <p>
+                        It also reorders the work honestly. Features nothing calls stop being
+                        urgent. Features one internal tool calls get done last, not first,
+                        whatever the original list said. The consumers turn out to be the
+                        requirements, and they were knowable all along.
+                      </p>
+                      <ul>
+                        <li>Run both paths and compare, before either one is authoritative.</li>
+                        <li>Move read traffic first — it is the half you can undo cheaply.</li>
+                        <li>Keep the old path warm until the last consumer has been off it for
+                          longer than your worst incident took to surface.</li>
+                      </ul>
+
+                      <h2>Keep a way back until you do not need one</h2>
+                      <p>
+                        A rollback that has never been executed is a hypothesis. The step that
+                        makes the difference on the day is having actually gone backwards at
+                        least once, deliberately, while nothing was wrong — because that is when
+                        you find the migration that only runs forwards, or the cache nobody
+                        thought to invalidate, or the queue that drains into the wrong place.
+                      </p>
+                      <p>
+                        The way back gets retired eventually. It should be retired on purpose,
+                        as its own decision, at a point where the evidence supports it — not
+                        quietly, three sprints after everyone stopped thinking about it.
+                      </p>
+
+                      <h2>What the quiet version looks like</h2>
+                      <p>
+                        The end state of all this is anticlimactic, which is the point. There is
+                        no launch. There is a week where the last consumer moves across, a
+                        period where the old system serves nothing, and a change that deletes
+                        it. Nobody outside the team can tell you which day it happened.
+                      </p>
+                      <p>
+                        That is worth saying out loud at the start, because a migration run this
+                        way looks slower for the first third of it and then finishes without
+                        drama. The version that looks faster early is usually the one that ends
+                        with a launch night, and launch nights are how systems get replaced
+                        twice.
+                      </p>
                     </div>
-                  </article>
+
+                    <aside class="article-aside" aria-label="About the author">
+                      <div class="article-aside_label">Author</div>
+                      <div class="article-aside_name">Placeholder Name</div>
+                      <p class="article-aside_bio">
+                        Engineering lead at Aythronix. Writes about the parts of delivery that
+                        do not fit in a ticket.
+                      </p>
+
+                      <div class="article-aside_label is-spaced">Share</div>
+                      <div class="article-share">
+                        <a
+                          class="article-share_link"
+                          href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.aythronix.com%2Fblog-post"
+                          target="_blank"
+                          rel="noopener"
+                          aria-label="Share this article on LinkedIn"
+                          >In</a
+                        >
+                        <a
+                          class="article-share_link"
+                          href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.aythronix.com%2Fblog-post"
+                          target="_blank"
+                          rel="noopener"
+                          aria-label="Share this article on X"
+                          >X</a
+                        >
+                      </div>
+                    </aside>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -148,88 +263,43 @@
             <div class="container-large-bordered">
               <div class="padding-section-medium">
                 <div class="padding-horizontal padding-medium">
-                  <div class="margin-bottom margin-huge">
-                    <div class="max-width-large">
-                      <div class="eyebrow-dot">Blog and articles</div>
+                  <div class="related-header">
+                    <div>
+                      <div class="eyebrow-dot">Keep reading</div>
                       <div class="margin-top margin-small">
-                        <h2 data-reveal="text">Latest insights and trends</h2>
+                        <h2 data-reveal="text">Related news</h2>
                       </div>
                     </div>
+
+                    <a href="blog.html" class="button is-secondary is-small">
+                      <div>See all</div>
+                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                    </a>
                   </div>
 
                   <div class="posts_grid" data-reveal="fade">
-                    <a href="blog-post.html" class="post-card" data-category="architecture">
+                    <a href="blog-post.html" class="post-card">
                       <div class="post-card_thumb"></div>
                       <div class="label-chip is-small">Architecture</div>
                       <div class="post-card_title">Designing for the day the traffic triples</div>
                       <p class="post-card_excerpt">When to rearchitect instead of tune.</p>
                     </a>
 
-                    <a href="blog-post.html" class="post-card" data-category="delivery">
+                    <a href="blog-post.html" class="post-card">
                       <div class="post-card_thumb"></div>
                       <div class="label-chip is-small">Delivery</div>
                       <div class="post-card_title">Estimates that survive contact with the codebase</div>
                       <p class="post-card_excerpt">Why we read the repo before quoting.</p>
                     </a>
 
-                    <a href="blog-post.html" class="post-card" data-category="performance">
+                    <a href="blog-post.html" class="post-card">
                       <div class="post-card_thumb"></div>
                       <div class="label-chip is-small">Performance</div>
                       <div class="post-card_title">Treating latency as a business metric</div>
                       <p class="post-card_excerpt">Three seconds to under one.</p>
-                    </a>
-
-                    <a href="blog-post.html" class="post-card" data-category="platform">
-                      <div class="post-card_thumb"></div>
-                      <div class="label-chip is-small">Platform</div>
-                      <div class="post-card_title">Observability you will still use in a year</div>
-                      <p class="post-card_excerpt">The dashboards a team actually keeps.</p>
-                    </a>
-
-                    <a href="blog-post.html" class="post-card" data-category="platform">
-                      <div class="post-card_thumb"></div>
-                      <div class="label-chip is-small">Platform</div>
-                      <div class="post-card_title">Automation that removes work, not adds it</div>
-                      <p class="post-card_excerpt">Which workflows are worth automating.</p>
-                    </a>
-
-                    <a href="blog-post.html" class="post-card" data-category="delivery">
-                      <div class="post-card_thumb"></div>
-                      <div class="label-chip is-small">Delivery</div>
-                      <div class="post-card_title">Writing for whoever inherits the system</div>
-                      <p class="post-card_excerpt">Docs and tests for the next team.</p>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="services-section">
-          <div class="padding-global">
-            <div class="container-large-bordered">
-              <div class="padding-section-medium">
-                <div class="padding-horizontal padding-medium">
-                  <div class="margin-bottom margin-huge">
-                    <div class="max-width-large">
-                      <div class="label-chip">Stay in Touch</div>
-                      <div class="margin-top margin-small">
-                      <h2 data-reveal="text">Get New Posts by Email</h2>
-                      <div class="margin-top margin-small">
-                        <p>Occasional notes when we publish.</p>
-                      </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="display-horizontal-left" data-reveal="fade">
-                    <a href="contact.html" class="button is-icon" data-brackets>
-                      <div>Book a consultation</div>
-                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
-                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
-                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
-                      <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
                     </a>
                   </div>
                 </div>

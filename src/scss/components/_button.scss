@@ -21,7 +21,11 @@
   text-decoration: none;
   cursor: pointer;
   border: 0;
-  border-radius: 0;
+  // The corner brackets (`.select-button-vector`) sit at the four corners and
+  // are drawn square. At one step of radius the two still read as the same
+  // corner; if this is ever opened up much further, the brackets are the thing
+  // that will stop agreeing with it.
+  border-radius: var(--radius--small);
   box-shadow: var(--shadow--button);
   transition: background-color 0.2s, opacity 0.2s;
 
@@ -163,8 +167,22 @@
   overflow: hidden;
 }
 
+// The box lottie-web renders its player into. Sized to the container's inner
+// square rather than left to shrink-wrap, so every glyph lands on the same
+// board — the generated ones fill their 500 box more evenly than the imported
+// ones did, and without this they sat at different sizes to each other.
 .arrow-icon {
-  padding-top: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 // The "Show more / Show less" pair under the team grid.

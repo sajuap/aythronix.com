@@ -32,6 +32,12 @@ export function initSmoothScroll() {
       autoRaf: false,
     });
 
+    // Lenis starts running the moment it is constructed. If the page is already
+    // locked — index.html sets `is-locked` from its head, before this chunk has
+    // even been requested — it has to come up stopped, or it spends the rest of
+    // the preloader listening for wheel events it should be ignoring.
+    if (document.documentElement.classList.contains('is-locked')) lenis.stop();
+
     lenis.on('scroll', ScrollTrigger.update);
 
     const raf = (time) => lenis.raf(time * 1000);

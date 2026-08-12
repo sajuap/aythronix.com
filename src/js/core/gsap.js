@@ -38,7 +38,11 @@ CustomEase.create('wfEase', '0.25, 0.1, 0.25, 1');
 /** The engine's "outCirc" — used for the logo pop and the hero copy entrance. */
 CustomEase.create('wfOutCirc', '0.075, 0.82, 0.165, 1');
 
-/** The engine's "inOutQuint", used by the page-transition panel. */
+/**
+ * The engine's "inOutQuint". Registered but not currently used — the page
+ * transition it was named for runs on `power2.inOut`, the curve the reference
+ * build uses for the same move.
+ */
 CustomEase.create('wfInOutQuint', '0.86, 0, 0.07, 1');
 
 export { gsap, ScrollTrigger, ScrollToPlugin, SplitText, CustomEase };

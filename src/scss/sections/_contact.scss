@@ -15,6 +15,12 @@
   grid-template-rows: auto;
   background-color: var(--base-color-neutral--neutral-lightest);
   border: 1px solid var(--base-color-neutral--neutral-lighter);
+  // Same step as `.case-card`. The two are explicitly one vocabulary of "panel"
+  // — see the note at the top of _case-studies.scss — so they cannot take
+  // different corners. `overflow` is what makes the right-hand panel inside
+  // follow the curve instead of poking square corners through it.
+  border-radius: var(--radius--medium);
+  overflow: hidden;
   box-shadow: var(--shadow--ambient-wide);
 
   @include tablet {

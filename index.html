@@ -2,21 +2,12 @@
 <html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
-    <!--
-      Drop the no-js class here, not from the bundle.
-
-      The stylesheet hides the preloader and the page-transition panel while
-      `no-js` is set, so that a visitor without JavaScript gets the plain page
-      instead of a permanent cover. main.js used to be what cleared it — but a
-      module script is deferred, so it does not run until after the document is
-      parsed, and the browser paints in the meantime. That painted the real page
-      with both covers still hidden, and the preloader then appeared over the top
-      a beat later. Measured at ~665ms of exposed page on a throttled load.
-
-      Inline and parser-blocking, it runs before the first paint, so the very
-      first frame the visitor sees is already the covered one.
-    -->
+    <!-- Drop no-js before the first paint: the covers are hidden while it is set, and the deferred bundle clears it too late. -->
     <script>document.documentElement.classList.remove('no-js');</script>
+
+    <!-- Lock scrolling before the first paint. The preloader owns the unlock on this page, so page-transition.js leaves it alone. -->
+    <script>document.documentElement.classList.add('is-locked');</script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Aythronix | Web, Mobile, AI &amp; E-Commerce Engineering Agency</title>
@@ -51,12 +42,7 @@
 
     <link rel="icon" type="image/svg+xml" href="/src/assets/icons/logo-mark.svg" />
 
-    <!--
-      Preload the two faces that paint above the fold. Overused Grotesk Medium
-      carries the H1; Mondwest carries the eyebrow labels beside it. Without
-      these the hero re-flows the moment the webfonts land, right as the
-      preloader hands over.
-    -->
+    <!-- Preload the two above-the-fold faces, or the hero re-flows just as the preloader hands over. -->
     <link
       rel="preload"
       href="/src/assets/fonts/overusedgrotesk-medium.otf"
@@ -72,12 +58,7 @@
       crossorigin
     />
 
-    <!--
-      Organization. `contactPoint` and `sameAs` are the two fields most often
-      omitted, and exactly what surfaces in a knowledge panel. The @id lets the
-      Service and Review graphs below point back here instead of redeclaring the
-      company three times.
-    -->
+    <!-- Organization. contactPoint and sameAs are what surface in a knowledge panel; the @id lets the graphs below point back here. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -149,12 +130,7 @@
       }
     </script>
 
-    <!--
-      AggregateRating carries reviewCount 3, matching the three reviews actually
-      rendered below. Claiming more than the page shows is the quickest route to a
-      structured-data penalty, and the reviews have to stay visible for this
-      markup to remain valid.
-    -->
+    <!-- AggregateRating carries reviewCount 3, matching the three reviews actually on the page. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -213,18 +189,7 @@
   <body>
     <a class="skip-link" href="#Hero">Skip to content</a>
 
-    <!--
-      Recolours the pre-rendered dot artwork from its original black to the brand
-      blue, referenced from CSS as `filter: url(#brand-tint)`.
-
-      A component transfer maps input 0 (black) to the brand blue and input 1
-      (white) to white, interpolating between — so it works for transparent PNGs
-      *and* opaque white-background AVIFs, which a mask could not have handled. It
-      also covers every srcset variant for free.
-
-      `color-interpolation-filters="sRGB"` is required: the default linearRGB
-      would apply the ramp in the wrong colour space and come out washed.
-    -->
+    <!-- Recolours the pre-rendered dot artwork from black to brand blue. -->
     <svg width="0" height="0" aria-hidden="true" focusable="false" style="position: absolute">
       <filter id="brand-tint" color-interpolation-filters="sRGB">
         <feComponentTransfer>
@@ -234,20 +199,7 @@
         </feComponentTransfer>
       </filter>
 
-      <!--
-        The decorative quotation mark behind every testimonial. One definition,
-        instanced per card with <use>, so the geometry is downloaded and parsed
-        once however many cards the marquee ends up cloning.
-
-        Two blocks, each with a quarter-round notch cut from the upper left. It
-        is drawn square rather than as a pair of soft serif commas on purpose:
-        the buttons and the form fields on this site both zero their radius, and
-        a rounded ornament would be the only soft corner on the page. The one
-        curve in it is the notch, which is what stops it reading as a bracket.
-
-        `currentColor` rather than a literal, so the colour is set in CSS next to
-        the opacity it is paired with — see scss/sections/_testimonials.scss.
-      -->
+      <!-- The decorative quotation mark behind every testimonial: defined once, referenced by each card. -->
       <symbol id="quote-mark" viewBox="0 0 64 40">
         <path
           fill="currentColor"
@@ -257,25 +209,16 @@
       </symbol>
     </svg>
 
-    <!--
-      Page transition. Sits one level under the preloader (z-101 against 102) and
-      covers the viewport from CSS alone, so there is never a frame of unstyled
-      page on arrival. js/components/page-transition.js drives it.
-    -->
-    <div class="page-transition" aria-hidden="true"></div>
+    <!-- Page transition: one level under the preloader (z-101 against 102), covering from CSS. js/components/page-transition.js. -->
+    <div class="page-transition" aria-hidden="true">
+      <span class="page-transition_panel"></span>
+      <span class="page-transition_panel"></span>
+      <span class="page-transition_panel"></span>
+      <span class="page-transition_panel"></span>
+      <span class="page-transition_panel"></span>
+    </div>
 
-    <!--
-      Preloader.
-
-      The mark is inline rather than an <img> because it is drawn: every path is
-      a dash-offset outline that fills in, icon first and then the wordmark one
-      letter at a time. Groups are split so the two halves can be paced
-      separately — see js/components/preloader.js, which owns every timing.
-
-      One copy of the mark, one colour axis. The paths paint from currentColor,
-      so the brand reveal is two tweens against each other: the panel's
-      background white→blue, and the stage's colour blue→white.
-    -->
+    <!-- Preloader. The mark is inline because it is drawn — dash-offset outlines filling in from currentColor. js/components/preloader.js owns the timings. -->
     <div class="preloader" aria-hidden="true">
       <div class="preloader_layers">
         <div class="preloader_bloom"></div>
@@ -321,7 +264,7 @@
       <header class="nav_component is-preload-hidden" role="banner">
         <div class="padding-global">
           <div class="nav_container">
-            <a href="#Hero" class="nav_logo" aria-label="Aythronix — home">
+            <a href="#" class="nav_logo" aria-label="Aythronix — home">
               <img
                 src="/src/assets/icons/logo.svg"
                 loading="eager"
@@ -333,9 +276,12 @@
             </a>
 
             <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Main">
+              <a href="#Hero" class="nav_link" aria-current="page">Home</a>
               <a href="about.html" class="nav_link">About</a>
               <a href="services.html" class="nav_link">Services</a>
+              <a href="portfolio.html" class="nav_link">Portfolio</a>
               <a href="blog.html" class="nav_link">Blog</a>
+              <a href="contact.html" class="nav_link">Contact</a>
 
               <!-- Tablet/mobile copy of the CTA, shown once the menu collapses. -->
               <div class="display-horizontal-left is-hidden-desktop">
@@ -378,14 +324,7 @@
         <!-- ============================================================== -->
         <section id="Hero" class="hero-section">
           <div class="hero-section_background-image">
-            <!--
-              The glass. The canvas is a Three.js scene — transmissive slabs in
-              front of an animated light field. The wrapper carries a CSS gradient
-              in the same colours, which is what paints while the Three chunk is
-              still loading and the whole backdrop on a machine that cannot run
-              it. `is-live` is added by the renderer on its first frame and fades
-              the canvas over the top.
-            -->
+            <!-- The glass: a Three.js scene of transmissive slabs. The wrapper gradient paints until is-live fades the canvas over it. -->
             <div class="hero_glass" aria-hidden="true">
               <canvas class="hero_glass-canvas"></canvas>
             </div>
@@ -401,7 +340,7 @@
                     <div class="margin-bottom margin-small">
                       <div class="margin-top margin-small">
                         <h1>
-                          We are architecting the future<br /> of your digital
+                          We are architecting the future<br class="d-md-block d-none" /> of your digital
                           <span class="heading-style-h1-pixel"> ecosystem</span> 
                         </h1>
                       </div>
@@ -428,11 +367,7 @@
                   </div>
                 </div>
 
-                <!--
-                  The interactive particle field. Canvas on desktop; below 992px
-                  the canvas is hidden by CSS and the pre-rendered still takes
-                  over.
-                -->
+                <!-- The interactive particle field: canvas on desktop, the still image below 992px. -->
                 <div class="hero_sphere-wrapper">
                   <div class="hero_sphere-code"><canvas id="nebula-canvas"></canvas></div>
                   <img
@@ -470,11 +405,7 @@
                     </div>
 
                     <div class="logo-section_logos-wrapper">
-                      <!--
-                        One authored copy of the set. marquee.js measures it and
-                        clones it as many times as the viewport needs, so the loop
-                        is seamless at any width.
-                      -->
+                      <!-- One authored copy of the set; marquee.js measures it and clones it to fill the row. -->
                       <div class="logo-section_logos-display" data-marquee>
                         <div class="capability_item">Web Development</div>
                         <div class="capability_item">Mobile Apps</div>
@@ -495,43 +426,34 @@
         <!-- ============================================================== -->
         <!-- Value proposition                                                -->
         <!-- ============================================================== -->
-        <section id="About" class="value-prop-section">
+        <section id="About" class="why-section">
           <div class="padding-global">
             <div class="container-large-bordered">
               <div class="padding-section-medium">
                 <div class="padding-horizontal padding-medium">
                   <div>
-                    <div class="value-prop_image-wrapper">
-                      <div class="margin-bottom margin-medium">
-                        <div class="max-width-medium">
-                          <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
-                            <div class="subtitle-line"></div>
-                            <div class="text-style-subtitle">Why Aythronix</div>
-                            <div class="subtitle-line"></div>
-                          </div>
-                          <h2 data-reveal="text">One Technical Partner. Endless Capabilities.</h2>
+                    <div class="margin-bottom margin-medium">
+                      <div class="max-width-medium">
+                        <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                          <div class="subtitle-line"></div>
+                          <div class="text-style-subtitle">Why Aythronix</div>
+                          <div class="subtitle-line"></div>
                         </div>
-                      </div>
-
-                      <img
-                        src="/src/assets/images/mission-and-vision.avif"
-                        loading="lazy"
-                        alt="Four figures walking in an evolutionary progression, from a stooped ape to an upright human, each one taller and more defined than the last, drawn in fine stippled dots"
-                        class="is-absolute is-value-prop-image"
-                      />
-
-                      <div class="display-horizontal-left">
-                        <a href="#Services" class="button is-icon" data-brackets>
-                          <div>Explore Services</div>
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
-                        </a>
+                        <h2 data-reveal="text">One Technical Partner. Endless Capabilities.</h2>
                       </div>
                     </div>
 
-                    <div class="w-layout-grid fs-styleguide_2-col is-gap-1remm-tab" data-reveal="fade">
+                    <div class="display-horizontal-left">
+                      <a href="#Services" class="button is-icon" data-brackets>
+                        <div>Explore Services</div>
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                        <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                      </a>
+                    </div>
+
+                    <div class="w-layout-grid fs-styleguide_2-col is-gap-1remm-tab pt-4" data-reveal="fade">
                       <p>
                         We eliminate the friction of managing disparate technical vendors.
                         Aythronix provides a unified full-stack engineering force, seamlessly
@@ -546,6 +468,8 @@
                       </p>
                     </div>
                   </div>
+
+                
                 </div>
               </div>
             </div>
@@ -690,31 +614,91 @@
                     </div>
                   </div>
 
-                  <div class="case-studies_grid" data-reveal="fade">
-                    <article class="case-card">
-                      <div class="case-card_metric">+140% Revenue Growth Post-Launch</div>
-                      <div class="case-card_divider"></div>
-                      <h3 class="case-card_title">
-                        Rescuing a Fragmented FinTech Architecture From Operational Chaos
-                      </h3>
-                      <p>
-                        How we took a crumbling legacy system that was dropping customer
-                        transactions and re-engineered it into a bulletproof, automated modern web
-                        infrastructure.
-                      </p>
+                  <!-- Full-width panels that stack on scroll: CSS sticky does the stacking, card-stack.js adds only the depth cue. No data-reveal — arriving over one another is the entrance. -->
+                  <div class="case-stack" data-card-stack>
+                    <article class="case-stack_card">
+                      <div class="case-stack_lead">
+                        <div class="case-stack_index">01</div>
+                        <div class="case-card_metric">+140% Revenue Growth Post-Launch</div>
+                      </div>
+                      <div class="case-stack_body">
+                        <h3 class="case-card_title">
+                          Rescuing a Fragmented FinTech Architecture From Operational Chaos
+                        </h3>
+                        <p>
+                          How we took a crumbling legacy system that was dropping customer
+                          transactions and re-engineered it into a bulletproof, automated modern
+                          web infrastructure.
+                        </p>
+                      </div>
                     </article>
 
-                    <article class="case-card">
-                      <div class="case-card_metric">0.8s Checkout Latency Achieved</div>
-                      <div class="case-card_divider"></div>
-                      <h3 class="case-card_title">
-                        Scaling Enterprise E-Commerce Past the Competitor Bottleneck
-                      </h3>
-                      <p>
-                        Stop losing sales to slow load times. We optimized high-performance
-                        checkout paths to turn frustrated visitors into highly profitable repeat
-                        buyers.
-                      </p>
+                    <article class="case-stack_card">
+                      <div class="case-stack_lead">
+                        <div class="case-stack_index">02</div>
+                        <div class="case-card_metric">0.8s Checkout Latency Achieved</div>
+                      </div>
+                      <div class="case-stack_body">
+                        <h3 class="case-card_title">
+                          Scaling Enterprise E-Commerce Past the Competitor Bottleneck
+                        </h3>
+                        <p>
+                          Stop losing sales to slow load times. We optimized high-performance
+                          checkout paths to turn frustrated visitors into highly profitable
+                          repeat buyers.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article class="case-stack_card">
+                      <div class="case-stack_lead">
+                        <div class="case-stack_index">03</div>
+                        <div class="case-card_metric">One Codebase, Two App Stores</div>
+                      </div>
+                      <div class="case-stack_body">
+                        <h3 class="case-card_title">
+                          Collapsing Two Diverging Native Apps Into a Single Build
+                        </h3>
+                        <p>
+                          Two teams, two roadmaps and two sets of bugs had become the real cost
+                          of shipping mobile. We rebuilt both on one cross-platform core, so a
+                          fix lands once and reaches everyone.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article class="case-stack_card">
+                      <div class="case-stack_lead">
+                        <div class="case-stack_index">04</div>
+                        <div class="case-card_metric">30 Hours a Week Returned</div>
+                      </div>
+                      <div class="case-stack_body">
+                        <h3 class="case-card_title">
+                          Replacing Manual Back-Office Work With an Automation Layer
+                        </h3>
+                        <p>
+                          The operations team was re-keying the same data between four systems.
+                          We put a machine learning pipeline underneath it and gave them their
+                          week back for work only people can do.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article class="case-stack_card">
+                      <div class="case-stack_lead">
+                        <div class="case-stack_index">05</div>
+                        <div class="case-card_metric">3× Organic Traffic in Two Quarters</div>
+                      </div>
+                      <div class="case-stack_body">
+                        <h3 class="case-card_title">
+                          Rebuilding a Technical Foundation Search Engines Could Actually Read
+                        </h3>
+                        <p>
+                          No amount of content was going to fix a site that rendered nothing
+                          without JavaScript. We rebuilt the delivery layer, and the rankings
+                          followed the architecture.
+                        </p>
+                      </div>
                     </article>
                   </div>
                 </div>
@@ -749,7 +733,7 @@
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                        <div class="arrow-icon" data-lottie="icon-1"></div>
+                        <div class="arrow-icon" data-lottie="discovery"></div>
                       </div>
                       <div class="lifecycle-step_index">01</div>
                       <h3 class="lifecycle-step_title">Discovery</h3>
@@ -763,7 +747,7 @@
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                        <div class="arrow-icon" data-lottie="icon-3"></div>
+                        <div class="arrow-icon" data-lottie="blueprint"></div>
                       </div>
                       <div class="lifecycle-step_index">02</div>
                       <h3 class="lifecycle-step_title">Blueprinting</h3>
@@ -791,7 +775,7 @@
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                        <div class="arrow-icon" data-lottie="icon-2"></div>
+                        <div class="arrow-icon" data-lottie="deployment"></div>
                       </div>
                       <div class="lifecycle-step_index">04</div>
                       <h3 class="lifecycle-step_title">Deployment</h3>
@@ -830,24 +814,7 @@
                     </div>
                   </div>
 
-                  <!--
-                    ============================================================
-                    PLACEHOLDER CONTENT — NOT REAL CLIENTS.
-
-                    Every quote, name and company below is invented. None of
-                    these people exist and none of them said this. They are here
-                    to carry the layout only, and must be replaced with real,
-                    attributable, permissioned testimonials before this section
-                    goes in front of customers — or the section removed until
-                    there are some.
-                    ============================================================
-
-                    One row. marquee.js measures a single authored copy of it,
-                    clones that until it covers the viewport twice over, and
-                    wraps the x value at the copy's width — so the loop has no
-                    seam and survives a resize. Speed and the hover pause are set
-                    on the data attributes.
-                  -->
+                  <!-- PLACEHOLDER COPY. Invented names and posts; portraits are initials rather than photographs, so no real person is misrepresented. -->
                   <div class="testimonials_row" data-reveal="fade">
                     <div
                       class="testimonials_track"
@@ -1014,12 +981,7 @@
                         <input class="form-input form-field-span-2" type="text" name="Company" id="Company" placeholder="Company" maxlength="256" />
                         <textarea class="form_input form-field-span-2" name="Message" id="Message" placeholder="What are you building?" maxlength="5000"></textarea>
                         <input class="button is-no-shadow form-submit" type="submit" value="Book a consultation" data-wait="Please wait..." />
-                        <!--
-                          Reserved cell for the anti-spam widget. Empty until a
-                          provider is mounted into it; on desktop it shares the
-                          submit's row, and below 992px — where the submit goes
-                          full width — it becomes the last row.
-                        -->
+                        <!-- Reserved cell for the anti-spam widget; empty until a key is configured. -->
                         <div class="form-captcha-slot" data-captcha-slot></div>
                       </form>
 
@@ -1091,16 +1053,7 @@
                         </div>
                       </div>
 
-                      <!--
-                        The legal pages are reachable from here rather than from a
-                        fourth link column: the content brief specifies exactly
-                        three (Company / Services / Connect), and a cookie policy
-                        nothing links to is worse than an untidy footer.
-
-                        Relative hrefs, not root-absolute — these have to resolve
-                        both at a domain root and under a project subpath such as
-                        GitHub Pages' /<repo>/.
-                      -->
+                      <!-- Legal pages live here rather than in a fourth column. Relative hrefs, so they resolve under a project subpath too. -->
                       <div class="footer_copyright-text">
                         © <span data-year>2026</span> Aythronix |
                         <a href="legal-notice.html"
@@ -1116,10 +1069,10 @@
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Company">
                       <div class="footer_link text-color-primary">Company</div>
+                      <a href="#Hero" class="footer_link">Home</a>
                       <a href="about.html" class="footer_link">About Us</a>
-                      <a href="#Process" class="footer_link">Process</a>
-                      <a href="#Work" class="footer_link">Gallery</a>
-                      <a href="#Contact" class="footer_link">Careers</a>
+                      <a href="portfolio.html" class="footer_link">Portfolio</a>
+                      <a href="blog.html" class="footer_link">Blog</a>
                     </nav>
 
                     <nav class="display-vertical-left is-gap-1rem" aria-label="Services">
@@ -1134,7 +1087,7 @@
                       <div class="footer_link text-color-primary">Connect</div>
                       <a href="https://www.linkedin.com/company/aythronix/" target="_blank" rel="noopener" class="footer_link">LinkedIn</a>
                       <a href="https://x.com/aythronix" target="_blank" rel="noopener" class="footer_link">Twitter / X</a>
-                      <a href="#Contact" class="footer_link">Contact Support</a>
+                      <a href="contact.html" class="footer_link">Contact Support</a>
                       <a href="#Contact" class="footer_link">Book Consultation</a>
                     </nav>
                   </div>

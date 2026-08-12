@@ -1,0 +1,125 @@
+/* ===========================================================================
+   Critical CSS — the rules that have to be in force before the first paint.
+
+   Plain CSS, not SCSS, and deliberately outside main.scss: this file is inlined
+   into every page's <head> by the `aythronix-critical-css` plugin in
+   vite.config.js, so it must be servable as-is with no compile step.
+
+   Why it exists. The stylesheet is imported by the bundle (`import
+   '../scss/main.scss'` in main.js). In a production build Vite extracts that to
+   a render-blocking <link>, so the first frame is already styled. In dev there
+   is no link at all — Vite injects the CSS from JavaScript, and a module script
+   is deferred, so the browser paints the raw document first: every image at its
+   natural size, the skip link sitting above the header, the preloader's mark as
+   twelve solid black paths. The covers that are supposed to prevent exactly
+   that are themselves declared in the stylesheet, so they are not there yet.
+
+   What goes in here. Only the covers and the things that would paint on top of
+   them. This is not a general "above the fold" extract — everything under the
+   cover can arrive with the stylesheet, because nobody can see it.
+
+   Ordering contract. This block is injected before the bundle's stylesheet
+   (Vite appends that at the end of <head>), so every declaration here loses to
+   the real rule the moment it lands. That is the point: nothing in this file can
+   pin a value the stylesheet later changes, which is what stops it drifting into
+   a second, competing source of truth. Colours are literals rather than tokens
+   for the same reason — the tokens are defined in the stylesheet that has not
+   arrived yet — and are kept in step with scss/base/_tokens.scss by hand.
+   =========================================================================== */
+
+/* Off-screen until focused. Without this it is the first element in the body and
+   paints as a plain link above the header on every load. */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 1300;
+}
+
+/* The inner pages' cover, in its resting state: five columns down and covering,
+   about to lift. Both parts are needed — an empty container would paint nothing,
+   which is the flash this file exists to prevent. The reasoning behind each
+   declaration is beside the real rules in scss/components/_preloader.scss. */
+.page-transition {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.page-transition_panel {
+  flex: 1 1 0;
+  height: 100%;
+  margin-right: -1px;
+  background-color: #0765eb;
+}
+
+/* Nothing would lift it, so it would sit over the page permanently. */
+html.no-js .page-transition {
+  display: none;
+}
+
+/* The home page's cover. Sized from its four insets rather than a width/height
+   pair so it does not collide with the stylesheet's `--vh` height fallback —
+   when both arrive, `height` wins and `bottom` is simply ignored. */
+.preloader {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1200;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+}
+
+/* The scroll lock, so it is in force from the first frame.
+
+   It is applied by an inline script in index.html's <head> rather than by the
+   bundle. `stopScroll()` lives inside `initPreloader`, which sits behind the
+   dynamic import of Lenis — so on a cold load there was a window, as long as
+   that chunk took to arrive, where the visitor was looking at the preloader and
+   could still scroll the page behind it. */
+html.is-locked {
+  overflow: hidden;
+}
+
+html.no-js .preloader {
+  display: none;
+}
+
+/* The mark is drawn by JS from an unpainted outline: the stylesheet holds every
+   path at zero fill and zero stroke until there is a measured length to animate.
+   Un-styled they are twelve solid black shapes on the white panel. */
+.preloader_logo path {
+  fill-opacity: 0;
+  stroke-opacity: 0;
+}
+
+/* The progress rule and the 000 readout, which otherwise land in the middle of
+   the panel next to the mark. Positioned rather than hidden — hiding them here
+   would still be hiding them after the stylesheet arrives. */
+.preloader_progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+
+.preloader_count {
+  position: absolute;
+  right: 2.5rem;
+  bottom: 2rem;
+}
+
+/* Held for the preloader to hand over to. */
+.is-preload-hidden {
+  opacity: 0;
+}
+
+html.no-js .is-preload-hidden {
+  opacity: 1;
+}

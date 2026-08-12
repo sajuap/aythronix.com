@@ -41,12 +41,7 @@
   // What paints before the first WebGL frame, and the entire backdrop if the
   // context never comes up: the same pools of light the shader builds, minus
   // the refraction.
-  background-color: #02091b;
-  background-image:
-    radial-gradient(120% 78% at 56% 74%, rgb(11 55 146 / 90%) 0%, rgb(4 23 58 / 0%) 62%),
-    radial-gradient(62% 48% at 88% 12%, rgb(11 55 146 / 55%) 0%, rgb(4 23 58 / 0%) 65%),
-    radial-gradient(70% 42% at 6% 96%, rgb(7 60 160 / 45%) 0%, rgb(2 9 27 / 0%) 70%),
-    linear-gradient(180deg, #02091b 0%, #041531 52%, #010613 100%);
+  @include night-sky;
 
   // The fallback's own slats, so a machine without WebGL still gets glass
   // rather than a plain gradient. Dropped the moment the canvas is live, or the
@@ -79,11 +74,27 @@
   // underneath. Both are built from the same colours, so the handover is a lift
   // in depth rather than a change of scene.
   opacity: 0;
-  transition: opacity 0.9s ease;
 
   .hero_glass.is-live & {
     opacity: 1;
   }
+}
+
+// The crossfade only applies once the intro has handed over.
+//
+// The preloader holds its exit until the renderer reports its first frame — and
+// `is-live` goes on with that same frame, so the 0.9s fade was starting under the
+// panel and finishing in front of the visitor. What that looks like is the hero
+// assembling itself after the page has arrived, which is exactly the "it takes a
+// moment to load" glitch.
+//
+// Behind an opaque panel there is nothing to smooth, so there is no reason to
+// fade: the canvas snaps to opaque while it cannot be seen. The transition is
+// kept for the cases that happen *after* the intro — a slow machine where the
+// scene lands late, or a lost WebGL context coming back — which is where a
+// crossfade was always the point.
+html.is-loaded .hero_glass-canvas {
+  transition: opacity 0.9s ease;
 }
 
 // --- Copy on the sheet -----------------------------------------------------

@@ -74,6 +74,32 @@
   }
 }
 
+// The page you are on. Drawn in `currentColor` so the one rule covers both ink
+// modes — navy over a white header, white over the hero — rather than needing a
+// second colour inside `.is-over-hero`. It is a static marker, so it is a
+// pseudo-element rather than a border: the border would shift the link's box and
+// nudge every link after it by a pixel.
+.nav_link[aria-current='page'] {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    inset: auto 10px 1px;
+    height: 1px;
+    background-color: currentColor;
+    content: '';
+  }
+
+  // The collapsed menu sets the links left-aligned at 1rem of padding, so the
+  // rule has to follow the larger box or it stops short of the word.
+  @include tablet {
+    &::after {
+      inset: auto auto calc(1rem - 4px) 1rem;
+      width: calc(100% - 2rem);
+    }
+  }
+}
+
 // --- Over the hero ---------------------------------------------------------
 //
 // Set by js/animations/nav.js for as long as the header is still transparent,

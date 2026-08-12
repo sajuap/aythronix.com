@@ -1,0 +1,310 @@
+// ---------------------------------------------------------------------------
+// Article — the blog detail page
+//
+// Structure follows the supplied reference: a back chip, a large title with a
+// short lead, a metadata rail down the right behind a hairline, a full-width
+// cover, then the body in two columns — prose on the left, author and share on
+// the right behind a second hairline — and a related row at the foot.
+//
+// There is no dark banner here, unlike the other inner pages. The reference puts
+// the title straight at the top of the page and it is the right call for a
+// reading page: a full-height colour block above an article is one screen of
+// nothing between the visitor and the thing they clicked for. `.is-inner-page`
+// on the body is what fills the header behind it instead — see _legal.scss,
+// which already had that pattern for the pages with no hero.
+//
+// Language is the site's, as everywhere else: the radius scale from
+// base/_tokens.scss, the navy/blue tokens, Mondwest for the small caps labels.
+// ---------------------------------------------------------------------------
+
+// --- Header ----------------------------------------------------------------
+
+.article-header {
+  display: grid;
+  align-items: start;
+  grid-template-columns: auto 1fr 15rem;
+  gap: 2.5rem;
+
+  // The rail drops under the title before the columns get narrow enough to
+  // break the heading badly. The back chip goes with it, onto its own line.
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+// A link, not a button: it goes somewhere. Shaped like the blog's filter chips
+// so the two read as the same small control.
+.article-back {
+  display: inline-block;
+  padding: 0.55rem 1rem;
+  color: var(--base-color-neutral--neutral-darkest);
+  border: 1px solid var(--base-color-neutral--neutral-lighter);
+  border-radius: var(--radius--pill);
+  font-family: $font-body;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.25px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: border-color 0.2s, color 0.2s;
+
+  &:hover {
+    border-color: var(--base-color-neutral--neutral);
+  }
+}
+
+.article-title {
+  margin: 0;
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: clamp(2.25rem, 1.4rem + 3.4vw, 4rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.article-lead {
+  max-width: 30rem;
+  margin: 1.5rem 0 0;
+  opacity: 0.85;
+  color: var(--base-color-neutral--neutral-darker);
+  font-family: $font-body;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+// The metadata rail. The hairline is the column's own left border rather than a
+// separate element, so it is exactly as tall as the content beside it.
+.article-meta {
+  display: grid;
+  gap: 1.5rem;
+  padding-left: 2.5rem;
+  border-left: 1px solid var(--base-color-neutral--neutral-lighter);
+
+  @include tablet {
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    gap: 2rem;
+    padding: 1.5rem 0 0;
+    border-top: 1px solid var(--base-color-neutral--neutral-lighter);
+    border-left: 0;
+  }
+
+  @include mobile-portrait {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+.article-meta_label {
+  margin-bottom: 0.4rem;
+  color: var(--base-color-neutral--neutral-dark);
+  font-family: $font-display;
+  font-size: 0.875rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.article-meta_value {
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  letter-spacing: 0.25px;
+  text-transform: uppercase;
+}
+
+// --- Cover -----------------------------------------------------------------
+//
+// A flat brand tint, as everywhere else on this site: there are photographs of
+// real people in this repo left over from the reference build, and running them
+// under an invented article would misrepresent them.
+.article-cover {
+  aspect-ratio: 16 / 9;
+  margin: 3rem 0;
+  background-image: linear-gradient(
+    112deg,
+    var(--base-color-brand--blue-darker),
+    var(--base-color-brand--blue)
+  );
+  border-radius: var(--radius--large);
+
+  @include mobile-landscape {
+    aspect-ratio: 4 / 3;
+    margin: 2rem 0;
+  }
+}
+
+// --- Body ------------------------------------------------------------------
+
+.article-body {
+  display: grid;
+  align-items: start;
+  grid-template-columns: 1fr 17rem;
+  gap: 3rem;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+// Measure is capped in `ch` rather than `rem`: the limit that matters for
+// reading is how many characters land on a line, and that follows the font size
+// rather than the layout.
+.article-prose {
+  max-width: 70ch;
+
+  h2 {
+    margin: 3rem 0 1rem;
+    color: var(--base-color-neutral--neutral-darkest);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+
+    // The first heading is introduced by the lead above it, so it does not need
+    // the full gap the later ones use to separate two blocks of prose.
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  p {
+    margin: 0 0 1.25rem;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.25rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+    color: var(--base-color-neutral--neutral-darker);
+    font-family: $font-body;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+}
+
+// A pulled-out line inside the prose. Marked by the hairline rather than by
+// italics or a size jump, which is the same device the section frames use.
+.article-pullquote {
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--base-color-brand--blue);
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.4px;
+}
+
+// --- Author and share ------------------------------------------------------
+
+.article-aside {
+  position: sticky;
+  top: calc(var(--nav-height) + 2rem);
+  padding-left: 2.5rem;
+  border-left: 1px solid var(--base-color-neutral--neutral-lighter);
+
+  @include tablet {
+    position: static;
+    padding: 2rem 0 0;
+    border-top: 1px solid var(--base-color-neutral--neutral-lighter);
+    border-left: 0;
+  }
+}
+
+.article-aside_label {
+  margin-bottom: 0.6rem;
+  color: var(--base-color-neutral--neutral-dark);
+  font-family: $font-display;
+  font-size: 0.875rem;
+  line-height: 1;
+  text-transform: uppercase;
+
+  // The second label in the column — "Share" under the author block.
+  & + * {
+    margin-top: 0;
+  }
+
+  &.is-spaced {
+    margin-top: 2rem;
+  }
+}
+
+.article-aside_name {
+  margin-bottom: 0.5rem;
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+}
+
+.article-aside_bio {
+  margin: 0;
+  opacity: 0.85;
+  color: var(--base-color-neutral--neutral-darker);
+  font-family: $font-body;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.article-share {
+  display: flex;
+  gap: 0.5rem;
+}
+
+// Round here, against the square-ish everything else, because these are the one
+// control on the site that is an icon and nothing more — there is no label to
+// give a box a shape around.
+.article-share_link {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--base-color-neutral--neutral-darker);
+  border: 1px solid var(--base-color-neutral--neutral-lighter);
+  border-radius: 50%;
+  font-family: $font-display;
+  font-size: 0.8125rem;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 0.2s, border-color 0.2s;
+
+  &:hover {
+    color: var(--base-color-brand--blue);
+    border-color: var(--base-color-brand--blue);
+  }
+}
+
+// --- Related ---------------------------------------------------------------
+
+.related-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+
+  h2 {
+    margin: 0;
+  }
+
+  @include mobile-landscape {
+    flex-flow: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+}

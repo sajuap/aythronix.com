@@ -3,10 +3,9 @@
 //
 // Structure follows the supplied reference: a dark banner carrying the page
 // title, chip-labelled sections, a large two-tone statement, a team grid and a
-// post grid. The *language* stays this site's, deliberately — square corners
-// (the buttons and form fields both zero their radius, so a rounded card here
-// would be the only soft corner on the site), the existing navy/blue tokens,
-// and Mondwest for the small caps labels.
+// post grid. The *language* stays this site's, deliberately — the radius scale
+// in base/_tokens.scss (controls, surfaces and media each take their own step),
+// the existing navy/blue tokens, and Mondwest for the small caps labels.
 //
 // Nothing here restyles a homepage component. Where a homepage component
 // already fits — the bento `.service-card`, the section shell — these pages use
@@ -31,12 +30,7 @@
 
   // The same pools of light the hero's WebGL backdrop paints, minus the glass —
   // so the two read as the same place without loading Three.js on every page.
-  background-color: #02091b;
-  background-image:
-    radial-gradient(120% 78% at 56% 74%, rgb(11 55 146 / 90%) 0%, rgb(4 23 58 / 0%) 62%),
-    radial-gradient(62% 48% at 88% 12%, rgb(11 55 146 / 55%) 0%, rgb(4 23 58 / 0%) 65%),
-    radial-gradient(70% 42% at 6% 96%, rgb(7 60 160 / 45%) 0%, rgb(2 9 27 / 0%) 70%),
-    linear-gradient(180deg, #02091b 0%, #041531 52%, #010613 100%);
+  @include night-sky;
 
   @include mobile-landscape {
     min-height: 18rem;
@@ -68,7 +62,7 @@
 
 // --- Section label chip ----------------------------------------------------
 //
-// The reference's rounded pill, squared off to match everything else here. It
+// The reference's rounded pill, taken down to this site's one step of radius. It
 // replaces the tick–label–tick eyebrow on these pages only; the homepage keeps
 // its own.
 .label-chip {
@@ -76,10 +70,20 @@
   padding: 0.4rem 0.85rem;
   color: var(--base-color-brand--blue);
   background-color: var(--base-color-brand--blue-lightest);
+  // Same corner as `.blog-filter`: they are the same object to look at, and on
+  // the blog page a row of each is on screen at once.
+  border-radius: var(--radius--small);
   font-family: $font-display;
   font-size: 1rem;
   line-height: 1;
   text-transform: uppercase;
+
+  // The same chip at card scale, where it is a category tag on a post rather
+  // than a label on a whole section.
+  &.is-small {
+    padding: 0.25rem 0.55rem;
+    font-size: 0.875rem;
+  }
 }
 
 // --- Two-tone statement ----------------------------------------------------
@@ -132,6 +136,7 @@
   aspect-ratio: 4 / 5;
   margin-bottom: 1rem;
   background-image: linear-gradient(112deg, #d2ddf0, #f6f9fe);
+  border-radius: var(--radius--large);
 }
 
 // Initials rather than a face. There are photographs of real people in this
@@ -161,6 +166,131 @@
   text-transform: uppercase;
 }
 
+// --- Blog: category filters ------------------------------------------------
+//
+// The reference's pill row, kept as pills — a filter chip is the one control
+// that is fully rounded in more or less every design system, and the reference
+// draws them that way too. Real buttons rather than styled links: they change
+// what is on the page, they do not go anywhere, and
+// js/components/blog-filters.js drives them.
+.blog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+
+  @include mobile-landscape {
+    margin-bottom: 2rem;
+  }
+}
+
+.blog-filter {
+  padding: 0.65rem 1.1rem;
+  color: var(--base-color-neutral--neutral-darkest);
+  background-color: transparent;
+  border: 1px solid var(--base-color-neutral--neutral-lighter);
+  border-radius: var(--radius--pill);
+  font-family: $font-body;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.25px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+
+  &:hover {
+    border-color: var(--base-color-neutral--neutral);
+  }
+
+  // Driven from `aria-pressed`, not a second class. The state a screen reader is
+  // told and the state that is drawn cannot drift apart if they are the same
+  // attribute.
+  &[aria-pressed='true'] {
+    color: var(--base-color-neutral--white);
+    background-color: var(--base-color-brand--black);
+    border-color: var(--base-color-brand--black);
+  }
+}
+
+// Hidden by the filter. `display: none` rather than a fade: the grid reflows
+// either way, so an opacity transition would animate the surviving cards
+// jumping into the gaps rather than smoothing anything.
+[data-category].is-filtered-out {
+  display: none;
+}
+
+// --- Blog: featured post ---------------------------------------------------
+
+.featured-post {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 3rem;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+// Stands in for the cover image, exactly as `.post-card_thumb` does and for the
+// same reason — see the note in the markup about the photographs in this repo.
+// Empty on purpose: the category is already stated in the chip beside it, and a
+// placeholder that repeats it reads as a caption rather than as a picture.
+.featured-post_media {
+  aspect-ratio: 4 / 3;
+  background-image: linear-gradient(
+    112deg,
+    var(--base-color-brand--blue-darker),
+    var(--base-color-brand--blue)
+  );
+  border-radius: var(--radius--large);
+}
+
+.featured-post_title {
+  margin: 1rem 0 0;
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -1px;
+}
+
+.featured-post_excerpt {
+  margin: 1.25rem 0 2rem;
+  opacity: 0.85;
+  color: var(--base-color-neutral--neutral-darker);
+  font-family: $font-body;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+// --- Dot eyebrow -----------------------------------------------------------
+//
+// The reference's bullet-and-label above a section heading. Used where the
+// chip would be too heavy — it sits directly over a large heading rather than
+// labelling a block from the side.
+.eyebrow-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--base-color-neutral--neutral-dark);
+  font-family: $font-display;
+  font-size: 1rem;
+  line-height: 1;
+  text-transform: uppercase;
+
+  &::before {
+    width: 0.45rem;
+    height: 0.45rem;
+    background-color: var(--base-color-brand--blue);
+    border-radius: 50%;
+    content: '';
+  }
+}
+
 // --- Blog ------------------------------------------------------------------
 
 .posts_grid {
@@ -184,6 +314,7 @@
   height: 100%;
   padding: 1rem 1rem 1.75rem;
   background-image: linear-gradient(112deg, #d2ddf0, #f6f9fe);
+  border-radius: var(--radius--medium);
   text-decoration: none;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   @include will-animate(transform);
@@ -206,9 +337,18 @@
     var(--base-color-brand--blue-darker),
     var(--base-color-brand--blue)
   );
+  border-radius: var(--radius--large);
   font-family: $font-display;
   font-size: 1.25rem;
   text-transform: uppercase;
+}
+
+// The category tag. `align-self` because the card is a flex column, where an
+// inline-block would otherwise be stretched to the full card width by the
+// default `align-items: stretch` and stop reading as a chip.
+.post-card .label-chip {
+  align-self: flex-start;
+  margin-bottom: 0.75rem;
 }
 
 .post-card_meta {

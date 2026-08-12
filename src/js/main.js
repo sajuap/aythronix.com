@@ -12,9 +12,14 @@
  *      cost is invisible, and the ticker waits for the panel to leave, where it
  *      would otherwise be stealing frames from the intro. The preloader holds
  *      its exit until the backdrop reports a real frame.
- *   5. The hero sphere is only built once the preloader has handed over —
- *      3,500 springs competing with the intro timeline costs frames on the one
- *      animation a visitor is guaranteed to watch.
+ *   5. The hero sphere follows the same rule, for the same reason. It used to be
+ *      *built* at the hand-over rather than merely started there, which put
+ *      3,500 particles and their springs on the one frame the panel lifts on —
+ *      so the hero stalled at exactly the moment a visitor started watching it.
+ *      Now it is built behind the panel and held, like the backdrop.
+ *   6. Everything the hand-over does beyond those two runs one step per frame
+ *      (`runAcrossFrames`), so the browser can paint between the pieces instead
+ *      of freezing through one long task. None of it is above the fold.
  */
 
 import '../scss/main.scss';
@@ -30,9 +35,11 @@ import { initNavMenu, initNavScroll } from './animations/nav.js';
 import { initMarquees } from './animations/marquee.js';
 import { initButtonBrackets } from './animations/button-brackets.js';
 import { initReveals } from './animations/reveals.js';
+import { initCardStack } from './animations/card-stack.js';
 import { initLottieIcons } from './components/lottie-icons.js';
 import { initAnchors } from './components/anchors.js';
 import { initContactForm } from './components/contact-form.js';
+import { initBlogFilters } from './components/blog-filters.js';
 import NebulaSphere from './three/nebula-sphere.js';
 
 // Belt and braces. The class is really cleared by a parser-blocking inline
@@ -56,6 +63,10 @@ let revealed = false;
 /**
  * Build the hero sphere on desktop only. Below 992px the canvas is display:none
  * and a still image stands in, so there is nothing to drive.
+ *
+ * Called twice over: once from `boot`, where `revealed` is still false and the
+ * field is therefore built but held, and again on every resize across the 992px
+ * boundary, where it is past the reveal and starts on its own.
  */
 function initHeroSphere() {
   const canvas = document.getElementById('nebula-canvas');
@@ -67,11 +78,36 @@ function initHeroSphere() {
     // Ice blue rather than the brand blue the sphere carried over the old white
     // hero — brand blue on the glass sheet is barely a step off its own
     // background, and the field disappears into it.
-    heroSphere = new NebulaSphere(canvas, { color: '214,232,255' });
+    heroSphere = new NebulaSphere(canvas, { color: '214,232,255', autoStart: revealed });
   } else if (!shouldRun && heroSphere) {
     heroSphere.destroy();
     heroSphere = null;
   }
+}
+
+/**
+ * Run each step on its own animation frame.
+ *
+ * Everything the reveal hands over to used to run in one synchronous block
+ * inside the preloader's `onComplete`: 3,500 particles built for the hero sphere
+ * and 1,400 more for the orb, SplitText across every heading on the page, the
+ * Lottie player, and a full `ScrollTrigger.refresh()`. That is a single long task
+ * landing on the exact frame the panel lifts, and it is what makes the hero stall
+ * for a moment just as the visitor starts watching it.
+ *
+ * Same total work, but the browser gets to paint between the pieces, so the glass
+ * and the sphere keep animating through it instead of freezing. None of these
+ * steps is above the fold — the first `[data-reveal]` on the home page is in the
+ * value-prop section — so nothing visible waits on them.
+ */
+function runAcrossFrames(steps) {
+  let i = 0;
+  const step = () => {
+    if (i >= steps.length) return;
+    steps[i++]();
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 
 /**
@@ -112,19 +148,33 @@ function initHeroGlass() {
 function initAfterReveal() {
   revealed = true;
 
-  // The scene has been sitting on a finished first frame. Hand it the ticker.
+  // The intro is over. Anything that should only animate once the visitor can
+  // actually see it keys off this — the hero backdrop's crossfade in
+  // scss/sections/_hero.scss is the one that matters, since under the panel it
+  // was a fade nobody could see turning into a fade everybody could.
+  document.documentElement.classList.add('is-loaded');
+
+  // The two things the hero itself is made of. Both were built behind the panel
+  // and have been sitting still on a finished first frame, so this is only the
+  // ticker being handed over — the frame the panel lifts on stays cheap.
   heroGlass?.start();
+  heroSphere?.start();
 
-  initHeroSphere();
-  initReveals();
-  initMarquees();
-  initLottieIcons();
+  // Everything else is below the fold, so it can arrive over the next few frames
+  // rather than all on this one. Order matters at the end: the refresh has to
+  // come after the reveals and marquees have registered their triggers.
+  runAcrossFrames([
+    initReveals,
+    initMarquees,
+    initCardStack,
+    initLottieIcons,    () => {
+      // Crossing the 992px boundary either needs the sphere or needs it gone.
+      onResize(initHeroSphere, 250);
 
-  // Crossing the 992px boundary either needs the sphere or needs it gone.
-  onResize(initHeroSphere, 250);
-
-  // Layout has settled and the intro is done — recompute every trigger.
-  ScrollTrigger.refresh();
+      // Layout has settled and the intro is done — recompute every trigger.
+      ScrollTrigger.refresh();
+    },
+  ]);
 }
 
 function boot() {
@@ -141,11 +191,19 @@ function boot() {
   // it. Every one of those milliseconds is free.
   heroGlassReady = initHeroGlass();
 
+  // Built here rather than at the reveal, for the same reason: distributing 3,500
+  // points over a sphere and allocating a spring for each is work the visitor
+  // should not be able to see, and behind the panel it is invisible. `revealed`
+  // is still false, so it is held — the loop does not start until the panel has
+  // gone, which is the part of the old ordering that was actually load-bearing.
+  initHeroSphere();
+
   // Static/idempotent wiring that does not depend on the intro.
   initNavMenu();
   initButtonBrackets();
   initAnchors();
   initContactForm();
+  initBlogFilters();
 
   // Auto-update the copyright year wherever it is marked.
   const year = String(new Date().getFullYear());
@@ -154,10 +212,18 @@ function boot() {
   });
 
   // Smooth scroll first, then the scroll-linked nav flip.
-  Promise.resolve(initSmoothScroll()).then(() => {
-    initNavScroll();
-    initPreloader({ waitFor: heroGlassReady, onComplete: initAfterReveal });
-  });
+  //
+  // The catch is load-bearing now that index.html locks scrolling from its head:
+  // the only thing that unlocks it is the preloader finishing, and the preloader
+  // is downstream of this promise. Let a failed Lenis chunk reject and the
+  // visitor is left on a page they cannot scroll. Smooth scrolling is an
+  // enhancement; being able to scroll at all is not.
+  Promise.resolve(initSmoothScroll())
+    .catch(() => null)
+    .then(() => {
+      initNavScroll();
+      initPreloader({ waitFor: heroGlassReady, onComplete: initAfterReveal });
+    });
 }
 
 if (document.readyState === 'loading') {

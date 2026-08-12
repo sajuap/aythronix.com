@@ -37,6 +37,7 @@
   min-height: 15rem;
   padding: 2rem;
   background-image: linear-gradient(112deg, #d2ddf0, #f6f9fe);
+  border-radius: var(--radius--medium);
   overflow: hidden;
 
   // The featured card leads the grid: two tracks wide, and inverted so it reads
