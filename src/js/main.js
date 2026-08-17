@@ -167,7 +167,8 @@ function initAfterReveal() {
     initReveals,
     initMarquees,
     initCardStack,
-    initLottieIcons,    () => {
+    initLottieIcons,
+    () => {
       // Crossing the 992px boundary either needs the sphere or needs it gone.
       onResize(initHeroSphere, 250);
 
@@ -241,3 +242,32 @@ if (import.meta.env.DEV) {
     get glass() { return heroGlass; },
   };
 }
+
+
+
+// --- Contact form submission ---
+document.querySelectorAll('[data-contact-form]').forEach((form) => {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const wrapper = form.closest('.form-wrapper');
+    const doneEl = wrapper.querySelector('[data-form-done]');
+    const failEl = wrapper.querySelector('[data-form-fail]');
+    const submitBtn = form.querySelector('.form-submit');
+    submitBtn.disabled = true;
+    const originalVal = submitBtn.value;
+    submitBtn.value = submitBtn.dataset.wait || 'Please wait...';
+    failEl.hidden = true;
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+      const data = await res.json();
+      if (!res.ok || data.status !== 'ok') throw new Error('Send failed');
+      form.hidden = true;
+      doneEl.hidden = false;
+    } catch (err) {
+      failEl.hidden = false;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.value = originalVal;
+    }
+  });
+});

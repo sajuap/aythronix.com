@@ -53,7 +53,7 @@ function inlineCriticalCss() {
 }
 
 export default defineConfig({
-  plugins: [inlineCriticalCss()],
+   plugins: [inlineCriticalCss()],
 
   root: '.',
   publicDir: 'public',
@@ -129,6 +129,12 @@ export default defineConfig({
     port: 5173,
     open: true,
     host: true,
+    proxy: {
+      '/send-mail.php': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+    },
   },
 
   preview: {
