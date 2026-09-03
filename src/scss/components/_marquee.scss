@@ -1,10 +1,4 @@
-// ---------------------------------------------------------------------------
 // Marquees
-//
-// Three of these on the page: the press logos, the core-values words, and a
-// faded logo strip inside the contact panel. Each is one long flex row that
-// GSAP translates leftwards forever, with a white gradient masking both ends.
-// ---------------------------------------------------------------------------
 
 .logo-section_logos-wrapper {
   display: flex;

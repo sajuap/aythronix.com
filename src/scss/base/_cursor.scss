@@ -1,19 +1,6 @@
-// ---------------------------------------------------------------------------
 // Cursor
-//
-// The site's pointer is a plus. `crosshair` gave that for free, but only in one
-// colour the page cannot change — and this design sets large near-black sections
-// against a white page, where a single ink loses one end or the other. So it is
-// drawn here instead, twice, and swapped on the dark surfaces.
-//
-// Inline SVG, so neither costs a request. Safari does not support SVG cursors:
-// the `crosshair` after each one is the fallback it takes, which is exactly what
-// every browser did before this file existed.
-// ---------------------------------------------------------------------------
 
-// 22px square, hotspot dead centre, so the crossing point is the point being
-// clicked. `%23` is an escaped `#` — it keeps the URI valid and stops Sass
-// reading `#{` as interpolation.
+// 22px square, hotspot dead centre, so the crossing point is the point being clicked.
 $cursor-plus-ink:
   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M11 1v20M1 11h20' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E")
     11 11,
@@ -28,16 +15,7 @@ body {
   cursor: $cursor-plus-ink;
 }
 
-// The dark surfaces. Measured rather than assumed — none of these paints above
-// 0.36 luminance, across an area big enough to lose a black cursor in.
-//
-// Interactive children look after themselves: a `cursor: pointer` sitting
-// directly on a link or a button always beats a value inherited from the section
-// around it, so buttons keep their hand in here as everywhere else.
-//
-// `.page-transition_panel` is dark too and is deliberately not in this list —
-// the cover sets `pointer-events: none`, so it is never the element under the
-// pointer and a cursor on it would never be read.
+// The dark surfaces.
 .hero-section,
 .testimonials-section,
 .service-card.is-featured,
@@ -48,24 +26,12 @@ body {
   cursor: $cursor-plus-white;
 }
 
-// The header is transparent for as long as it is over the hero, so the surface
-// under it there is the hero, not the page. `is-over-hero` is set by
-// js/animations/nav.js for exactly that span and dropped as the white fill
-// scrubs in, which makes it the right hook — the cursor changes with the header,
-// on the same frame.
+// The header is transparent for as long as it is over the hero, so the surface under it there is the hero.
 .nav_component.is-over-hero {
   cursor: $cursor-plus-white;
 }
 
-// The studio band's photograph is not one surface. Measured down the element it
-// runs 0.96 luminance at 20%, 0.44 at 40% and 0.10 at 90% — the white page
-// showing through its cut-out top, then the wall, then the dark foot — so no
-// single cursor is right for all of it.
-//
-// The lower half claims its own hit area: a transparent box that exists only to
-// carry the white cursor, split at the crossover rather than at the photograph's
-// own top edge. Nothing interactive sits under it — the band's only link is in
-// `.studio-band_copy`, which is a sibling stacked above this element.
+// The studio band's photograph is not one surface.
 .studio-band_media::after {
   content: '';
   position: absolute;
@@ -78,8 +44,7 @@ body {
   cursor: $cursor-plus-ink;
 }
 
-// Below `mobile-landscape` the band's copy leaves the photograph and lands on
-// the white page, so it goes back to ink with everything else.
+// Below `mobile-landscape` the band's copy leaves the photograph and lands on the white page.
 .studio-band_copy {
   @include mobile-landscape {
     cursor: $cursor-plus-ink;

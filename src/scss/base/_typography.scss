@@ -1,11 +1,4 @@
-// ---------------------------------------------------------------------------
 // Typography
-//
-// Sizes are in rem against a 16px root. The negative letter-spacing values are
-// absolute px on purpose — they were authored that way and they do not scale
-// with the font size, which is what keeps the large headings tight and the
-// small ones from collapsing.
-// ---------------------------------------------------------------------------
 
 h1,
 h2,
@@ -117,7 +110,7 @@ figcaption {
   text-align: center;
 }
 
-// --- Named type styles -----------------------------------------------------
+// Named type styles
 
 // Eyebrow label: uppercase Mondwest, sat between two 1px ticks.
 .text-style-subtitle {
@@ -139,8 +132,7 @@ figcaption {
   text-decoration: none;
 }
 
-// Standalone H3 scale for elements that are not headings semantically
-// (team member names, marquee words).
+// Standalone H3 scale for elements that are not headings semantically (team member names, marquee words).
 .heading-style-h3 {
   color: var(--base-color-neutral--neutral-darkest);
   font-family: $font-body;
@@ -159,8 +151,7 @@ figcaption {
   letter-spacing: -0.96px;
 }
 
-// The word "autonomous" in the hero: Mondwest, set larger than the
-// surrounding H1, with two hand-drawn underline SVGs pinned behind it.
+// The word "autonomous" in the hero: Mondwest, set larger than the surrounding H1.
 .heading-style-h1-pixel {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -188,7 +179,7 @@ figcaption {
   color: var(--text-color--text-primary);
 }
 
-// --- Responsive type -------------------------------------------------------
+// Responsive type
 
 @include mobile-landscape {
   h1 {

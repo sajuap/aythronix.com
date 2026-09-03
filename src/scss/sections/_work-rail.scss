@@ -1,0 +1,278 @@
+// Work rail — the portfolio page's Selected Work.
+
+// The section's own frame gets out of the way: the row crosses the column.
+.section-bleeds > .padding-global > .container-large-bordered {
+  border-style: none none solid;
+}
+
+.work-rail {
+  position: relative;
+
+  // Full bleed, on the same device the testimonials row uses.
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+
+  // No background of its own.
+}
+
+.work-rail_viewport {
+  --edge-fade: 6rem;
+
+  overflow-x: auto;
+  // Nothing here is taller than the row; this only stops a stray descender from turning into a second scrollbar.
+  overflow-y: hidden;
+
+  // Room for the hover lift and its shadow to go somewhere.
+  padding-block: 1.25rem;
+
+  // The row loops, so there is always more of it past both edges and the fade is always true.
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--edge-fade),
+    #000 calc(100% - var(--edge-fade)),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--edge-fade),
+    #000 calc(100% - var(--edge-fade)),
+    transparent 100%
+  );
+
+  // The bar is never the affordance here — the row moving is.
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include mobile-landscape {
+    --edge-fade: 1.5rem;
+  }
+}
+
+// The pointer is replaced by `.work-rail_cursor` — but only once JS has one to put there.
+.work-rail.has-custom-cursor .work-rail_viewport,
+.work-rail.has-custom-cursor .work-card_link {
+  cursor: none;
+}
+
+.work-rail_track {
+  display: flex;
+  align-items: stretch;
+  gap: 1.5rem;
+  // `ul` — the row is a list of work, and the reset does not zero these.
+  margin: 0;
+  // Half a card of lead-in, so the first one is not welded to the left edge on a wide screen.
+  padding: 0 1.5rem;
+  list-style: none;
+}
+
+.work-card {
+  display: flex;
+  flex: 0 0 auto;
+  width: 28rem;
+  max-width: 84vw;
+
+  @include tablet {
+    width: 25rem;
+  }
+
+  @include mobile-landscape {
+    width: 20rem;
+  }
+}
+
+.work-card_link {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  color: inherit;
+  background-color: var(--base-color-neutral--white);
+  border: 1px solid var(--base-color-neutral--neutral-lighter);
+  border-radius: var(--radius--medium);
+  // A hairline and a hint of lift.
+  box-shadow: 0 1px 2px rgb(4 23 58 / 4%);
+  // The screenshot runs to the card's own edge, so the card has to clip it back to the radius.
+  overflow: hidden;
+  text-decoration: none;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+
+  // A card is a drag handle as much as it is a link.
+  -webkit-user-drag: none;
+  user-select: none;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.75rem 1.5rem rgb(4 23 58 / 9%);
+    border-color: var(--base-color-neutral--neutral-light);
+  }
+
+  // The ring is the global one in base/_reset.scss — only the offset is set here.
+  &:focus-visible {
+    outline-offset: 3px;
+  }
+}
+
+// The screenshot: edge to edge across the top of the card and the largest thing in it.
+.work-card_thumb {
+  display: block;
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-image: linear-gradient(
+    112deg,
+    var(--base-color-brand--blue-darker),
+    var(--base-color-brand--blue)
+  );
+  // The picture is the only thing on the card that reaches an edge.
+  border-bottom: 1px solid var(--base-color-neutral--neutral-lighter);
+}
+
+.work-card_thumb-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  // Anchored to the top: these are captures of a page, and the top of a page is the part worth showing.
+  object-fit: cover;
+  object-position: top center;
+  transition: scale 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.work-card_link:hover .work-card_thumb-img {
+  scale: 1.03;
+}
+
+// The caption.
+.work-card_text {
+  display: flex;
+  flex-flow: column;
+  gap: 0.75rem;
+  padding: 1.75rem;
+
+  @include mobile-landscape {
+    padding: 1.25rem;
+  }
+}
+
+// Who it was for, as an eyebrow over the title.
+.work-card_client {
+  color: var(--base-color-brand--blue);
+  font-family: $font-display;
+  font-size: 1rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.work-card_title {
+  margin: 0;
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.6px;
+  transition: color 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+// Rather than an underline, which under a title that runs to two lines sits a long way from the words it belongs to.
+.work-card_link:hover .work-card_title {
+  color: var(--base-color-brand--blue);
+}
+
+// Cut to two lines with an ellipsis.
+.work-card_body {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  // `p` carries a global 0.8 tuned for long-form copy on white.
+  opacity: 1;
+  color: var(--base-color-neutral--neutral-dark);
+  font-family: $font-body;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+// The disciplines, as one quiet line with middots between them.
+.work-card_tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  // Pushed to the foot, so the line sits level across cards whose titles run to different depths.
+  margin: auto 0 0;
+  padding: 0.25rem 0 0;
+  color: var(--base-color-neutral--neutral);
+  font-family: $font-display;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  list-style: none;
+  text-transform: uppercase;
+
+  li + li::before {
+    content: "·";
+    margin-right: 0.5rem;
+  }
+}
+
+// The cursor
+.work-rail_cursor {
+  display: grid;
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  place-items: center;
+  width: 5.25rem;
+  height: 5.25rem;
+  opacity: 0;
+  color: var(--base-color-neutral--white);
+  background-color: var(--base-color-brand--blue);
+  border-radius: var(--radius--pill);
+  font-family: $font-display;
+  font-size: 0.9375rem;
+  line-height: 1;
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  @include will-animate(transform);
+}
+
+.work-rail.is-cursor-in .work-rail_cursor {
+  opacity: 1;
+}
+
+// The two faces of it, stacked in the same cell so neither moves as they swap: the word over the open row.
+.work-rail_cursor-label,
+.work-rail_cursor-arrow {
+  grid-area: 1 / 1;
+  transition:
+    opacity 0.2s ease,
+    scale 0.2s ease;
+}
+
+.work-rail_cursor-arrow {
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0;
+  scale: 0.6;
+}
+
+.work-rail.is-over-card .work-rail_cursor-label {
+  opacity: 0;
+  scale: 0.6;
+}
+
+.work-rail.is-over-card .work-rail_cursor-arrow {
+  opacity: 1;
+  scale: 1;
+}

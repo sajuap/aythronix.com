@@ -1,11 +1,4 @@
-// ---------------------------------------------------------------------------
 // Buttons
-//
-// The signature detail is the four 8px corner brackets. On `.is-ext` buttons
-// they sit 4px outside the box and animate a further 4px outward on hover
-// (handled in js/animations/button-brackets.js, because the rotation each
-// corner needs has to be preserved while x/y animate).
-// ---------------------------------------------------------------------------
 
 .button {
   position: relative;
@@ -21,16 +14,12 @@
   text-decoration: none;
   cursor: pointer;
   border: 0;
-  // The corner brackets (`.select-button-vector`) sit at the four corners and
-  // are drawn square. At one step of radius the two still read as the same
-  // corner; if this is ever opened up much further, the brackets are the thing
-  // that will stop agreeing with it.
+  // The corner brackets (`.select-button-vector`) sit at the four corners and are drawn square.
   border-radius: var(--radius--small);
   box-shadow: var(--shadow--button);
   transition: background-color 0.2s, opacity 0.2s;
 
-  // The original's solid button was black and had no hover state — there is not
-  // much a black fill can do. A blue one can darken, so it does.
+  // The original's solid button was black and had no hover state — there is not much a black fill can do.
   &:hover {
     background-color: var(--background-color--background-primary-hover);
   }
@@ -44,8 +33,7 @@
     color: var(--text-color--text-primary);
     box-shadow: none;
 
-    // The secondary button is a navy wash, so it deepens rather than darkening
-    // toward the brand blue — going blue here would compete with the real CTA.
+    // The secondary button is a navy wash, so it deepens rather than darkening toward the brand blue.
     &:hover {
       background-color: var(--base-color-neutral--neutral-light);
     }
@@ -89,8 +77,7 @@
   }
 
   @include tablet {
-    // Below 992px the header CTA moves inside the menu, so the header copy
-    // hides and the menu copy takes over.
+    // Below 992px the header CTA moves inside the menu, so the header copy hides and the menu copy takes over.
     &.is-secondary.is-small {
       display: none;
 
@@ -101,11 +88,7 @@
   }
 }
 
-// ---------------------------------------------------------------------------
 // Corner brackets
-//
-// One SVG, rotated per corner. `.is-ext` offsets it 4px outside the edge.
-// ---------------------------------------------------------------------------
 
 .select-button-vector {
   position: absolute;
@@ -167,10 +150,7 @@
   overflow: hidden;
 }
 
-// The box lottie-web renders its player into. Sized to the container's inner
-// square rather than left to shrink-wrap, so every glyph lands on the same
-// board — the generated ones fill their 500 box more evenly than the imported
-// ones did, and without this they sat at different sizes to each other.
+// The box lottie-web renders its player into.
 .arrow-icon {
   display: flex;
   justify-content: center;

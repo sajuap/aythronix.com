@@ -1,23 +1,6 @@
-// ---------------------------------------------------------------------------
-// Article — the blog detail page
-//
-// Structure follows the supplied reference: a back chip, a large title with a
-// short lead, a metadata rail down the right behind a hairline, a full-width
-// cover, then the body in two columns — prose on the left, author and share on
-// the right behind a second hairline — and a related row at the foot.
-//
-// There is no dark banner here, unlike the other inner pages. The reference puts
-// the title straight at the top of the page and it is the right call for a
-// reading page: a full-height colour block above an article is one screen of
-// nothing between the visitor and the thing they clicked for. `.is-inner-page`
-// on the body is what fills the header behind it instead — see _legal.scss,
-// which already had that pattern for the pages with no hero.
-//
-// Language is the site's, as everywhere else: the radius scale from
-// base/_tokens.scss, the navy/blue tokens, Mondwest for the small caps labels.
-// ---------------------------------------------------------------------------
+// Article — the blog detail page.
 
-// --- Header ----------------------------------------------------------------
+// Header
 
 .article-header {
   display: grid;
@@ -25,16 +8,14 @@
   grid-template-columns: auto 1fr 15rem;
   gap: 2.5rem;
 
-  // The rail drops under the title before the columns get narrow enough to
-  // break the heading badly. The back chip goes with it, onto its own line.
+  // The rail drops under the title before the columns get narrow enough to break the heading badly.
   @include tablet {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 }
 
-// A link, not a button: it goes somewhere. Shaped like the blog's filter chips
-// so the two read as the same small control.
+// A link, not a button: it goes somewhere.
 .article-back {
   display: inline-block;
   padding: 0.55rem 1rem;
@@ -75,8 +56,7 @@
   line-height: 1.5;
 }
 
-// The metadata rail. The hairline is the column's own left border rather than a
-// separate element, so it is exactly as tall as the content beside it.
+// The metadata rail.
 .article-meta {
   display: grid;
   gap: 1.5rem;
@@ -116,11 +96,7 @@
   text-transform: uppercase;
 }
 
-// --- Cover -----------------------------------------------------------------
-//
-// A flat brand tint, as everywhere else on this site: there are photographs of
-// real people in this repo left over from the reference build, and running them
-// under an invented article would misrepresent them.
+// Cover
 .article-cover {
   aspect-ratio: 16 / 9;
   margin: 3rem 0;
@@ -137,7 +113,7 @@
   }
 }
 
-// --- Body ------------------------------------------------------------------
+// Body
 
 .article-body {
   display: grid;
@@ -151,9 +127,7 @@
   }
 }
 
-// Measure is capped in `ch` rather than `rem`: the limit that matters for
-// reading is how many characters land on a line, and that follows the font size
-// rather than the layout.
+// Measure is capped in `ch` rather than `rem`: the limit that matters for reading is how many characters land on a line, and that follows the font size rather than the layout.
 .article-prose {
   max-width: 70ch;
 
@@ -165,8 +139,7 @@
     line-height: 1.25;
     letter-spacing: -0.5px;
 
-    // The first heading is introduced by the lead above it, so it does not need
-    // the full gap the later ones use to separate two blocks of prose.
+    // The first heading is introduced by the lead above it.
     &:first-child {
       margin-top: 0;
     }
@@ -193,8 +166,7 @@
   }
 }
 
-// A pulled-out line inside the prose. Marked by the hairline rather than by
-// italics or a size jump, which is the same device the section frames use.
+// A pulled-out line inside the prose.
 .article-pullquote {
   margin: 2rem 0;
   padding-left: 1.5rem;
@@ -207,7 +179,7 @@
   letter-spacing: -0.4px;
 }
 
-// --- Author and share ------------------------------------------------------
+// Author and share
 
 .article-aside {
   position: sticky;
@@ -265,9 +237,7 @@
   gap: 0.5rem;
 }
 
-// Round here, against the square-ish everything else, because these are the one
-// control on the site that is an icon and nothing more — there is no label to
-// give a box a shape around.
+// Round here, against the square-ish everything else.
 .article-share_link {
   display: grid;
   place-items: center;
@@ -288,7 +258,7 @@
   }
 }
 
-// --- Related ---------------------------------------------------------------
+// Related
 
 .related-header {
   display: flex;

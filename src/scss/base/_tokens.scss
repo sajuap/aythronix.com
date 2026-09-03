@@ -1,18 +1,7 @@
-// ---------------------------------------------------------------------------
 // Design tokens
-//
-// The brand is built on one blue — #0765eb, taken straight from the logo — and a
-// deep navy that acts as the dark neutral.
-//
-// The neutral ramp is deliberately *not* black. Every step is an alpha of the
-// same navy, so body copy, hairlines, form fills and shadows all carry a trace
-// of the brand hue instead of reading as a grey layer sitting on top of a blue
-// logo. It is a small shift per element and the reason the page holds together
-// as one system rather than "blue accents on a monochrome site".
-// ---------------------------------------------------------------------------
 
 :root {
-  // --- Brand -------------------------------------------------------------
+  // Brand
   --base-color-brand--blue: #0765eb;
   --base-color-brand--blue-dark: #0550c2; // hover / pressed
   --base-color-brand--blue-darker: #043a8c;
@@ -22,13 +11,12 @@
   --base-color-brand--white: #fff;
   --base-color-brand--black: #04173a; // the navy stands in for black
 
-  // Kept so nothing referencing the old accent breaks; repointed at the blue
-  // family rather than left as a stale magenta.
+  // Kept so nothing referencing the old accent breaks.
   --base-color-brand--pink: var(--base-color-brand--blue);
   --base-color-brand--pink-light: var(--base-color-brand--blue-light);
   --base-color-brand--pink-dark: var(--base-color-brand--blue-darker);
 
-  // --- Neutrals (alphas of the navy) -------------------------------------
+  // Neutrals (alphas of the navy).
   --base-color-neutral--white: #fff;
   --base-color-neutral--black: #04173a;
   --base-color-neutral--neutral-darkest: #04173a;
@@ -39,7 +27,7 @@
   --base-color-neutral--neutral-lighter: rgb(4 23 58 / 11%);
   --base-color-neutral--neutral-lightest: rgb(4 23 58 / 5%);
 
-  // --- System ------------------------------------------------------------
+  // System
   --base-color-system--success-green: #cef5ca;
   --base-color-system--success-green-dark: #114e0b;
   --base-color-system--warning-yellow: #fcf8d8;
@@ -48,7 +36,7 @@
   --base-color-system--error-red-dark: #3b0b0b;
   --base-color-system--focus-state: var(--base-color-brand--blue);
 
-  // --- Semantic: text ----------------------------------------------------
+  // Semantic: text
   --text-color--text-primary: var(--base-color-neutral--neutral-darkest);
   --text-color--text-secondary: var(--base-color-neutral--neutral-darker);
   --text-color--text-alternate: var(--base-color-neutral--white);
@@ -57,8 +45,7 @@
   --text-color--text-warning: var(--base-color-system--warning-yellow-dark);
   --text-color--text-error: var(--base-color-system--error-red-dark);
 
-  // --- Semantic: background ---------------------------------------------
-  // Primary is the brand blue: it is what the solid buttons are filled with.
+  // Semantic: background Primary is the brand blue: it is what the solid buttons are filled with.
   --background-color--background-primary: var(--base-color-brand--blue);
   --background-color--background-primary-hover: var(--base-color-brand--blue-dark);
   --background-color--background-secondary: var(--base-color-brand--white);
@@ -68,22 +55,19 @@
   --background-color--background-warning: var(--base-color-system--warning-yellow);
   --background-color--background-error: var(--base-color-system--error-red);
 
-  // --- Semantic: border --------------------------------------------------
+  // Semantic: border
   --border-color--border-primary: var(--base-color-neutral--neutral-lightest);
   --border-color--border-secondary: var(--base-color-brand--white);
   --border-color--border-alternate: var(--base-color-neutral--neutral-darker);
   --border-color--border-brand: var(--base-color-brand--blue);
 
-  // --- Semantic: link ----------------------------------------------------
+  // Semantic: link
   --link-color--link-primary: var(--base-color-brand--white);
   --link-color--link-secondary: var(--base-color-neutral--neutral-darkest);
   --link-color--link-alternate: var(--base-color-neutral--white);
   --link-color--link-brand: var(--base-color-brand--blue);
 
-  // --- Elevation ---------------------------------------------------------
-  // The button's long top-left-cast shadow and the wide ambient shadow shared by
-  // the project card and the contact panel. Both are navy-tinted rather than
-  // neutral black, so they sit under blue elements without going muddy.
+  // Elevation The button's long top-left-cast shadow and the wide ambient shadow shared by the project card and the contact panel.
   --shadow--button: -5px 5px 17px rgb(4 23 58 / 12%), -22px 22px 31px rgb(4 23 58 / 10%),
     -49px 49px 41px rgb(4 23 58 / 6%), -87px 87px 49px rgb(4 23 58 / 2%),
     -136px 136px 54px rgb(4 23 58 / 0%);
@@ -91,38 +75,16 @@
     -412px 412px 233px rgb(4 23 58 / 2%), -232px 232px 197px rgb(4 23 58 / 3%),
     -103px 103px 146px rgb(4 23 58 / 5%), -26px 26px 80px rgb(4 23 58 / 6%);
 
-  // --- Radius ------------------------------------------------------------
-  //
-  // Three steps, and the step is chosen by what a thing *is* rather than by how
-  // big it happens to be:
-  //
-  //   small   controls  — buttons, form fields, the focus ring
-  //   medium  surfaces  — cards and panels
-  //   large   media     — the blocks standing in for photographs
-  //   pill    chips     — the filter row, which is a pill in any design system
-  //
-  // Media curves hardest on purpose. A picture sharing its corner with the
-  // button beside it reads as a swatch rather than a photograph, and the larger
-  // the box the more radius it takes before the eye registers any curve at all —
-  // 6px on a 400px-wide image is a rounding error you cannot see.
-  //
-  // `.container-large-bordered` is the one deliberate exception and stays
-  // square. It is the frame the entire layout is built on: its hairlines are
-  // what make the stacked sections read as one continuous grid, and curving
-  // their ends breaks every join down the page.
-  //
-  // Everything that curves reads from these, so the set moves together and
-  // there is no second opinion hard-coded three files away.
+  // Radius
   --radius--small: 6px;
   --radius--medium: 12px;
   --radius--large: 16px;
   --radius--pill: 999px;
 
-  // --- Layout ------------------------------------------------------------
+  // Layout
   --container-max: 80rem; // 1280px
   --nav-height: 4.5rem;
 
-  // Real viewport height, kept in sync by js/utils/viewport.js so 100vh does
-  // not jump when mobile browser chrome collapses.
+  // Real viewport height, kept in sync by js/utils/viewport.js so 100vh does not jump when mobile browser chrome collapses.
   --vh: 1vh;
 }

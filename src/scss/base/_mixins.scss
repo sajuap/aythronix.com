@@ -1,17 +1,4 @@
-// ---------------------------------------------------------------------------
 // Breakpoint mixins
-//
-// These mirror the reference site's boundaries exactly. They are max-width
-// (desktop-first) because the whole design system cascades downward, and one
-// off-by-one pixel here shifts an entire section.
-//
-//   desktop   : 992px and up          (base, unwrapped)
-//   tablet    : <= 991px
-//   mobile-l  : <= 767px
-//   mobile-p  : <= 479px
-//   wide      : >= 1440px
-//   xwide     : >= 1920px
-// ---------------------------------------------------------------------------
 
 $bp-tablet: 991px;
 $bp-mobile-landscape: 767px;
@@ -62,12 +49,9 @@ $bp-xwide: 1920px;
   }
 }
 
-// ---------------------------------------------------------------------------
 // Helpers
-// ---------------------------------------------------------------------------
 
 // Hint the compositor for transform/opacity animation.
-// Variadic so `will-animate(transform, opacity)` reads naturally at call sites.
 @mixin will-animate($props...) {
   @if length($props) > 0 {
     will-change: join((), $props, comma);
@@ -82,17 +66,7 @@ $bp-xwide: 1920px;
   inset: 0;
 }
 
-// The site's dark surface: the same pools of light the hero's WebGL backdrop
-// paints, minus the glass — so every dark band reads as the same place without
-// loading Three.js to draw it.
-//
-// One definition because there are four call sites now (the hero, the
-// testimonials band, the inner-page heroes and the case-study panels), and four
-// hand-copied gradient stacks drift the first time one of them is nudged.
-//
-// Opaque, which the case-study panels depend on: they stack, and a panel that
-// covers another has to actually cover it. The linear-gradient at the foot of
-// the list is what guarantees that — the radials above it are all alpha.
+// The site's dark surface: the same pools of light the hero's WebGL backdrop paints, minus the glass.
 @mixin night-sky {
   background-color: #02091b;
   background-image:

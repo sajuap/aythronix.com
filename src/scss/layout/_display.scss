@@ -1,12 +1,6 @@
-// ---------------------------------------------------------------------------
 // Flex display utilities
-//
-// `is-still-horizontal` is the important modifier: horizontal rows collapse to
-// columns at 767px, and anything tagged `is-still-horizontal` opts out. It is
-// what keeps the eyebrow labels (tick — text — tick) on one line at every size.
-// ---------------------------------------------------------------------------
 
-// --- Vertical --------------------------------------------------------------
+// Vertical
 
 .display-vertical-left {
   display: flex;
@@ -58,7 +52,7 @@
   width: 100%;
 }
 
-// --- Horizontal ------------------------------------------------------------
+// Horizontal
 
 .display-horizontal-left {
   display: flex;
@@ -174,7 +168,7 @@
   }
 }
 
-// --- Visibility ------------------------------------------------------------
+// Visibility
 
 .is-hidden-mob {
   @include mobile-landscape {

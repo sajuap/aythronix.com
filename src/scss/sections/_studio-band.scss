@@ -1,49 +1,17 @@
-// ---------------------------------------------------------------------------
 // Studio band
-//
-// One frame holds the wordmark, the picture and the copy. The wordmark is
-// positioned against that frame at `z-index: 0`; the picture sits at 1, so it
-// covers the lower part of the type and the word reads as passing behind it.
-//
-// The wordmark and the picture both break out to the full viewport. The copy
-// does not — it is positioned against the frame, which is still the column.
-// ---------------------------------------------------------------------------
 
 .studio-band {
-  // Set to fill the viewport, so it is one linear expression rather than a
-  // clamp: "Our Greater Vision" measures 7.642× its own font size in this face
-  // at this weight and tracking, so dividing (100vw less 3rem) by that sets the
-  // line to the screen with about 1rem clear at each end. The 3rem is that
-  // breathing room plus cover for a classic scrollbar, which 100vw counts and
-  // the visible width does not.
-  //
-  // Both numbers are tied to the phrase and have to be re-measured if it
-  // changes length — and measured with a Range over the text, not `scrollWidth`,
-  // which is clamped to this element's own full-width box. Because it is linear
-  // it holds at every width: no separate mobile size, and no cap, since full
-  // width has to mean full width at 2560 too.
+  // Set to fill the viewport, so it is one linear expression rather than a clamp.
   --wordmark: calc(13.08vw - 0.39rem);
 
-  // Where the photograph's own top edge sits inside the file: it is transparent
-  // above this and solid below, so it is both where the wordmark's baseline goes
-  // and where the scrim starts. Row 345 of the image's 1024.
-  //
-  // A length, not the 33.7% it reads as, because the wordmark is positioned
-  // against the frame and the frame is not always the picture's height — below
-  // `mobile-landscape` the copy joins the flow and roughly doubles it, which put
-  // the wordmark behind the photograph instead of above it. So it is measured
-  // off the picture: full bleed at 1536×1024 makes it 66.667vw tall, and 345/1024
-  // of that is 22.46vw. Tied to the picture being full width — if it ever stops
-  // being, this has to be derived from whatever width it does take.
+  // Where the photograph's own top edge sits inside the file: it is transparent above this and solid below.
   --wall-edge: 22.46vw;
 
-  // Two children break out past this section's own width. Clipping them is what
-  // keeps that from becoming a horizontal scrollbar.
+  // Two children break out past this section's own width.
   overflow: hidden;
 }
 
-// `.container-large` carries no width in this codebase — the page banners use it
-// purely as a hook — so the band brings its own column.
+// `.container-large` carries no width in this codebase — the page banners use it purely as a hook.
 .studio-band_inner {
   width: 100%;
   max-width: var(--container-max);
@@ -55,21 +23,7 @@
   position: relative;
 }
 
-// Behind the picture, and it stays visible because the picture is a cut-out:
-// `about-banner.png` is transparent down to y=115, carries only the standing
-// figure (2–18% of the width) to y=330, and is a solid photograph from y=345.
-// So the wordmark reads through the empty part and the figure stands in front
-// of it. Nothing is painted behind the image — a background there is exactly
-// what fills that gap in and kills the effect.
-//
-// Sat on the picture's own top edge: the baseline lands where the photograph
-// starts, `--wall-edge` below the top of the frame. The 0.841em is where this
-// face puts its baseline inside a 0.92 line box.
-//
-// Full bleed, on the same device as the picture: `left: 50%` finds the centre of
-// the frame, which is the centre of the page because the column is centred, and
-// the transform pulls a viewport-wide box back over it. The two then share a
-// centre line, which is what puts the figure through the middle of the word.
+// Behind the picture, and it stays visible because the picture is a cut-out.
 .studio-band_wordmark {
   position: absolute;
   z-index: 0;
@@ -77,20 +31,7 @@
   left: 50%;
   width: 100vw;
   transform: translateX(-50%);
-  // Fog: painted with a gradient instead of a flat fill and clipped to the
-  // glyphs, so the type is solid where it stands clear at the top and thins to
-  // nothing as it drops toward the photograph — it reads as dissolving into the
-  // wall rather than being cut off by the picture's edge.
-  //
-  // Every stop is the photograph's own wall colour, sampled from the file at the
-  // row where the wall begins, so the word stays part of the picture: a shade
-  // lighter than the wall at the top, the wall itself at 40% through the middle,
-  // gone by the bottom.
-  //
-  // The stops are percentages of this element's line box, not of the letters.
-  // At `line-height: 0.92` the cap tops land around 13% down that box and the
-  // baseline around 91%, so the fade is tuned to that span — retune it if the
-  // line-height moves.
+  // Fog: painted with a gradient instead of a flat fill and clipped to the glyphs.
   background-image: linear-gradient(
     to bottom,
     #a0aea5 10%,
@@ -99,28 +40,19 @@
   );
   -webkit-background-clip: text;
   background-clip: text;
-  // The gradient is the fill; this is what lets it through. Safe to leave the
-  // text invisible without it — the element is `aria-hidden` decoration.
+  // The gradient is the fill; this is what lets it through.
   color: transparent;
   font-family: $font-body;
   font-size: var(--wordmark);
   font-weight: 700;
   line-height: 0.92;
   letter-spacing: -0.04em;
-  // Centred in that viewport-wide box, so the word and the picture share a
-  // centre line and the standing figure falls through the middle of the phrase
-  // rather than off to one side of it.
+  // Centred in that viewport-wide box, so the word and the picture share a centre line and the standing figure falls through the middle of the phrase rather than off to one side of it.
   text-align: center;
   white-space: nowrap;
 }
 
-// Full bleed, like the wordmark. The copy is not: it is positioned against the
-// frame rather than against this, so it stays in the 80rem column.
-//
-// `margin-left: 50%` finds the centre of the frame, which is the centre of the
-// page because the column is centred, and the transform pulls a viewport-wide
-// box back over it. Same device the testimonials row uses. `.studio-band` clips
-// the overhang, so this cannot become a horizontal scrollbar.
+// Full bleed, like the wordmark.
 .studio-band_media {
   display: block;
   position: relative;
@@ -130,24 +62,14 @@
   transform: translateX(-50%);
 }
 
-// Full frame, uncropped: the transparent head-room above the figure is the point
-// of the image, not something to trim away.
-//
-// No corner radius, here or on the scrim. Full bleed overhangs the viewport by
-// half the scrollbar at each side, so a rounded corner falls partly outside the
-// screen and what is left of the curve reads as a white nick bitten out of the
-// picture's edge rather than as rounding. If the picture is ever pulled back
-// inside the column, the radius comes back with it.
+// Full frame, uncropped: the transparent head-room above the figure is the point of the image.
 .studio-band_media img {
   display: block;
   width: 100%;
   height: auto;
 }
 
-// Only over the photograph, never over the cut-out — a scrim across the whole
-// frame would grey the wordmark showing through it. Weighted to the foot,
-// because the bottom of this picture is a white table and white copy needs help
-// there while the top needs none.
+// Only over the photograph, never over the cut-out.
 .studio-band_scrim {
   position: absolute;
   inset: var(--wall-edge) 0 0;
@@ -155,8 +77,8 @@
     to top,
     rgb(2 9 27 / 96%),
     rgb(2 9 27 / 88%) 24%,
-    rgb(2 9 27 / 55%) 48%,
-    rgb(2 9 27 / 0%) 76%
+    rgb(2 9 27 / 55%) 52%,
+    rgb(2 9 27 / 0%) 82%
   );
   pointer-events: none;
 
@@ -165,8 +87,7 @@
   }
 }
 
-// Over the picture on desktop, below it on a phone: at this ratio a 390px band
-// is under 200px tall, which will not hold a headline, a paragraph and a button.
+// Over the picture on desktop, below it on a phone: at this ratio a 390px band is under 200px tall.
 .studio-band_copy {
   display: grid;
   position: absolute;
@@ -197,7 +118,8 @@
   max-width: 16ch;
   color: inherit;
   font-family: $font-body;
-  font-size: clamp(1.5rem, 0.9rem + 2.2vw, 2.75rem);
+  // Linear between its ends: 48px across a 1280 screen, 52px at 1440.
+  font-size: clamp(1.5rem, 1rem + 2.5vw, 3.5rem);
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -218,16 +140,7 @@
   }
 }
 
-// The corner brackets are one SVG filled brand blue at 55%, which is drawn for a
-// white page — on the dark foot of this photograph it disappears. Flipped to
-// white here rather than shipping a second file: `brightness(0)` takes the fill
-// to black and `invert(1)` takes it to white, and neither touches alpha, so the
-// 55% baked into the file survives and these read exactly as the blue ones do
-// elsewhere.
-//
-// Only while the copy is over the picture. Below `mobile-landscape` it drops
-// onto the white page like every other button, and white brackets would be the
-// invisible ones.
+// The corner brackets are one SVG filled brand blue at 55%, which is drawn for a white page.
 .studio-band_copy .select-button-vector {
   filter: brightness(0) invert(1);
 
@@ -239,12 +152,12 @@
 .studio-band_lead {
   margin: 0;
   max-width: 44ch;
-  // Not the global `p` opacity: that is tuned for navy on white, and at 80% over
-  // a photograph this line stops holding its own against the scrim.
+  // Not the global `p` opacity: that is tuned for navy on white.
   opacity: 1;
   color: rgb(255 255 255 / 84%);
   font-family: $font-body;
-  font-size: 0.9375rem;
+  // 18px, up from the 15px this ran at but back a step from the 20px it briefly took.
+  font-size: 1.125rem;
   line-height: 1.6;
 
   @include mobile-landscape {

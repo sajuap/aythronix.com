@@ -1,34 +1,17 @@
-// ===========================================================================
 // Aythronix — main stylesheet
-//
-// Load order matters:
-//   1. tokens   — custom properties, no output dependencies
-//   2. mixins   — breakpoint + helper mixins used by every file below
-//   3. fonts    — @font-face and the $font-body / $font-display stacks
-//   4. bootstrap — grid + utilities API only (see note below)
-//   5. reset → typography → layout → components → sections → utilities
-//
-// Bootstrap is deliberately partial. Reboot is *not* imported: it would
-// overwrite the heading scale, paragraph opacity and letter-spacing that define
-// the design, and we would only be fighting it back. What we take is the grid,
-// the breakpoint/utility mixins, and the utilities API — configured below to
-// the same breakpoints the design actually uses.
-// ===========================================================================
 
 @use 'sass:math';
 
-// --- 1. Tokens -------------------------------------------------------------
+// 1. Tokens
 @import 'base/tokens';
 
-// --- 2. Mixins -------------------------------------------------------------
+// 2. Mixins
 @import 'base/mixins';
 
-// --- 3. Fonts --------------------------------------------------------------
+// 3. Fonts
 @import 'base/fonts';
 
-// --- 4. Bootstrap (grid + utilities only) ----------------------------------
-// Breakpoints are aligned to the design's own boundaries so `media-breakpoint-*`
-// and the max-width mixins above agree with each other.
+// 4. Bootstrap (grid + utilities only). Breakpoints match the design's own boundaries.
 $grid-breakpoints: (
   xs: 0,
   sm: 480px,
@@ -38,10 +21,7 @@ $grid-breakpoints: (
   xxl: 1920px,
 );
 
-// `$container-max-widths` is deliberately left at Bootstrap's defaults. The
-// design's own column is `.container-large-bordered` (80rem, with the hairline
-// border), so Bootstrap's `.container` is never used here — overriding it only
-// produced a non-ascending map warning for no benefit.
+// `$container-max-widths` is deliberately left at Bootstrap's defaults.
 
 $grid-gutter-width: 2rem;
 $enable-dark-mode: false;
@@ -55,17 +35,17 @@ $enable-dark-mode: false;
 @import 'bootstrap/scss/grid';
 @import 'bootstrap/scss/utilities/api';
 
-// --- 5. Base ---------------------------------------------------------------
+// 5. Base
 @import 'base/reset';
 @import 'base/typography';
 @import 'base/cursor';
 
-// --- Layout ----------------------------------------------------------------
+// Layout
 @import 'layout/containers';
 @import 'layout/spacing';
 @import 'layout/display';
 
-// --- Components ------------------------------------------------------------
+// Components
 @import 'components/button';
 @import 'components/nav';
 @import 'components/preloader';
@@ -73,12 +53,14 @@ $enable-dark-mode: false;
 @import 'components/form';
 @import 'components/reveals';
 
-// --- Sections --------------------------------------------------------------
+// Sections
 @import 'sections/hero';
 @import 'sections/logos';
 @import 'sections/value-prop';
 @import 'sections/services';
 @import 'sections/case-studies';
+@import 'sections/work-rail';
+@import 'sections/image-trail';
 @import 'sections/lifecycle';
 @import 'sections/testimonials';
 @import 'sections/contact';
@@ -88,5 +70,5 @@ $enable-dark-mode: false;
 @import 'sections/article';
 @import 'sections/studio-band';
 
-// --- Utilities (last, so they can win) -------------------------------------
+// Utilities (last, so they can win).
 @import 'utilities/helpers';

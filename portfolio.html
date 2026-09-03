@@ -2,9 +2,9 @@
 <html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
-    <!-- Drop no-js before the first paint: the covers are hidden while it is set, and the deferred bundle clears it too late. -->
+    <!-- Drop no-js before the first paint; the deferred bundle clears it too late. -->
     <script>document.documentElement.classList.remove('no-js');</script>
-    <!-- Lock scrolling before the first paint; page-transition.js unlocks when the last column leaves. -->
+    <!-- Lock scrolling before the first paint; page-transition.js unlocks it. -->
     <script>document.documentElement.classList.add('is-locked');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -21,12 +21,9 @@
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
 
-    <!-- Page transition: covers from CSS so no unstyled frame shows, lifted on load by js/components/page-transition.js. -->
+    <!-- Page transition: covers from CSS, lifted by js/components/page-transition.js. -->
     <div class="page-transition" aria-hidden="true">
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
+      <!-- One sheet: the arch is a single curve and cannot be split across panels. -->
       <span class="page-transition_panel"></span>
     </div>
 
@@ -90,7 +87,7 @@
       </header>
 
       <main id="content">
-      <!-- PLACEHOLDER COPY. Invented names and posts; portraits are initials rather than photographs, so no real person is misrepresented. -->
+      <!-- PLACEHOLDER COPY: invented names; portraits are initials rather than photographs. -->
         <section class="hero-section page-hero">
           <div class="padding-global">
             <div class="container-large">
@@ -100,7 +97,8 @@
           </div>
         </section>
 
-        <section id="Work" class="case-studies-section">
+        <!-- `section-bleeds` drops this column's side hairlines: the work rail below crosses them. -->
+        <section id="Work" class="case-studies-section section-bleeds">
           <div class="padding-global">
             <div class="container-large-bordered">
               <div class="padding-section-medium">
@@ -115,50 +113,143 @@
 
                   <div class="statement" data-reveal="fade">Work we can talk about: <span class="statement_muted">the constraint, the decision, what shipped.</span></div>
 
-                  <div class="case-studies_grid" data-reveal="fade">
-  <article class="case-card">
-    <div class="case-card_metric">Alpha Trophies</div>
-    <div class="case-card_divider"></div>
-    <h3 class="case-card_title">
-      SEO Landing Pages Built From a Single Config File
-    </h3>
-    <p>
-      For <a href="https://alphatrophies.com.au" target="_blank" rel="noopener">Alpha Trophies</a>,
-      built a CMS-driven architecture generating category + region landing pages
-      (e.g. academic-trophies-melbourne) from one content config, with
-      LocalBusiness, Breadcrumb, and FAQ structured data powering search visibility
-      across dozens of city and category combinations.
-    </p>
-  </article>
+                  <!-- Selected Work rail: a real scroll container; work-rail.js adds the drift, the loop, drag and the cursor. -->
+                  <div class="work-rail" data-work-rail data-reveal="fade">
+                    <div
+                      class="work-rail_viewport"
+                      data-work-rail-viewport
+                      tabindex="0"
+                      role="region"
+                      aria-label="Selected work, scrollable"
+                    >
+                      <ul class="work-rail_track" data-work-rail-track>
+                        <li class="work-card">
+                          <a class="work-card_link" href="https://alphatrophies.com.au" target="_blank" rel="noopener">
+                            <div class="work-card_thumb">
+                              <img
+                                src="/src/assets/images/work-alphatrophies.jpg"
+                                class="work-card_thumb-img"
+                                width="960"
+                                height="600"
+                                loading="lazy"
+                                decoding="async"
+                                alt="The Alpha Trophies storefront homepage"
+                              />
+                            </div>
+                            <div class="work-card_text">
+                              <div class="work-card_client">Alpha Trophies</div>
+                              <h3 class="work-card_title">SEO Landing Pages Built From a Single Config File</h3>
+                              <p class="work-card_body">A CMS-driven architecture generating category + region landing pages from one content config, with LocalBusiness, Breadcrumb and FAQ structured data powering search visibility across dozens of city and category combinations.</p>
+                              <ul class="work-card_tags">
+                                <li>SEO</li>
+                                <li>Structured Data</li>
+                                <li>CMS</li>
+                              </ul>
+                            </div>
+                          </a>
+                        </li>
 
-  <article class="case-card">
-    <div class="case-card_metric">StampStore</div>
-    <div class="case-card_divider"></div>
-    <h3 class="case-card_title">
-      Migrating a Live Payment Flow Without Losing a Sale
-    </h3>
-    <p>
-      For <a href="https://stamps.net.au" target="_blank" rel="noopener">StampStore</a>,
-      migrated the eWAY payment integration from inline card fields to a hosted
-      redirect flow, then traced and fixed an empty gateway response that was
-      sending successfully paid customers back to their cart.
-    </p>
-  </article>
+                        <li class="work-card">
+                          <a class="work-card_link" href="https://olympia.com.au" target="_blank" rel="noopener">
+                            <div class="work-card_thumb">
+                              <img
+                                src="/src/assets/images/work-olympia.jpg"
+                                class="work-card_thumb-img"
+                                width="960"
+                                height="600"
+                                loading="lazy"
+                                decoding="async"
+                                alt="The Olympia trophies storefront homepage"
+                              />
+                            </div>
+                            <div class="work-card_text">
+                              <div class="work-card_client">Olympia</div>
+                              <h3 class="work-card_title">A Full-Stack Storefront Built for Scale</h3>
+                              <p class="work-card_body">Full-stack Laravel development across catalogue, checkout and customer-facing features for a store carrying over 12,000 trophy and award products.</p>
+                              <ul class="work-card_tags">
+                                <li>Laravel</li>
+                                <li>E-Commerce</li>
+                                <li>Full-Stack</li>
+                              </ul>
+                            </div>
+                          </a>
+                        </li>
 
-  <article class="case-card">
-    <div class="case-card_metric">Olympia</div>
-    <div class="case-card_divider"></div>
-    <h3 class="case-card_title">
-      A Full-Stack Storefront Built for Scale
-    </h3>
-    <p>
-      For <a href="https://olympia.com.au" target="_blank" rel="noopener">Olympia</a>,
-      delivered full-stack Laravel development across catalogue, checkout, and
-      customer-facing features for a store carrying over 12,000 trophy and
-      award products.
-    </p>
-  </article>
-</div>
+                        <li class="work-card">
+                          <a class="work-card_link" href="https://stamps.net.au" target="_blank" rel="noopener">
+                            <div class="work-card_thumb">
+                              <img
+                                src="/src/assets/images/work-stampstore.jpg"
+                                class="work-card_thumb-img"
+                                width="960"
+                                height="600"
+                                loading="lazy"
+                                decoding="async"
+                                alt="The StampStore homepage"
+                              />
+                            </div>
+                            <div class="work-card_text">
+                              <div class="work-card_client">StampStore</div>
+                              <h3 class="work-card_title">Migrating a Live Payment Flow Without Losing a Sale</h3>
+                              <p class="work-card_body">Migrated the eWAY payment integration from inline card fields to a hosted redirect flow, then traced and fixed an empty gateway response that was sending successfully paid customers back to their cart.</p>
+                              <ul class="work-card_tags">
+                                <li>Payments</li>
+                                <li>eWAY</li>
+                                <li>Debugging</li>
+                              </ul>
+                            </div>
+                          </a>
+                        </li>
+
+                        <!-- PLACEHOLDER: describes the storefront, not what we shipped. Replace with the real engagement. -->
+                        <li class="work-card">
+                          <a class="work-card_link" href="https://badge-a-minit.com.au" target="_blank" rel="noopener">
+                            <div class="work-card_thumb">
+                              <img
+                                src="/src/assets/images/work-badgeaminit.jpg"
+                                class="work-card_thumb-img"
+                                width="960"
+                                height="600"
+                                loading="lazy"
+                                decoding="async"
+                                alt="The Badge-A-Minit storefront homepage"
+                              />
+                            </div>
+                            <div class="work-card_text">
+                              <div class="work-card_client">Badge-A-Minit</div>
+                              <h3 class="work-card_title">Custom Badges, Lanyards and the Machines to Make Them</h3>
+                              <p class="work-card_body">An Australian badge and promotional-products storefront trading since 1978 — name badges, button badges, lapel pins and plaques — with a quote form and reseller ordering running alongside the standard checkout.</p>
+                              <ul class="work-card_tags">
+                                <li>E-Commerce</li>
+                                <li>Catalogue</li>
+                                <li>Quotes</li>
+                              </ul>
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <!-- Two faces, stacked in one grid cell: the word over the open row, the arrow over a card. -->
+                    <div class="work-rail_cursor" data-work-rail-cursor aria-hidden="true">
+                      <span class="work-rail_cursor-label">Drag</span>
+                      <svg
+                        class="work-rail_cursor-arrow"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path
+                          d="M7 17 17 7M8.5 7H17v8.5"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
 
                 </div>
               </div>
@@ -183,7 +274,7 @@
                     </div>
                   </div>
 
-                  <!-- The blog's card grid, reused rather than duplicated. Cards point at contact until per-project case studies exist. -->
+                  <!-- The blog's card grid, reused. Cards point at contact until case studies exist. -->
                   <div class="posts_grid" data-reveal="fade">
                     <a href="contact.html" class="post-card">
                       <div class="post-card_thumb">Web</div>
@@ -361,7 +452,7 @@
                         </div>
                       </div>
 
-                      <!-- Legal pages live here rather than in a fourth column. Relative hrefs, so they resolve under a project subpath too. -->
+                      <!-- Legal pages live here. Relative hrefs, so they resolve under a subpath too. -->
                       <div class="footer_copyright-text">
                         © <span data-year>2026</span> Aythronix |
                         <a href="legal-notice.html"

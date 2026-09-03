@@ -191,7 +191,7 @@ wordmark `295.92 × 61.67`, mark `65.68 × 67.70`.
 | `logo.svg` | horizontal lockup — header, footer brand, preloader | `397.03 × 80.17` |
 | `logo-mark.svg` | mark alone — favicon, tight spaces | `65.68 × 67.70` |
 | `logo-wordmark.svg` | wordmark alone | `295.92 × 61.67` |
-| `footer-logo.svg` | oversized footer wordmark with a masked fade | `1192 × 201` |
+| `footer-logo.svg` | oversized footer wordmark with a masked fade | `1192 × 250` |
 
 Three decisions worth recording:
 

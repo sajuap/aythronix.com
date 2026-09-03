@@ -1,13 +1,6 @@
-// ---------------------------------------------------------------------------
 // Contact form
-//
-// Two-column grid; Company and Message span both tracks. Everything collapses
-// to a single column at 767px.
-// ---------------------------------------------------------------------------
 
-// Wraps the form plus its status panels. The 15px bottom margin is the
-// reference's — it separates the form from the faded logo strip below it, and
-// leaving it off makes the whole contact panel 15px short.
+// Wraps the form plus its status panels.
 .form-wrapper {
   margin-bottom: 15px;
 }
@@ -24,8 +17,7 @@
 .form_input {
   display: block;
   width: 100%;
-  // Fixed 38px, matching the reference. The 12px padding and 1.5 line-height
-  // would otherwise compute to 48px and add 10px to every row.
+  // Fixed 38px, matching the reference.
   height: 38px;
   vertical-align: middle;
   margin-bottom: 0;
@@ -33,8 +25,7 @@
   background-color: var(--base-color-neutral--neutral-lightest);
   color: var(--base-color-neutral--neutral-darkest);
   border: 0;
-  // Matched to the button deliberately: the submit sits in the same grid as
-  // these, so the two disagreeing on their corners is visible at a glance.
+  // Matched to the button deliberately: the submit sits in the same grid as these.
   border-radius: var(--radius--small);
   font-family: $font-body;
   font-size: 1rem;
@@ -57,7 +48,6 @@
 }
 
 // The textarea sizes to its `rows` (2), which is where its 72px comes from.
-// No min-height here — one would push the whole panel taller.
 textarea.form_input,
 textarea.form-input {
   height: auto;
@@ -69,14 +59,13 @@ textarea.form-input {
   grid-column: span 2;
 }
 
-// On desktop the submit sits in a single column, as it does in the reference;
-// it only goes full width once the layout tightens (see below).
+// On desktop the submit sits in a single column, as it does in the reference.
 .form-submit {
   grid-column: span 1;
   justify-self: stretch;
 }
 
-// --- Status messages -------------------------------------------------------
+// Status messages
 
 .form-done,
 .form-fail {
@@ -100,9 +89,7 @@ textarea.form-input {
   display: block;
 }
 
-// The grid keeps its two tracks at every width; what changes is how many tracks
-// each field spans. Collapsing to a single track instead would make the
-// `span 2` fields generate a phantom second column.
+// The grid keeps its two tracks at every width; what changes is how many tracks each field spans.
 @include tablet {
   .form-submit {
     grid-column: span 2;

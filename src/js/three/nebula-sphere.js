@@ -23,6 +23,54 @@
 const TAU = Math.PI * 2;
 const GOLDEN_ANGLE = Math.PI * (1 + Math.sqrt(5));
 
+/**
+ * How much of the canvas is clear above the very top of the arc, as a fraction
+ * of the canvas height. Small — it is breathing room, not a margin.
+ */
+const ARC_TOP_INSET = 0.05;
+
+/**
+ * The smallest a dot is ever drawn, as a CSS-pixel radius.
+ *
+ * Dot size is a share of the sphere's size, which is right — a smaller sphere
+ * has smaller dots. But a share of a small sphere is a sub-pixel circle, and a
+ * sub-pixel circle is not a faint dot, it is a smudge the antialiaser gives up
+ * on. Below this they stop being drawn small and start being drawn badly.
+ */
+const MIN_DOT = 0.6;
+
+/**
+ * How many opacity levels the field is drawn in.
+ *
+ * Every point used to be its own `fillStyle` string and its own `fill()` — for
+ * 3,500 points at 60fps that is 210,000 colour strings built and parsed a second
+ * and 210,000 draw calls, and it is what made the hero stutter. Points are
+ * gathered into this many opacity levels instead and each level is drawn as one
+ * path in one call, which is twelve of each per frame rather than 3,500.
+ *
+ * Twelve is enough that the quantising cannot be seen: the levels are 0.09 apart
+ * on dots two or three pixels across, at opacities between 0.1 and 1.
+ */
+const ALPHA_STEPS = 12;
+const ALPHA_TOP = ALPHA_STEPS - 1;
+
+/**
+ * How far the highest point of the field projects above the sphere's centre, in
+ * particle units.
+ *
+ * Not the radius. The perspective divide magnifies whatever is nearest the
+ * camera, so the topmost dot on screen is not the one at the top of the sphere —
+ * it is one some way down the near face, lifted by its own magnification. For
+ * the authored radius and camera that lands at 1.72x the radius, and every
+ * anchor written against the radius alone cut that overshoot off flat.
+ *
+ * Maximising `y·Z/(Z + z)` over the sphere gives the closed form below.
+ */
+function arcTop(radius, z) {
+  if (radius >= z) return radius; // no real maximum; the near face is past the camera
+  return radius * Math.sqrt(1 - (radius / z) ** 2) * ((z * z) / (z * z - radius * radius));
+}
+
 export default class NebulaSphere {
   constructor(canvasOrId, options = {}) {
     this.canvas =
@@ -32,6 +80,20 @@ export default class NebulaSphere {
     this.config = {
       particleCount: 3500,
       baseRadius: 650,
+      // Capping DPR keeps the fill-rate sane on 3x phone screens. It no longer
+      // changes how big the field looks — `resize()` divides that back out — so
+      // this is purely how many pixels the arcs are drawn into.
+      maxDpr: 2,
+      // How wide the arc may be drawn, as a fraction of the canvas width. Under
+      // 1 it is held inside the canvas; over 1 its sides run off the edges,
+      // which is what a small screen wants — held inside a phone's width the
+      // arc is a small dome adrift in a tall gap, and letting it overrun gives
+      // the hero an arc across it with the ends off-frame.
+      arcWidth: 0.95,
+      // Multiplies dot size after the sphere's own scale. The field reads by its
+      // dots, and on a screen where the sphere is small they need help to stay
+      // dots rather than dust.
+      dotScale: 1,
       interactionRadius: 120,
       warpStrength: 40,
       rotationSpeed: 0.2,
@@ -75,6 +137,11 @@ export default class NebulaSphere {
     this._running = false;
     this._held = this.config.autoStart === false;
     this._rafId = null;
+    // Seconds the field has been drawing for, and when the last frame landed.
+    // See `_tick` — the two together are what keep the rotation continuous
+    // across every pause.
+    this._clock = 0;
+    this._lastFrame = 0;
     this._tick = this._tick.bind(this);
     this._listeners = [];
 
@@ -83,7 +150,9 @@ export default class NebulaSphere {
   }
 
   /**
-   * Size the backing store to the parent box at up to 2x DPR.
+   * Size the backing store to the parent box, and work out how big a unit of
+   * particle space is on this screen.
+   *
    * Returns false while the parent still has no layout — on a cold load the
    * canvas is measured before CSS has settled.
    */
@@ -95,13 +164,49 @@ export default class NebulaSphere {
     const height = parent.clientHeight;
     if (!width || !height) return false;
 
-    // Capping DPR at 2 keeps the fill-rate sane on 3x phone screens.
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, this.config.maxDpr);
 
     this.canvas.width = Math.floor(width * dpr);
     this.canvas.height = Math.floor(height * dpr);
     this.canvas.style.width = `${width}px`;
     this.canvas.style.height = `${height}px`;
+
+    this._dpr = dpr;
+
+    /**
+     * One unit of particle space, in backing-store pixels — which is to say how
+     * big the sphere is drawn.
+     *
+     * Sized to the gap under the copy, not to the width of the screen. The
+     * canvas is exactly that gap, and the whole arc has to fit inside it: the
+     * hero is copy first and a sphere below it, so the field must never reach up
+     * behind the words, and it must never grow so large that the canvas shows a
+     * band through its middle instead of a dome.
+     *
+     * Both fall out of one rule. The full projected height of the arc — the
+     * overshoot in `arcTop`, not the radius — is made to equal the canvas height
+     * less a little breathing room. The centre then sits exactly on the bottom
+     * edge of the canvas, so what is on screen is always the top half of the
+     * field and never a whole circle, on any screen, at any size.
+     *
+     * The consequence is that the sphere grows with the gap: a hero with room
+     * under its copy gets a big arc, a cramped one gets a small arc, and neither
+     * has to be special-cased. It is also capped against the width, for the tall
+     * narrow case where the gap would otherwise make it wider than the screen.
+     *
+     * `dpr` is in here so none of it is DPR-dependent: a 2x screen has twice the
+     * backing-store pixels for the same box, and without this the field came out
+     * at half the size on every retina display.
+     */
+    const reach = arcTop(this.config.baseRadius, this.Z_PERSPECTIVE);
+    const byHeight = (height * (1 - ARC_TOP_INSET)) / reach;
+    const byWidth = (width * this.config.arcWidth) / (2 * reach);
+
+    this._unit = dpr * Math.min(byHeight, byWidth);
+
+    // The floor that keeps the smallest dots from dissolving. In backing-store
+    // pixels, like everything the draw works in.
+    this._minDot = MIN_DOT * dpr;
 
     return true;
   }
@@ -162,6 +267,25 @@ export default class NebulaSphere {
         alpha: Math.random() * 0.5 + 0.5,
       };
     }
+
+    this._allocScratch(particleCount);
+  }
+
+  /**
+   * The buffers the draw batches through. Allocated once with the field, so a
+   * frame allocates nothing at all — at 60fps anything per-particle per-frame is
+   * garbage measured in megabytes a second, and the collector pausing to take it
+   * away is a stutter you can see.
+   */
+  _allocScratch(n) {
+    this._sx = new Float32Array(n);
+    this._sy = new Float32Array(n);
+    this._sr = new Float32Array(n);
+    this._sb = new Uint8Array(n);
+    this._order = new Int32Array(n);
+    this._bStart = new Int32Array(ALPHA_STEPS + 1);
+    this._bCursor = new Int32Array(ALPHA_STEPS);
+    this._bCount = new Int32Array(ALPHA_STEPS);
   }
 
   _on(target, type, handler, opts) {
@@ -248,22 +372,92 @@ export default class NebulaSphere {
 
   stop() {
     this._running = false;
+    // So the time spent stopped is not charged to the rotation when it resumes.
+    this._lastFrame = 0;
     if (this._rafId !== null) {
       cancelAnimationFrame(this._rafId);
       this._rafId = null;
     }
   }
 
+  /**
+   * Put this frame's collected points on screen, one path per opacity level.
+   *
+   * The points are sorted into their levels by counting sort — three linear
+   * passes, no comparisons and no allocation — and then each level is a single
+   * `beginPath`, a run of arcs, and one `fill`. The colour is set once for the
+   * whole field and opacity is carried by `globalAlpha`, which is a number
+   * assignment rather than a colour string to build and parse.
+   *
+   * The `moveTo` before each arc is not optional: consecutive arcs in one path
+   * are joined by a line from wherever the last one ended, and without it the
+   * field draws as a single scribble through every point in the level.
+   */
+  _paint(ctx, visible, color) {
+    if (!visible) return;
+
+    const start = this._bStart;
+    const cursor = this._bCursor;
+    const counts = this._bCount;
+    const order = this._order;
+
+    let acc = 0;
+    for (let b = 0; b < ALPHA_STEPS; b++) {
+      start[b] = acc;
+      cursor[b] = acc;
+      acc += counts[b];
+    }
+    start[ALPHA_STEPS] = acc;
+
+    const sbs = this._sb;
+    for (let i = 0; i < visible; i++) {
+      order[cursor[sbs[i]]++] = i;
+    }
+
+    const sxs = this._sx;
+    const sys = this._sy;
+    const srs = this._sr;
+
+    ctx.fillStyle = `rgb(${color})`;
+
+    for (let b = 0; b < ALPHA_STEPS; b++) {
+      const from = start[b];
+      const to = start[b + 1];
+      if (from === to) continue;
+
+      ctx.globalAlpha = b / ALPHA_TOP;
+      ctx.beginPath();
+
+      for (let j = from; j < to; j++) {
+        const i = order[j];
+        const x = sxs[i];
+        const y = sys[i];
+        const r = srs[i];
+        ctx.moveTo(x + r, y);
+        ctx.arc(x, y, r, 0, TAU);
+      }
+
+      ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+  }
+
   /** Where the sphere's centre sits, in backing-store pixels. */
   _centreY(height) {
     if (this.config.anchor === 'center') return height / 2;
 
-    // Push the centre below the canvas so only the top of the sphere is visible.
-    // The thresholds are against the backing-store height, so they already
-    // account for DPR — a taller canvas needs proportionally less push.
-    if (height > 900) return height * 1.1;
-    if (height > 750) return height * 1.5;
-    return height * 1.8;
+    // On the bottom edge of the canvas, exactly. Everything above that line is
+    // the top half of the field and everything below it is out of frame, so what
+    // shows is always an arc and never a whole circle — which is the whole point
+    // of anchoring it here rather than at some multiple of the canvas height.
+    //
+    // It works because `resize()` has already sized the field to reach from just
+    // under the top of the canvas down to this line. The two are one decision
+    // made in two places, and moving either without the other is what put the
+    // arc through the middle of the copy in one direction and cut its top off in
+    // the other.
+    return height;
   }
 
   _tick() {
@@ -273,6 +467,23 @@ export default class NebulaSphere {
     // preloader lifts.
     if (!this._isReady) return;
     if (!this._running && !this._drawOnce) return;
+
+    // Time the field has actually been drawing for, not time since the epoch.
+    //
+    // Rotation used to read the wall clock, which meant the sphere's angle was a
+    // function of when you looked rather than of how long it had been turning.
+    // Anything that stopped the loop and started it again — the preloader
+    // holding it, scrolling past the hero, a background tab — resumed at the
+    // angle the clock had reached while it was away, and the field snapped
+    // there in one frame: 29 degrees after a typical intro, 344 after half a
+    // minute out of view. That jump is the flash.
+    //
+    // A gap contributes nothing now: the first frame after any start or resume
+    // adds no time, and the clock only advances while frames are being drawn.
+    const now = performance.now();
+    const step = this._lastFrame ? Math.min(now - this._lastFrame, 100) : 0;
+    this._lastFrame = now;
+    this._clock += step * 0.001;
 
     const { width, height } = this.canvas;
     const cx = width / 2;
@@ -288,9 +499,18 @@ export default class NebulaSphere {
 
     ctx.clearRect(0, 0, width, height);
 
-    const time = Date.now() * 0.001 * rotationSpeed;
+    const time = this._clock * rotationSpeed;
     const cosT = Math.cos(time);
     const sinT = Math.sin(time);
+
+    // How many backing-store pixels one unit of particle space is worth here.
+    // Everything projected is multiplied by it; see `resize()`.
+    const unit = this._unit || 1;
+    const dotScale = this.config.dotScale;
+    const minDot = this._minDot || 0;
+    // The warp is a screen-space reach, so it scales with what is on screen —
+    // otherwise it covers a different amount of the field on every display.
+    const reach = interactionRadius * unit;
 
     const interactive = this.mouse.isActive && !disableInteractions;
     // Backing-store scale, so pointer coords (CSS px) match particle coords.
@@ -316,6 +536,16 @@ export default class NebulaSphere {
       cosRY = Math.cos(rotY);
       sinRY = Math.sin(rotY);
     }
+
+    // Where this frame's points are collected, and how many landed in each
+    // opacity level. All preallocated — see `_allocScratch`.
+    const sxs = this._sx;
+    const sys = this._sy;
+    const srs = this._sr;
+    const sbs = this._sb;
+    const counts = this._bCount;
+    counts.fill(0);
+    let visible = 0;
 
     const g = this.gather;
     const scattered = g < 1;
@@ -386,16 +616,16 @@ export default class NebulaSphere {
       // reference's ordering and it is what gives the field its slight
       // trailing feel — recomputing after integration tightens it visibly.
       const scale = this.Z_PERSPECTIVE / (this.Z_PERSPECTIVE + p.z);
-      const sx = cx + p.x * scale;
-      const sy = cy + p.y * scale;
+      const sx = cx + p.x * scale * unit;
+      const sy = cy + p.y * scale * unit;
 
       if (interactive) {
         const dx = sx - mouseX;
         const dy = sy - mouseY;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < interactionRadius) {
-          const force = (interactionRadius - dist) / interactionRadius;
+        if (dist < reach) {
+          const force = (reach - dist) / reach;
           const angle = Math.atan2(dy, dx);
           p.vx += Math.cos(angle) * force * warpStrength;
           p.vy += Math.sin(angle) * force * warpStrength;
@@ -413,13 +643,20 @@ export default class NebulaSphere {
 
       const finalScale = this.Z_PERSPECTIVE / (this.Z_PERSPECTIVE + p.z);
       if (finalScale > 0) {
+        // Collected, not drawn. The batch below is what puts it on screen.
         const alpha = Math.min(1, Math.max(0.1, finalScale * p.alpha));
-        ctx.beginPath();
-        ctx.arc(sx, sy, p.size * finalScale, 0, TAU);
-        ctx.fillStyle = `rgba(${color},${alpha})`;
-        ctx.fill();
+        const bucket = (alpha * ALPHA_TOP + 0.5) | 0;
+
+        sxs[visible] = sx;
+        sys[visible] = sy;
+        srs[visible] = Math.max(minDot, p.size * finalScale * unit * dotScale);
+        sbs[visible] = bucket;
+        counts[bucket]++;
+        visible++;
       }
     }
+
+    this._paint(ctx, visible, color);
 
     // Only the running loop schedules another frame. A one-off still does not.
     if (this._running) this._rafId = requestAnimationFrame(this._tick);

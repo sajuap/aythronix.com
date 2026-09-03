@@ -1,8 +1,4 @@
-// ---------------------------------------------------------------------------
 // Utilities
-//
-// Loaded last so these can override component styles when applied directly.
-// ---------------------------------------------------------------------------
 
 .is-height-100 {
   height: 100%;
@@ -13,7 +9,6 @@
 }
 
 // Locks body scroll while the preloader is up and while the mobile menu is open.
-// Lenis is stopped alongside this in JS; the class handles the native fallback.
 html.is-locked,
 body.is-locked {
   overflow: hidden;
@@ -38,9 +33,7 @@ body.is-locked {
   position: absolute;
   top: -100%;
   left: 1rem;
-  // Above the fixed header (1000) and both covers. It only ever appears on
-  // focus, and at `top: 1rem` it lands squarely under the header — at the old
-  // 200 it was painted behind it and a keyboard visitor never saw it.
+  // Above the fixed header (1000) and both covers.
   z-index: 1300;
   padding: 0.75rem 1.25rem;
   background-color: var(--base-color-neutral--black);
@@ -54,8 +47,7 @@ body.is-locked {
   }
 }
 
-// Lenis requirements. `html.lenis` disables native smooth scrolling so the two
-// do not fight; `.lenis-stopped` is what Lenis sets when we pause it.
+// Lenis requirements.
 html.lenis,
 html.lenis body {
   height: auto;
@@ -69,8 +61,7 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
-// Anchor targets need to clear the fixed header. Lenis handles the offset for
-// script-driven scrolls; this covers a hard page load onto a #hash.
+// Anchor targets need to clear the fixed header.
 [id] {
   scroll-margin-top: 6rem;
 }

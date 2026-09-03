@@ -1,13 +1,11 @@
-// ---------------------------------------------------------------------------
-// Page shell, containers and width constraints
-// ---------------------------------------------------------------------------
+// Page shell, containers and width constraints.
 
 .page-wrapper {
   position: relative;
   overflow-x: clip; // keeps the marquees from ever widening the document
 }
 
-// Outer gutter. Every section wraps its content in this.
+// Outer gutter.
 .padding-global {
   margin-left: 0;
   margin-right: 0;
@@ -34,9 +32,7 @@
   }
 }
 
-// The 1280px column with the hairline left/right/bottom rules that give the
-// site its "framed" look. Only the bottom and sides are drawn — stacking the
-// sections produces one continuous grid.
+// The 1280px column with the hairline left/right/bottom rules that give the site its "framed" look.
 .container-large-bordered {
   width: 100%;
   max-width: var(--container-max);
@@ -54,7 +50,9 @@
     gap: 2rem;
     height: 100vh;
     padding-top: 8rem;
-    overflow: hidden;
+
+    // Not clipped.
+    overflow: visible;
 
     @include mobile-landscape {
       padding-top: 6rem;
@@ -74,7 +72,7 @@
   }
 }
 
-// --- Width constraints -----------------------------------------------------
+// Width constraints
 
 .max-width-medium {
   width: 100%;
@@ -97,7 +95,7 @@
   max-width: 48rem;
 }
 
-// --- Position helpers ------------------------------------------------------
+// Position helpers
 
 .is-relative {
   position: relative;
@@ -112,7 +110,7 @@
   top: 0;
 }
 
-// --- Grids -----------------------------------------------------------------
+// Grids
 
 .w-layout-grid {
   display: grid;

@@ -2,10 +2,10 @@
 <html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
-    <!-- Drop no-js before the first paint: the covers are hidden while it is set, and the deferred bundle clears it too late. -->
+    <!-- Drop no-js before the first paint; the deferred bundle clears it too late. -->
     <script>document.documentElement.classList.remove('no-js');</script>
 
-    <!-- Lock scrolling before the first paint. The preloader owns the unlock on this page, so page-transition.js leaves it alone. -->
+    <!-- Lock scrolling before the first paint; the preloader owns the unlock here. -->
     <script>document.documentElement.classList.add('is-locked');</script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -42,7 +42,7 @@
 
     <link rel="icon" type="image/svg+xml" href="/src/assets/icons/logo-mark.svg" />
 
-    <!-- Preload the two above-the-fold faces, or the hero re-flows just as the preloader hands over. -->
+    <!-- Preload the above-the-fold faces, or the hero re-flows at the hand-over. -->
     <link
       rel="preload"
       href="/src/assets/fonts/overusedgrotesk-medium.otf"
@@ -58,7 +58,7 @@
       crossorigin
     />
 
-    <!-- Organization. contactPoint and sameAs are what surface in a knowledge panel; the @id lets the graphs below point back here. -->
+    <!-- Organization. The @id is what the graphs below point back to. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -199,7 +199,7 @@
         </feComponentTransfer>
       </filter>
 
-      <!-- The decorative quotation mark behind every testimonial: defined once, referenced by each card. -->
+      <!-- The quote mark behind every testimonial: defined once, referenced per card. -->
       <symbol id="quote-mark" viewBox="0 0 64 40">
         <path
           fill="currentColor"
@@ -209,16 +209,13 @@
       </symbol>
     </svg>
 
-    <!-- Page transition: one level under the preloader (z-101 against 102), covering from CSS. js/components/page-transition.js. -->
+    <!-- Page transition, one level under the preloader. js/components/page-transition.js. -->
     <div class="page-transition" aria-hidden="true">
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
+      <!-- One sheet: the arch is a single curve and cannot be split across panels. -->
       <span class="page-transition_panel"></span>
     </div>
 
-    <!-- Preloader. The mark is inline because it is drawn — dash-offset outlines filling in from currentColor. js/components/preloader.js owns the timings. -->
+    <!-- Preloader. The mark is inline because it is drawn — see js/components/preloader.js. -->
     <div class="preloader" aria-hidden="true">
       <div class="preloader_layers">
         <div class="preloader_bloom"></div>
@@ -258,9 +255,7 @@
     </div>
 
     <div class="page-wrapper">
-      <!-- ================================================================ -->
-      <!-- Navigation                                                        -->
-      <!-- ================================================================ -->
+      <!-- Navigation -->
       <header class="nav_component is-preload-hidden" role="banner">
         <div class="padding-global">
           <div class="nav_container">
@@ -319,12 +314,10 @@
       </header>
 
       <main>
-        <!-- ============================================================== -->
-        <!-- Hero                                                            -->
-        <!-- ============================================================== -->
+        <!-- Hero -->
         <section id="Hero" class="hero-section">
           <div class="hero-section_background-image">
-            <!-- The glass: a Three.js scene of transmissive slabs. The wrapper gradient paints until is-live fades the canvas over it. -->
+            <!-- The glass: a Three.js scene; the wrapper gradient paints until is-live. -->
             <div class="hero_glass" aria-hidden="true">
               <canvas class="hero_glass-canvas"></canvas>
             </div>
@@ -340,7 +333,7 @@
                     <div class="margin-bottom margin-small">
                       <div class="margin-top margin-small">
                         <h1>
-                          We are architecting the future<br class="d-md-block d-none" /> of your digital
+                          We are architecting the future<br class="d-lg-block d-none" /> of your digital
                           <span class="heading-style-h1-pixel"> ecosystem</span> 
                         </h1>
                       </div>
@@ -391,9 +384,7 @@
           </div>
         </section>
 
-        <!-- ============================================================== -->
-        <!-- Capability ticker                                                -->
-        <!-- ============================================================== -->
+        <!-- Capability ticker -->
         <section id="Capabilities" class="capabilities-section" aria-label="Capabilities">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -423,9 +414,7 @@
           </div>
         </section>
 
-        <!-- ============================================================== -->
-        <!-- Value proposition                                                -->
-        <!-- ============================================================== -->
+        <!-- Value proposition -->
         <section id="About" class="why-section">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -476,9 +465,7 @@
           </div>
         </section>
 
-        <!-- ============================================================== -->
-        <!-- Tech stack ribbon                                                -->
-        <!-- ============================================================== -->
+        <!-- Tech stack ribbon -->
         <section id="Stack" class="stack-section" aria-label="Technology stack">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -508,9 +495,7 @@
           </div>
         </section>
 
-        <!-- ============================================================== -->
-        <!-- Services — bento grid                                            -->
-        <!-- ============================================================== -->
+        <!-- Services — bento grid -->
         <section id="Services" class="services-section">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -595,9 +580,133 @@
           </div>
         </section>
 
-        <!-- ============================================================== -->
-        <!-- Case studies                                                     -->
-        <!-- ============================================================== -->
+        <!-- Capability wall — drifting words, work under the pointer -->
+        <section id="Capabilities-detail" class="trail-section" data-image-trail aria-label="What we do">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-medium">
+                <div data-reveal="fade">
+                  <div class="trail_line">
+                    <div class="trail_row">
+                      <!-- One authored copy of the set; marquee.js measures it and clones it to fill the row. -->
+                      <div class="trail_track" data-marquee data-marquee-speed="58">
+                        <span class="trail_word" data-trail-word>Enterprise Web</span>
+                        <span class="trail_word" data-trail-word>Mobile Applications</span>
+                        <span class="trail_word" data-trail-word>Platform &amp; Cloud</span>
+                        <span class="trail_word" data-trail-word>Performance</span>
+                        <span class="trail_word" data-trail-word>Integrations</span>
+                      </div>
+                    </div>
+                    <!-- Outside the row: inside it the row's own mask painted over this. -->
+                    <p class="trail_still is-left" data-trail-still><span class="trail_word" data-trail-word>Web &amp; Mobile</span></p>
+                  </div>
+
+                  <div class="trail_line">
+                    <div class="trail_row">
+                      <!-- One authored copy of the set; marquee.js measures it and clones it to fill the row. -->
+                      <div class="trail_track" data-marquee data-marquee-speed="44" data-marquee-reverse data-marquee-offset="0.35">
+                        <span class="trail_word" data-trail-word>React</span>
+                        <span class="trail_word" data-trail-word>Next.js</span>
+                        <span class="trail_word" data-trail-word>Laravel</span>
+                        <span class="trail_word" data-trail-word>Python</span>
+                        <span class="trail_word" data-trail-word>AWS</span>
+                        <span class="trail_word" data-trail-word>Google Cloud</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="trail_line">
+                    <div class="trail_row">
+                      <!-- One authored copy of the set; marquee.js measures it and clones it to fill the row. -->
+                      <div class="trail_track" data-marquee data-marquee-speed="52" data-marquee-offset="0.2">
+                        <span class="trail_word" data-trail-word>Secure Checkout</span>
+                        <span class="trail_word" data-trail-word>Payment Flows</span>
+                        <span class="trail_word" data-trail-word>Catalogue</span>
+                        <span class="trail_word" data-trail-word>Structured Data</span>
+                        <span class="trail_word" data-trail-word>CMS</span>
+                      </div>
+                    </div>
+                    <!-- Outside the row: inside it the row's own mask painted over this. -->
+                    <p class="trail_still" data-trail-still><span class="trail_word" data-trail-word>E-Commerce</span></p>
+                  </div>
+
+                  <div class="trail_line">
+                    <div class="trail_row">
+                      <!-- One authored copy of the set; marquee.js measures it and clones it to fill the row. -->
+                      <div class="trail_track" data-marquee data-marquee-speed="40" data-marquee-reverse data-marquee-offset="0.6">
+                        <span class="trail_word" data-trail-word>OpenAI</span>
+                        <span class="trail_word" data-trail-word>Automation Pipelines</span>
+                        <span class="trail_word" data-trail-word>Data-Driven SEO</span>
+                        <span class="trail_word" data-trail-word>Monitoring</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="trail_line">
+                    <div class="trail_row">
+                      <!-- One authored copy of the set; marquee.js measures it and clones it to fill the row. -->
+                      <div class="trail_track" data-marquee data-marquee-speed="56" data-marquee-offset="0.45">
+                        <span class="trail_word" data-trail-word>Discovery</span>
+                        <span class="trail_word" data-trail-word>Blueprinting</span>
+                        <span class="trail_word" data-trail-word>Engineering</span>
+                        <span class="trail_word" data-trail-word>Deployment</span>
+                        <span class="trail_word" data-trail-word>Maintenance</span>
+                      </div>
+                    </div>
+                    <!-- Outside the row: inside it the row's own mask painted over this. -->
+                    <p class="trail_still is-mid-left" data-trail-still><span class="trail_word" data-trail-word>AI &amp; Automation</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- The portfolio rail's thumbnails, cropped square. image-trail.js clones these into its pool. -->
+          <div class="trail_images" aria-hidden="true">
+            <img
+              class="trail_img"
+              data-trail-img
+              src="/src/assets/images/work-alphatrophies.jpg"
+              width="3680"
+              height="2760"
+              loading="lazy"
+              decoding="async"
+              alt=""
+            />
+            <img
+              class="trail_img"
+              data-trail-img
+              src="/src/assets/images/work-olympia.jpg"
+              width="6000"
+              height="4500"
+              loading="lazy"
+              decoding="async"
+              alt=""
+            />
+            <img
+              class="trail_img"
+              data-trail-img
+              src="/src/assets/images/work-stampstore.jpg"
+              width="4000"
+              height="3000"
+              loading="lazy"
+              decoding="async"
+              alt=""
+            />
+            <img
+              class="trail_img"
+              data-trail-img
+              src="/src/assets/images/work-badgeaminit.jpg"
+              width="4000"
+              height="3000"
+              loading="lazy"
+              decoding="async"
+              alt=""
+            />
+          </div>
+        </section>
+
+        <!-- Case studies -->
         <section id="Work" class="case-studies-section">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -614,7 +723,7 @@
                     </div>
                   </div>
 
-                  <!-- Full-width panels that stack on scroll: CSS sticky does the stacking, card-stack.js adds only the depth cue. No data-reveal — arriving over one another is the entrance. -->
+                  <!-- Sticky panels; card-stack.js adds only the depth cue. No data-reveal — they arrive by scrolling. -->
                   <div class="case-stack" data-card-stack>
                     <article class="case-stack_card">
                       <div class="case-stack_lead">
@@ -707,9 +816,7 @@
           </div>
         </section>
 
-        <!-- ============================================================== -->
-        <!-- Engineering lifecycle                                            -->
-        <!-- ============================================================== -->
+        <!-- Engineering lifecycle -->
         <section id="Process" class="lifecycle-section">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -789,9 +896,7 @@
           </div>
         </section>
 
-        <!-- ============================================================== -->
-        <!-- Testimonials                                                     -->
-        <!-- ============================================================== -->
+        <!-- Testimonials -->
         <section id="Reviews" class="testimonials-section">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -814,7 +919,7 @@
                     </div>
                   </div>
 
-                  <!-- PLACEHOLDER COPY. Invented names and posts; portraits are initials rather than photographs, so no real person is misrepresented. -->
+                  <!-- PLACEHOLDER COPY: invented names; portraits are initials rather than photographs. -->
                   <div class="testimonials_row" data-reveal="fade">
                     <div
                       class="testimonials_track"
@@ -945,9 +1050,7 @@
           </div>
         </section>
 
-        <!-- ============================================================== -->
-        <!-- Contact                                                          -->
-        <!-- ============================================================== -->
+        <!-- Contact -->
         <section id="Contact" class="contact-section">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -1016,9 +1119,7 @@
         </section>
       </main>
 
-      <!-- ================================================================ -->
-      <!-- Footer                                                            -->
-      <!-- ================================================================ -->
+      <!-- Footer -->
       <footer class="footer_section">
         <div class="padding-global">
           <div class="container-large-bordered is-footer">
@@ -1053,7 +1154,7 @@
                         </div>
                       </div>
 
-                      <!-- Legal pages live here rather than in a fourth column. Relative hrefs, so they resolve under a project subpath too. -->
+                      <!-- Legal pages live here. Relative hrefs, so they resolve under a subpath too. -->
                       <div class="footer_copyright-text">
                         © <span data-year>2026</span> Aythronix |
                         <a href="legal-notice.html"

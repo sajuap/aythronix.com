@@ -1,16 +1,4 @@
-// ---------------------------------------------------------------------------
 // Services — bento grid
-//
-// Three columns on desktop. The featured card spans two of them on the first
-// row, which is what makes the arrangement read as a bento rather than a plain
-// card grid: one clear entry point, then four equal siblings.
-//
-//   [ featured — Enterprise Web  ][ Mobile ]
-//   [ AI ][ E-Commerce ][ SEO ]
-//
-// Two columns at 991px (the featured card keeps its span, so it still leads),
-// one column at 767px.
-// ---------------------------------------------------------------------------
 
 .services_grid {
   display: grid;
@@ -40,8 +28,7 @@
   border-radius: var(--radius--medium);
   overflow: hidden;
 
-  // The featured card leads the grid: two tracks wide, and inverted so it reads
-  // as the primary surface rather than one of five equals.
+  // The featured card leads the grid: two tracks wide.
   &.is-featured {
     grid-column: span 2;
     background-image: linear-gradient(
@@ -117,4 +104,138 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
+}
+
+// Principles — the about page's six.
+
+.services_grid.is-principles {
+  $ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  .service-card {
+    transition:
+      transform 0.5s $ease,
+      box-shadow 0.5s $ease;
+
+    // The blue, crossfading in over the resting surface.
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      opacity: 0;
+      background-image: linear-gradient(
+        112deg,
+        var(--base-color-brand--blue-darker),
+        var(--base-color-brand--blue)
+      );
+      transition: opacity 0.5s $ease;
+      pointer-events: none;
+    }
+
+    // The rule along the foot.
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      transform: scaleX(0);
+      transform-origin: left center;
+      background-image: linear-gradient(90deg, rgb(255 255 255 / 85%), rgb(255 255 255 / 0%));
+      transition: transform 0.55s $ease;
+      pointer-events: none;
+    }
+
+    // Head and copy over the wash.
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  // The brackets have to leave the 3rem square to open, and it clips.
+  .icon-container {
+    overflow: visible;
+  }
+
+  // `transform` on a bracket is its per-corner rotation (components/_button.scss).
+  .select-button-vector {
+    filter: brightness(1) invert(0);
+    transition:
+      translate 0.45s $ease,
+      filter 0.5s $ease;
+  }
+
+  .arrow-icon {
+    filter: brightness(1) invert(0);
+    transition:
+      scale 0.45s $ease,
+      filter 0.5s $ease;
+  }
+
+  .service-card_title {
+    transition: color 0.5s $ease;
+  }
+
+  .service-card_body {
+    transition:
+      color 0.5s $ease,
+      opacity 0.45s $ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 1.25rem 2.5rem rgb(4 23 58 / 10%),
+      0 0.25rem 0.75rem rgb(4 23 58 / 5%);
+
+    &::before {
+      opacity: 1;
+    }
+
+    &::after {
+      transform: scaleX(1);
+      transition-delay: 0.08s;
+    }
+
+    // Both to white, for the reason in the note at the top of this block.
+    .select-button-vector {
+      filter: brightness(0) invert(1);
+      transition-delay: 0.05s;
+
+      &.is-top-left {
+        translate: -4px -4px;
+      }
+
+      &.is-top-right {
+        translate: 4px -4px;
+      }
+
+      &.is-bottom-left {
+        translate: -4px 4px;
+      }
+
+      &.is-bottom-right {
+        translate: 4px 4px;
+      }
+    }
+
+    .arrow-icon {
+      filter: brightness(0) invert(1);
+      scale: 1.06;
+      transition-delay: 0.05s;
+    }
+
+    // The same pair of values `.service-card.is-featured` sets on the blue it is permanently filled with.
+    .service-card_title {
+      color: var(--base-color-neutral--white);
+    }
+
+    .service-card_body {
+      opacity: 0.85;
+      color: var(--base-color-neutral--white);
+    }
+  }
 }

@@ -1,11 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1192 201" role="img" aria-label="Aythronix">
+<!-- Box runs to 250 so the y descender (bottom of its ink lands at ~248) clears
+     the viewport edge; the baseline itself stays at 195. The fade is pinned to
+     user space 0..201 so the letterforms keep the exact falloff they had, and
+     the tail below the baseline holds the gradient's end value. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1192 250" role="img" aria-label="Aythronix">
   <defs>
-    <linearGradient id="ay-footer-fade" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="ay-footer-fade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="201">
       <stop offset="0" stop-color="#fff" stop-opacity="1"/>
       <stop offset="1" stop-color="#fff" stop-opacity="0.27"/>
     </linearGradient>
     <mask id="ay-footer-mask">
-      <rect width="1192" height="201" fill="url(#ay-footer-fade)"/>
+      <rect width="1192" height="250" fill="url(#ay-footer-fade)"/>
     </mask>
   </defs>
   <g mask="url(#ay-footer-mask)" opacity="0.31" fill="#0765eb">

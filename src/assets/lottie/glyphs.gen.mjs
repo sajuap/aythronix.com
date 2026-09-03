@@ -75,6 +75,22 @@ const GLYPHS = {
     'M 385 330 A 55 55 0 1 1 275 330 A 55 55 0 1 1 385 330',
     'M 208 208 L 292 292',
   ],
+
+  /** Scalability — the same step, taken again, off one baseline. */
+  scalability: ['M 120 380 H 380', 'M 170 335 V 270', 'M 250 335 V 195', 'M 330 335 V 120'],
+
+  /** Partnership — two of them, and the ground they hold in common. */
+  partnership: [
+    'M 300 250 A 90 90 0 1 1 120 250 A 90 90 0 1 1 300 250',
+    'M 380 250 A 90 90 0 1 1 200 250 A 90 90 0 1 1 380 250',
+  ],
+
+  /** Innovation — a bulb. The idea, before there is anything to build. */
+  innovation: [
+    'M 342 210 A 92 92 0 1 1 158 210 A 92 92 0 1 1 342 210',
+    'M 205 345 H 295',
+    'M 218 383 H 282',
+  ],
 };
 
 // --- Board and timing, taken from the originals ----------------------------
@@ -438,7 +454,12 @@ function build(name, paths) {
 // value it was reaching for. Nothing is lost — all 43 expressions across the four
 // files are colour, none of them drives motion. Idempotent, so re-running is
 // safe.
-const IMPORTED = ['icon-1', 'icon-2', 'icon-3', 'built-icon'];
+// `icon-2` was in this list and is not in the folder — it went with the pages
+// rework in 0e60d24, and nothing has referenced it since. The name stayed here,
+// which is enough to crash the run on `readFileSync` before the last two files
+// are reached, so the script had quietly stopped being runnable. Names here have
+// to match what is actually on disk.
+const IMPORTED = ['icon-1', 'icon-3', 'built-icon'];
 
 function normaliseImported(name) {
   const file = join(HERE, `${name}.json`);

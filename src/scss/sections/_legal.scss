@@ -1,11 +1,4 @@
-// ---------------------------------------------------------------------------
 // Legal / policy pages
-//
-// A single prose column inside the same bordered container as the homepage
-// sections. The margins below are the reference's own: bottom-only, no top
-// margin on headings. It runs tight on purpose, so headings read as attached to
-// the paragraph they introduce.
-// ---------------------------------------------------------------------------
 
 .padding-section-large {
   padding-top: 8rem;
@@ -17,11 +10,7 @@
   }
 }
 
-// The header is fixed and normally sits over the hero, which is dark — so it
-// starts transparent with light type and flips on scroll. Any page without a
-// hero has nothing behind it, and the type would be white on white. These two
-// classes are the same statement ("no hero here"), kept separate only so the
-// legal pages keep the name they already had.
+// The header is fixed and normally sits over the hero, which is dark.
 .is-legal-page .nav_component,
 .is-inner-page .nav_component {
   background-color: var(--base-color-neutral--white);

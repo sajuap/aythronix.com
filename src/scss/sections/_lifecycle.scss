@@ -1,11 +1,4 @@
-// ---------------------------------------------------------------------------
 // Engineering lifecycle
-//
-// Four steps across on desktop, each led by its number. A connecting hairline
-// runs behind the row so it reads as a sequence rather than four unrelated
-// cards — it is drawn on the container and stops before the last step so the
-// line never dangles past the end.
-// ---------------------------------------------------------------------------
 
 .lifecycle_grid {
   display: grid;
@@ -56,8 +49,7 @@
   }
 }
 
-// Hairline running from the glyph out to the next step. Suppressed on the last
-// one, and on any step that ends a row — otherwise it points into nothing.
+// Hairline running from the glyph out to the next step.
 .lifecycle-step_rule {
   width: 100%;
   height: 1px;
@@ -65,22 +57,4 @@
   background-color: var(--base-color-neutral--neutral-lighter);
 }
 
-// Hide the *line*, not the box. `display: none` would reclaim the row and lift
-// the last step's paragraph ~24px above its neighbours', which reads as a
-// misalignment rather than as the end of the sequence.
-.lifecycle-step:last-child .lifecycle-step_rule {
-  background-color: transparent;
-}
 
-@include tablet {
-  .lifecycle-step:nth-child(2n) .lifecycle-step_rule {
-    background-color: transparent;
-  }
-}
-
-@include mobile-landscape {
-  // Stacked, so there is no "next step" to the right of anything.
-  .lifecycle-step_rule {
-    display: none;
-  }
-}

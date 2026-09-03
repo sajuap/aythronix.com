@@ -1,16 +1,4 @@
-// ---------------------------------------------------------------------------
 // Hero
-//
-// Full-viewport frame: centred copy on top, the interactive particle sphere
-// filling the remaining space below. The sphere is a 2D canvas on desktop; at
-// 991px and under the canvas is dropped entirely and a pre-rendered still takes
-// its place, which is what keeps the section cheap on phones.
-//
-// Behind both sits the glass — a Three.js scene of transmissive slabs standing
-// in front of an animated field of blue light (js/three/glass-slabs.js). It is
-// the only dark section on the page, so everything below re-states the colours
-// the copy, the frame and the sphere still need against it.
-// ---------------------------------------------------------------------------
 
 .hero-section_background-image {
   position: relative;
@@ -18,13 +6,11 @@
   color: var(--base-color-neutral--white);
   overflow: hidden;
 
-  // Two jobs. It scopes the backdrop's stacking to the hero, and it closes the
-  // blend group so the mobile still's `mix-blend-mode` below reaches the sheet
-  // and stops there instead of picking up the white page behind it.
+  // Two jobs.
   isolation: isolate;
 }
 
-// --- Glass backdrop --------------------------------------------------------
+// Glass backdrop
 
 .hero_glass {
   position: absolute;
@@ -32,20 +18,13 @@
   overflow: hidden;
   pointer-events: none;
 
-  // Behind the hero's own content but inside its stacking context. Negative
-  // rather than giving the content a positive z-index: a positioned content
-  // wrapper would open a stacking context of its own, and the mobile still
-  // would then have nothing to blend against.
+  // Behind the hero's own content but inside its stacking context.
   z-index: -1;
 
-  // What paints before the first WebGL frame, and the entire backdrop if the
-  // context never comes up: the same pools of light the shader builds, minus
-  // the refraction.
+  // What paints before the first WebGL frame, and the entire backdrop if the context never comes up.
   @include night-sky;
 
-  // The fallback's own slats, so a machine without WebGL still gets glass
-  // rather than a plain gradient. Dropped the moment the canvas is live, or the
-  // two would double up.
+  // The fallback's own slats, so a machine without WebGL still gets glass rather than a plain gradient.
   &::after {
     display: none;
     content: '';
@@ -70,9 +49,7 @@
   width: 100%;
   height: 100%;
 
-  // Held back until the renderer has a frame, then crossfaded over the gradient
-  // underneath. Both are built from the same colours, so the handover is a lift
-  // in depth rather than a change of scene.
+  // Held back until the renderer has a frame, then crossfaded over the gradient underneath.
   opacity: 0;
 
   .hero_glass.is-live & {
@@ -81,53 +58,43 @@
 }
 
 // The crossfade only applies once the intro has handed over.
-//
-// The preloader holds its exit until the renderer reports its first frame — and
-// `is-live` goes on with that same frame, so the 0.9s fade was starting under the
-// panel and finishing in front of the visitor. What that looks like is the hero
-// assembling itself after the page has arrived, which is exactly the "it takes a
-// moment to load" glitch.
-//
-// Behind an opaque panel there is nothing to smooth, so there is no reason to
-// fade: the canvas snaps to opaque while it cannot be seen. The transition is
-// kept for the cases that happen *after* the intro — a slow machine where the
-// scene lands late, or a lost WebGL context coming back — which is where a
-// crossfade was always the point.
 html.is-loaded .hero_glass-canvas {
   transition: opacity 0.9s ease;
 }
 
-// --- Copy on the sheet -----------------------------------------------------
-//
-// Type scale, weight, spacing and alignment are untouched — only the colour the
-// dark backdrop now demands.
+// Copy on the sheet
 
 .hero-section {
   h1 {
     color: var(--base-color-neutral--white);
 
-    // Wide, weak and dark: it never reads as a shadow, it just stops the
-    // lightest bands of the sheet from lifting the counters of the letterforms.
+    // Wide, weak and dark: it never reads as a shadow.
     text-shadow: 0 2px 30px rgb(1 7 22 / 45%);
   }
 
   p {
     color: var(--base-color-neutral--white);
 
-    // A shade under the global 0.8: pure white at full strength next to a white
-    // H1 flattens the hierarchy the original had.
+    // A shade under the global 0.8: pure white at full strength next to a white H1 flattens the hierarchy the original had.
     opacity: 0.78;
+
+    // Up from the global 1rem on a phone.
+    @include mobile-landscape {
+      font-size: 1.0625rem;
+      line-height: 1.55;
+    }
+
+    @include mobile-portrait {
+      font-size: 1.125rem;
+    }
   }
 
-  // The two hairline ticks behind the word are brand blue, which all but
-  // disappears against the sheet. Brightness lifts them back; the word itself is
-  // white and already clamped, so it comes through unchanged.
+  // The two hairline ticks behind the word are brand blue, which all but disappears against the sheet.
   .heading-style-h1-pixel {
     filter: brightness(1.9) saturate(0.85);
   }
 
-  // The frame's hairline is an alpha of the navy — invisible here. Same weight
-  // and position, inverted so it still draws.
+  // The frame's hairline is an alpha of the navy — invisible here.
   .container-large-bordered.is-hero {
     // border-color: #000 rgb(255 255 255 / 14%) rgb(255 255 255 / 12%);
   }
@@ -138,15 +105,13 @@ html.is-loaded .hero_glass-canvas {
   flex: 1;
 }
 
-// Deliberately `overflow: visible` — the sphere is wider than its box and is
-// meant to bleed past the frame.
+// The sphere's own box, and it has to be the viewport rather than the column.
 .hero_sphere-code {
+  width: 100vw;
+  max-width: 100vw;
   height: 100%;
-  overflow: visible;
-
-  @include tablet {
-    display: none;
-  }
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 
 #nebula-canvas {
@@ -155,24 +120,33 @@ html.is-loaded .hero_glass-canvas {
   height: 100%;
 }
 
-// The still that replaces the canvas below 992px.
-//
-// The source render is black dots on an opaque white plate (only the 2070w
-// original carries alpha — every srcset variant is indexed and flat). Against a
-// white section the plate was invisible and `#brand-tint` was enough to recolour
-// the dots. On the sheet that plate would be a white block, so it is inverted
-// and screened instead: the plate goes black and screens out to nothing, and the
-// dots come back as light. Still no extra raster variants.
+// The still that stands in for the canvas.
+@mixin sphere-still {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+  filter: invert(1) opacity(0.62);
+  mix-blend-mode: screen;
+}
+
 .hero-sphere-picture {
   display: none;
+}
 
-  @include tablet {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 0%;
-    filter: invert(1) opacity(0.62);
-    mix-blend-mode: screen;
+// No script: nothing will ever build the canvas.
+html.no-js .hero-sphere-picture {
+  @include sphere-still;
+}
+
+// Motion turned down: js/main.js does not build the field, so the still is the hero's only sphere.
+@include reduced-motion {
+  .hero_sphere-code {
+    display: none;
+  }
+
+  .hero-sphere-picture {
+    @include sphere-still;
   }
 }

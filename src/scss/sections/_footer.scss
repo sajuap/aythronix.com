@@ -1,17 +1,10 @@
-// ---------------------------------------------------------------------------
 // Footer
-//
-// Brand block and link column on a 5fr / 1fr split, with the oversized wordmark
-// running full-width underneath. The container's bottom hairline is removed here
-// so the page ends on the wordmark rather than a rule.
-// ---------------------------------------------------------------------------
 
 .footer_section {
   min-width: 100%;
 }
 
-// Brand block plus three link columns. The brand track is wide enough to hold
-// the lockup, the divider and the tagline on one line at 1440.
+// Brand block plus three link columns.
 .footer_grid {
   display: grid;
   width: 100%;
@@ -34,9 +27,10 @@
     gap: 2.5rem 1.5rem;
   }
 
+  // Two up rather than a single stack: the link columns are short enough to pair.
   @include mobile-portrait {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 1.25rem;
   }
 }
 

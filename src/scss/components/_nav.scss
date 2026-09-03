@@ -1,11 +1,4 @@
-// ---------------------------------------------------------------------------
 // Navigation
-//
-// Fixed, transparent over the hero, then flips to solid white with a 10%-black
-// hairline the moment the page leaves scroll position 0. That flip is driven by
-// js/animations/nav.js so it can be a real interpolation rather than a class
-// swap.
-// ---------------------------------------------------------------------------
 
 .nav_component {
   position: fixed;
@@ -74,11 +67,7 @@
   }
 }
 
-// The page you are on. Drawn in `currentColor` so the one rule covers both ink
-// modes — navy over a white header, white over the hero — rather than needing a
-// second colour inside `.is-over-hero`. It is a static marker, so it is a
-// pseudo-element rather than a border: the border would shift the link's box and
-// nudge every link after it by a pixel.
+// The page you are on.
 .nav_link[aria-current='page'] {
   position: relative;
 
@@ -90,8 +79,7 @@
     content: '';
   }
 
-  // The collapsed menu sets the links left-aligned at 1rem of padding, so the
-  // rule has to follow the larger box or it stops short of the word.
+  // The collapsed menu sets the links left-aligned at 1rem of padding.
   @include tablet {
     &::after {
       inset: auto auto calc(1rem - 4px) 1rem;
@@ -100,11 +88,7 @@
   }
 }
 
-// --- Over the hero ---------------------------------------------------------
-//
-// Set by js/animations/nav.js for as long as the header is still transparent,
-// which is only ever over the hero's dark glass sheet. Colour only: nothing here
-// moves, resizes or reflows, and it all reverts as the white fill scrubs in.
+// Over the hero
 
 .nav_component.is-over-hero {
   .nav_logo img,
@@ -126,13 +110,12 @@
     color: var(--base-color-neutral--white);
   }
 
-  // The mark is a flat blue lockup, so it flattens to white rather than being
-  // swapped for a second file — one less asset to keep in sync.
+  // The mark is a flat blue lockup, so it flattens to white rather than being swapped for a second file.
   .nav_logo img {
     filter: brightness(0) invert(1);
   }
 
-  // The header CTA is a navy wash with navy text. Same weights, mirrored.
+  // The header CTA is a navy wash with navy text.
   .nav_container > .button.is-secondary {
     background-color: rgb(255 255 255 / 12%);
     color: var(--base-color-neutral--white);
@@ -146,9 +129,7 @@
     }
   }
 
-  // Below 992px the links live in a white panel that opens under the header, so
-  // they keep their own colour there. The mark and the button stay inverted —
-  // those sit on the transparent bar, over the hero.
+  // Below 992px the links live in a white panel that opens under the header.
   @include tablet {
     .nav_link {
       color: var(--base-color-neutral--neutral-darkest);
@@ -160,7 +141,7 @@
   }
 }
 
-// --- Collapsed menu (below 992px) ------------------------------------------
+// Collapsed menu (below 992px)
 
 .menu-button {
   display: none;

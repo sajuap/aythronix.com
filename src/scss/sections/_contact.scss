@@ -1,10 +1,4 @@
-// ---------------------------------------------------------------------------
 // Contact
-//
-// A bordered two-panel card: intro copy on a 5%-black wash, form on solid white
-// with a 2rem offset that lets the wash show through on the left. Stacks at
-// 992px, where the dividing rule moves from the left edge to the top.
-// ---------------------------------------------------------------------------
 
 .contact-section_form-wrapper {
   display: grid;
@@ -15,10 +9,7 @@
   grid-template-rows: auto;
   background-color: var(--base-color-neutral--neutral-lightest);
   border: 1px solid var(--base-color-neutral--neutral-lighter);
-  // Same step as `.case-card`. The two are explicitly one vocabulary of "panel"
-  // — see the note at the top of _case-studies.scss — so they cannot take
-  // different corners. `overflow` is what makes the right-hand panel inside
-  // follow the curve instead of poking square corners through it.
+  // Same step as `.case-card`.
   border-radius: var(--radius--medium);
   overflow: hidden;
   box-shadow: var(--shadow--ambient-wide);

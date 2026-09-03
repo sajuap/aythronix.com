@@ -1,11 +1,4 @@
-// ---------------------------------------------------------------------------
 // Reset
-//
-// Only the normalisation the layout actually depends on. `img` keeps the
-// inline-block + vertical-align:middle behaviour of the reference, because the
-// press-logo marquee and the corner brackets are laid out against that
-// baseline; switching to `display:block` shifts them.
-// ---------------------------------------------------------------------------
 
 *,
 *::before,
@@ -18,18 +11,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 
-  // Reserve the scrollbar's gutter permanently, whether or not a scrollbar is
-  // currently in it.
-  //
-  // The preloader and the mobile menu both lock scrolling with `overflow: hidden`
-  // on this element (utilities/_helpers.scss), which takes the scrollbar away
-  // with it. On a desktop that is ~15px of width handed back to the layout for as
-  // long as the lock is on and taken again the instant it lifts — so the whole
-  // page, every centred container and every fixed element, jumps sideways at
-  // exactly the moment the preloader hands over to the hero. It reads as the
-  // page glitching, and it is the most visible thing in that handover.
-  //
-  // Unsupported on Safari before 18.2, which simply gets the old behaviour.
+  // Reserve the scrollbar's gutter permanently, whether or not a scrollbar is currently in it.
   scrollbar-gutter: stable;
 }
 
@@ -38,9 +20,7 @@ body {
   margin: 0;
   background-color: var(--base-color-neutral--white);
 
-  // A single soft smoke plume pinned to the top of the document, sized to the
-  // full viewport width. It sits behind the hero and fades out naturally as the
-  // page scrolls past it — there is no separate hero background layer.
+  // A single soft smoke plume pinned to the top of the document, sized to the full viewport width.
   background-image: url('/src/assets/images/hero-background-smoke.avif');
   background-position: 50% 0;
   background-repeat: no-repeat;
@@ -52,8 +32,7 @@ body {
   font-weight: 400;
   line-height: 1.5;
 
-  // The cursor lives in base/_cursor.scss — it is two drawn pluses swapped by
-  // surface now, not one native keyword.
+  // The cursor lives in base/_cursor.scss — it is two drawn pluses swapped by surface now.
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -149,17 +128,7 @@ table {
   border-radius: var(--radius--small);
 }
 
-// The page never scrolls sideways. The marquees and the testimonials' full-bleed
-// row are the only wide content, and `.page-wrapper` clips them.
-//
-// `clip`, not `hidden`, and the difference is load-bearing. `hidden` makes a box
-// a scroll container, and a `position: sticky` element inside a scroll container
-// sticks to *that* rather than to the viewport — which is how the case-study
-// stack on the home page would quietly stop working with no error to debug.
-// Whether body's value propagates to the viewport (it should, while `html` is
-// `overflow: visible`) is a subtlety this does not need to depend on: `clip`
-// clips without ever creating a scroll container, so sticky is safe either way.
-// `.page-wrapper` uses it for the same reason.
+// The page never scrolls sideways.
 body {
   overflow-x: clip;
 }

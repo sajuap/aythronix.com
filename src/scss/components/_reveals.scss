@@ -1,25 +1,6 @@
-// ---------------------------------------------------------------------------
 // Scroll-reveal structure
-//
-// `.line-wrapper` is the clip; `.line-inner` is what moves. The 0.15em vertical
-// padding stops descenders (g, y, p) from being shaved by the clip on the way
-// through.
-// ---------------------------------------------------------------------------
 
-// The clip needs to sit slightly outside the line box, or a descender (g, y, p)
-// is shaved off once the line has settled. The padding buys that room and the
-// matching negative margin takes it straight back out of the layout, so a split
-// heading occupies exactly the height it did before it was split.
-//
-// Putting both on the wrapper (block-level) rather than the inner (inline-block)
-// is what makes this exact: the wrapper's padding box is what `overflow` clips
-// against, while its margin box is what the parent measures. The padding also
-// stops these negative margins collapsing through to the parent.
-// One of these per split line. `flow-root` gives each its own block formatting
-// context, which stops the wrapper's negative margins collapsing with the
-// neighbouring line's. Without it, two adjacent lines share a single -0.15em
-// instead of applying one each, and a multi-line heading ends up 0.15em taller
-// than an unsplit one.
+// The clip sits slightly outside the line box, or descenders are shaved.
 .split-line {
   display: flow-root;
 }
@@ -45,14 +26,7 @@ p[data-reveal='text'] .line-wrapper,
   line-height: 1.5em;
 }
 
-// Reveal targets are hidden from the first paint until reveals.js has taken
-// ownership of them, at which point it stamps `.is-revealed` on <html>. Without
-// this the copy is briefly visible at full opacity before GSAP sets its "from"
-// state, which reads as a flash.
-//
-// Both guards matter: `.no-js` covers the script never running at all, and
-// `.is-revealed` covers every path through reveals.js — including the mobile and
-// reduced-motion paths, where nothing animates.
+// Reveal targets are hidden from the first paint until reveals.js has taken ownership of them.
 html:not(.no-js):not(.is-revealed) [data-reveal] {
   opacity: 0;
 }

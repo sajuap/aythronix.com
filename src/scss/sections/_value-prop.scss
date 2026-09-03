@@ -1,35 +1,6 @@
-// ---------------------------------------------------------------------------
 // Value proposition
-//
-// `.value-prop-section` is a bare hook — the pages that carry it get their
-// width and rhythm from `.container-large-bordered` and the padding utilities,
-// and nothing here styles it.
-//
-// The stage that used to sit at the top of this file — a fixed-height box with
-// the dot-dome still, the live particle field crossfading in over it, and the
-// copy lifted above both — went with the Why Aythronix redesign, which puts an
-// arc of photographs there instead. See sections/_why.scss. That took
-// js/animations/pulse.js with it, and left side-shpere*.avif unreferenced.
-// ---------------------------------------------------------------------------
 
-// ---------------------------------------------------------------------------
-// Ticker items — the capability strip and the tech stack ribbon
-//
-// Same row either way: eyebrow label left, marquee right, same gap, same end
-// masks. Separation between items is the marquee's own 4rem gap, so neither has
-// to draw a divider that could double up at the seam where marquee.js joins a
-// clone to the original.
-//
-// They part company on type, and deliberately. The stack ribbon is a list of
-// other people's product names — supporting evidence, set quietly in the
-// interface face. The capability strip is our own offer, so it takes the display
-// face at full-strength navy and is meant to be read first.
-//
-// The ribbon is set typographically rather than with brand logos: two of the six
-// marks (AWS, OpenAI) are not available under a licence that permits
-// redistribution, and mixing four real logos with two text labels looks like an
-// oversight. Drop in real marks later if the brand guidelines allow it.
-// ---------------------------------------------------------------------------
+// Ticker items — the capability strip and the tech stack ribbon.
 
 .capability_item,
 .tech-ribbon_item {
@@ -50,8 +21,7 @@
   letter-spacing: -0.5px;
 }
 
-// Mondwest, solid navy. No negative tracking here — the -0.5px on the ribbon is
-// tuned for Overused Grotesk, and Mondwest's serifs need the room.
+// Mondwest, solid navy.
 .capability_item {
   color: var(--base-color-neutral--neutral-darkest);
   font-family: $font-display;

@@ -199,25 +199,38 @@ const PANEL_GLOW_VARIANCE = 0.05;
  * boundary and hunt between two settings for the length of the visit.
  */
 const QUALITY_STEPS = [
-  { dprScale: 1, slabScale: 1 },
-  { dprScale: 0.78, slabScale: 1 },
-  { dprScale: 0.6, slabScale: 1.6 },
+  // Opens at 0.82 rather than 1. Every pixel here is paid for three times over —
+  // in the frame, in the multisampled transmission buffer sized to match it, and
+  // in the mip chain rebuilt over that buffer every frame — so the top step was
+  // the most expensive thing on the page by a wide margin. Nothing in this scene
+  // has an edge sharp enough to show the difference: it is a soft light field
+  // behind frosted panels. What it does show is roughly a third off the fill.
+  { dprScale: 0.82, slabScale: 1 },
+  { dprScale: 0.66, slabScale: 1 },
+  { dprScale: 0.5, slabScale: 1.6 },
+  // A floor for the machines that cannot hold even that. Soft, but running.
+  { dprScale: 0.38, slabScale: 2.2 },
 ];
 
 /** Roughly 45fps. Above this the scene is costing the page real frames. */
 const FRAME_BUDGET_MS = 22;
 
 /** Ignored after start and after each step down — shader compiles land here. */
-const WARMUP_MS = 700;
+const WARMUP_MS = 500;
 
 /**
  * A verdict needs either enough frames for a stable median or enough wall clock,
  * whichever lands first. Frames alone would mean the slowest devices — the ones
  * that actually need the governor — wait longest to hear from it.
+ *
+ * Short windows on purpose. Every millisecond before the first verdict is a
+ * millisecond of the stutter the governor exists to end, and on a machine that
+ * needs two steps down the old windows meant three seconds of it. A median of
+ * six frames is coarse, but it only has to answer "is this obviously too slow".
  */
-const MIN_SAMPLES = 8;
-const SAMPLE_FRAMES = 70;
-const SAMPLE_MS = 1500;
+const MIN_SAMPLES = 6;
+const SAMPLE_FRAMES = 40;
+const SAMPLE_MS = 700;
 
 // --- Layer 1: the gradient -------------------------------------------------
 

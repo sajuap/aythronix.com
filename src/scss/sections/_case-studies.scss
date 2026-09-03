@@ -1,18 +1,4 @@
-// ---------------------------------------------------------------------------
 // Case studies
-//
-// Two shapes, one vocabulary.
-//
-//   .case-studies_grid  two panels side by side — the portfolio page's list
-//   .case-stack         full-width panels that stack as you scroll — the home
-//                       page's Engineering Impact section
-//
-// Both are metric-first. The number is the headline — it is what a prospect
-// scans for — with the narrative beside or beneath it. Same bordered, softly
-// shadowed surface as the contact panel so the page keeps one vocabulary of
-// "panel", and the stack reuses the grid card's own type classes
-// (`.case-card_metric`, `.case-card_title`) rather than restating them.
-// ---------------------------------------------------------------------------
 
 .case-studies_grid {
   display: grid;
@@ -45,7 +31,7 @@
   }
 }
 
-// The metric. Set at H2 scale in the brand blue so it carries the panel.
+// The metric.
 .case-card_metric {
   color: var(--base-color-brand--blue);
   font-family: $font-body;
@@ -82,47 +68,19 @@
   background-color: var(--base-color-neutral--neutral-lighter);
 }
 
-// ---------------------------------------------------------------------------
 // The scroll stack
-//
-// Each panel sticks to the top of the viewport, and the next one scrolls up over
-// it until it is covered. The stacking is `position: sticky` and nothing else —
-// no pinning, no scroll-driven layout, no JS in the critical path. The browser
-// composites a sticky element on its own, so the effect cannot drop frames the
-// way a scrubbed pin can, and it still works with the stylesheet alone if the
-// bundle never arrives.
-//
-// GSAP's only job here is the depth cue — see js/animations/card-stack.js, which
-// scrubs the outgoing panel down a few percent so it reads as receding behind
-// the one arriving rather than being wiped by it. That is a transform on two
-// elements, which is about as cheap as scroll work gets.
-//
-// Sticky is fragile in one specific way: an ancestor that is a scroll container
-// silently kills it — the panel sticks to that box instead of the viewport, with
-// no error to go on. The chain above these cards is clear on purpose. Both
-// `body` and `.page-wrapper` clip their horizontal overflow with `clip` rather
-// than `hidden` precisely so that neither becomes one; see the note in
-// base/_reset.scss. Anything that introduces `overflow: hidden` or `auto`
-// between here and the root will break this section silently.
-// ---------------------------------------------------------------------------
 
 .case-stack {
   // Where the first panel parks: clear of the fixed header, with a little air.
   --stack-top: calc(var(--nav-height) + 2rem);
 
-  // How much of each panel stays showing once the next one lands on it. Every
-  // panel parks one of these lower than the one before, so the stack keeps a
-  // visible edge per card and reads as a pile of files rather than a single
-  // surface being replaced.
+  // How much of each panel stays showing once the next one lands on it.
   --peek: 1.25rem;
 
   display: flex;
   flex-flow: column;
 
-  // The gap is the scroll distance. Each panel has to travel its own height plus
-  // this before it lands on the one below, so the gap is what sets how long a
-  // transition takes rather than how much white space there is — there is none
-  // visible, because a sticky panel is already covering it.
+  // The gap is the scroll distance.
   gap: 3rem;
 
   padding-bottom: 2rem;
@@ -144,20 +102,14 @@
 
   top: var(--stack-top);
 
-  // The same dark blue the hero, the testimonials band and the inner-page heroes
-  // are painted in, so the stack reads as part of that family rather than as a
-  // fourth surface. Opaque, which the stacking depends on — see the mixin.
+  // The same dark blue the hero, the testimonials band and the inner-page heroes are painted in.
   @include night-sky;
 
-  // No shadow. The 1px light border is what separates one panel from the next
-  // where they overlap, and the scale cue is what carries the depth.
+  // No shadow.
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: var(--radius--medium);
 
-  // The depth cue in card-stack.js scales a covered panel down. From the centre
-  // that would walk its top edge downward and eat the peek it is supposed to be
-  // leaving; from the top edge the peek stays exactly `--peek` whatever the
-  // scale does.
+  // The depth cue in card-stack.js scales a covered panel down.
   transform-origin: top center;
 
   @include tablet {
@@ -167,19 +119,14 @@
     padding: 2.5rem 1.5rem;
   }
 
-  // Below 768px the panel would be most of the screen and the stack turns into a
-  // long hold on a small viewport. The panels simply flow instead, which is the
-  // same call the reveals and the spheres make at this width.
+  // Below 768px the panel would be most of the screen and the stack turns into a long hold on a small viewport.
   @include mobile-landscape {
     position: static;
     padding: 2rem 1.25rem;
   }
 }
 
-// Each panel parks one `--peek` below the one before it, which is the whole
-// effect: five sticky offsets rather than five panels sharing one. Written out
-// per child because a sticky `top` cannot be derived from the element's own
-// index in CSS.
+// Each panel parks one `--peek` below the one before it, which is the whole effect.
 .case-stack_card:nth-child(2) {
   top: calc(var(--stack-top) + var(--peek));
 }
@@ -196,21 +143,13 @@
   top: calc(var(--stack-top) + var(--peek) * 4);
 }
 
-// --- On the dark panel ------------------------------------------------------
-//
-// The panel went from a near-white surface to almost black, so everything drawn
-// on it has to come with it. These are scoped to the panel rather than changed
-// at the token, because the same classes are used on the light case cards.
+// On the dark panel
 
 .case-stack_card .case-card_title {
   color: var(--base-color-neutral--white);
 }
 
-// Lifted toward white rather than left at brand blue. The panel is now blue
-// itself, and where the gradient pools brightest (about #0a3184) #0765eb falls
-// to roughly 2.3:1 — below the floor even for type this size. This clears 4.5:1
-// across the panel, so the number stays the loudest thing on it, which is the
-// whole job of a metric.
+// Lifted toward white rather than left at brand blue.
 .case-stack_card .case-card_metric {
   color: #5aa2ff;
 }
@@ -219,8 +158,7 @@
   color: rgb(255 255 255 / 40%);
 }
 
-// `p` carries its colour and a 0.8 opacity globally, both tuned for navy on
-// white. Opacity has to be reset as well or this lands at 58% and greys out.
+// `p` carries its colour and a 0.8 opacity globally, both tuned for navy on white.
 .case-stack_card p {
   opacity: 1;
   color: rgb(255 255 255 / 72%);
@@ -240,8 +178,7 @@
   text-transform: uppercase;
 }
 
-// The hairline between the two halves, drawn by the body column so it is exactly
-// as tall as the taller of the two.
+// The hairline between the two halves, drawn by the body column so it is exactly as tall as the taller of the two.
 .case-stack_body {
   display: flex;
   flex-flow: column;

@@ -1,15 +1,6 @@
-// ---------------------------------------------------------------------------
 // Spacing scale
-//
-// The pattern: a size class sets padding/margin on all four sides, then a
-// direction class zeroes the three sides you do not want. So
-// `.padding-top.padding-huge` = padding-top: 6rem and nothing else.
-//
-// It reads oddly but it is what the markup is built around, and the scale
-// steps down at 991px and again at 767px.
-// ---------------------------------------------------------------------------
 
-// --- Size steps ------------------------------------------------------------
+// Size steps
 
 .padding-tiny {
   padding: 0.125rem;
@@ -53,7 +44,7 @@
   margin: 8rem;
 }
 
-// --- Direction filters -----------------------------------------------------
+// Direction filters
 
 .padding-top {
   padding-bottom: 0;
@@ -113,7 +104,7 @@
   margin-right: 0;
 }
 
-// --- Section rhythm --------------------------------------------------------
+// Section rhythm
 
 .padding-section-xsmall {
   padding-top: 2rem;
@@ -130,7 +121,7 @@
   padding-right: 0;
 }
 
-// --- Responsive scale ------------------------------------------------------
+// Responsive scale
 
 @include tablet {
   .padding-medium {
@@ -161,8 +152,7 @@
     padding-bottom: 2rem;
   }
 
-  // Re-assert the direction filters after the size overrides above, otherwise
-  // the reset side of the pattern loses to the new all-sides value.
+  // Re-assert the direction filters after the size overrides above.
   .padding-top {
     padding-bottom: 0;
     padding-left: 0;

@@ -2,9 +2,9 @@
 <html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
-    <!-- Drop no-js before the first paint: the covers are hidden while it is set, and the deferred bundle clears it too late. -->
+    <!-- Drop no-js before the first paint; the deferred bundle clears it too late. -->
     <script>document.documentElement.classList.remove('no-js');</script>
-    <!-- Lock scrolling before the first paint; page-transition.js unlocks when the last column leaves. -->
+    <!-- Lock scrolling before the first paint; page-transition.js unlocks it. -->
     <script>document.documentElement.classList.add('is-locked');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -21,12 +21,9 @@
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
 
-    <!-- Page transition: covers from CSS so no unstyled frame shows, lifted on load by js/components/page-transition.js. -->
+    <!-- Page transition: covers from CSS, lifted by js/components/page-transition.js. -->
     <div class="page-transition" aria-hidden="true">
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
+      <!-- One sheet: the arch is a single curve and cannot be split across panels. -->
       <span class="page-transition_panel"></span>
     </div>
 
@@ -90,7 +87,7 @@
       </header>
 
       <main id="content">
-      <!-- PLACEHOLDER COPY. Invented names and posts; portraits are initials rather than photographs, so no real person is misrepresented. -->
+      <!-- PLACEHOLDER COPY: invented names; portraits are initials rather than photographs. -->
         <section class="hero-section page-hero">
           <div class="padding-global">
             <div class="container-large">
@@ -115,7 +112,8 @@
 
                   <div class="statement" data-reveal="fade">Built on one idea: <span class="statement_muted">engineering should be accountable, not fragmented.</span></div>
 
-                  <div class="services_grid" data-reveal="fade">
+                  <!-- `is-principles` opts this grid into the hover in scss/sections/_services.scss. -->
+                  <div class="services_grid is-principles" data-reveal="fade">
                     <article class="service-card">
                       <div class="service-card_head">
                         <div class="icon-container">
@@ -163,6 +161,54 @@
                         <p class="service-card_body">Single team ownership eliminating fragmented project handoffs.</p>
                       </div>
                     </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="icon-container">
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                          <div class="arrow-icon" data-lottie="scalability"></div>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">Scalability</h3>
+                        <p class="service-card_body">Future-proof architectures designed to support your long-term growth.</p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="icon-container">
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                          <div class="arrow-icon" data-lottie="partnership"></div>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">Partnership</h3>
+                        <p class="service-card_body">Strategic engineering alliances focused entirely on your vision.</p>
+                      </div>
+                    </article>
+
+                    <article class="service-card">
+                      <div class="service-card_head">
+                        <div class="icon-container">
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                          <div class="arrow-icon" data-lottie="innovation"></div>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 class="service-card_title">Innovation</h3>
+                        <p class="service-card_body">Forward-thinking technical solutions keeping you ahead of the curve.</p>
+                      </div>
+                    </article>
                   </div>
                 </div>
               </div>
@@ -170,7 +216,7 @@
           </div>
         </section>
 
-        <!-- Studio band: wordmark behind at z-0, the cut-out PNG over it at z-1, copy on top at z-2. The PNG is used exactly as supplied. Decorative, alt="". -->
+        <!-- Studio band: wordmark z-0, cut-out PNG z-1, copy z-2. Decorative, alt="". -->
         <section class="studio-band">
           <div class="padding-global">
             <div class="studio-band_inner">
@@ -198,14 +244,17 @@
                     </h2>
 
                     <div class="studio-band_aside">
+                      <!-- Keep this short: the block is anchored to the foot of the photograph. See scss/sections/_studio-band.scss. -->
                       <p class="studio-band_lead">
                         Most systems get replaced because nobody dares change them, not
                         because they stopped working. We build for whoever inherits this
                         one — clear seams, decisions written down, and a way back from
-                        each of them.
+                        each of them. The test is never launch week; it is the second
+                        year, when someone else is making the change and the original
+                        team is no longer in the room.
                       </p>
 
-                      <!-- Same corner brackets as the other CTAs; _studio-band.scss flips them white over the photograph. -->
+                      <!-- Same corner brackets as the other CTAs; _studio-band.scss flips them white. -->
                       <a href="contact.html" class="button is-icon" data-brackets>
                         <div>Start a project</div>
                         <img src="/src/assets/icons/angle-vector.svg" alt="" class="select-button-vector is-top-right is-ext" />
@@ -220,6 +269,19 @@
             </div>
           </div>
         </section>
+
+        <!--
+          Our Team — hidden, not deleted. Commented out rather than display:none'd,
+          so there is no markup in the DOM and nothing for a screen reader to
+          reach. Vite keeps comments through the build, so the block itself still
+          ships as ~3KB of dead bytes in about.html; delete it outright if that
+          ever matters more than having it to hand.
+
+          Every card is still "Placeholder Name" behind a set of initials, which
+          is why it is out of the page but kept in the file. Uncomment when there
+          are real people to put in it. Nothing else points at it — no nav anchor,
+          no JS, and the `.team_grid` / `.team-card` styles stay where they are in
+          scss/sections/_pages.scss, so it comes back styled.
 
         <section class="services-section">
           <div class="padding-global">
@@ -273,6 +335,7 @@
             </div>
           </div>
         </section>
+        -->
 
         <section class="lifecycle-section">
           <div class="padding-global">
@@ -402,7 +465,7 @@
                         </div>
                       </div>
 
-                      <!-- Legal pages live here rather than in a fourth column. Relative hrefs, so they resolve under a project subpath too. -->
+                      <!-- Legal pages live here. Relative hrefs, so they resolve under a subpath too. -->
                       <div class="footer_copyright-text">
                         © <span data-year>2026</span> Aythronix |
                         <a href="legal-notice.html"

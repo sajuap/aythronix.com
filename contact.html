@@ -2,9 +2,9 @@
 <html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
-    <!-- Drop no-js before the first paint: the covers are hidden while it is set, and the deferred bundle clears it too late. -->
+    <!-- Drop no-js before the first paint; the deferred bundle clears it too late. -->
     <script>document.documentElement.classList.remove('no-js');</script>
-    <!-- Lock scrolling before the first paint; page-transition.js unlocks when the last column leaves. -->
+    <!-- Lock scrolling before the first paint; page-transition.js unlocks it. -->
     <script>document.documentElement.classList.add('is-locked');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -21,12 +21,9 @@
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
 
-    <!-- Page transition: covers from CSS so no unstyled frame shows, lifted on load by js/components/page-transition.js. -->
+    <!-- Page transition: covers from CSS, lifted by js/components/page-transition.js. -->
     <div class="page-transition" aria-hidden="true">
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
-      <span class="page-transition_panel"></span>
+      <!-- One sheet: the arch is a single curve and cannot be split across panels. -->
       <span class="page-transition_panel"></span>
     </div>
 
@@ -90,7 +87,7 @@
       </header>
 
       <main id="content">
-      <!-- PLACEHOLDER COPY. Invented names and posts; portraits are initials rather than photographs, so no real person is misrepresented. -->
+      <!-- PLACEHOLDER COPY: invented names; portraits are initials rather than photographs. -->
         <section class="hero-section page-hero">
           <div class="padding-global">
             <div class="container-large">
@@ -100,7 +97,7 @@
           </div>
         </section>
 
-        <!-- The homepage's contact panel, reused as-is; only the eyebrow changes to the chip the inner pages use. -->
+        <!-- The homepage's contact panel, reused; only the eyebrow changes. -->
         <section id="Contact" class="contact-section">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -332,7 +329,7 @@
                         </div>
                       </div>
 
-                      <!-- Legal pages live here rather than in a fourth column. Relative hrefs, so they resolve under a project subpath too. -->
+                      <!-- Legal pages live here. Relative hrefs, so they resolve under a subpath too. -->
                       <div class="footer_copyright-text">
                         © <span data-year>2026</span> Aythronix |
                         <a href="legal-notice.html"

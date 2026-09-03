@@ -37,6 +37,8 @@ import { initButtonBrackets } from './animations/button-brackets.js';
 import { initReveals } from './animations/reveals.js';
 import { initCardStack } from './animations/card-stack.js';
 import { initLottieIcons } from './components/lottie-icons.js';
+import { initWorkRail } from './components/work-rail.js';
+import { initImageTrail } from './components/image-trail.js';
 import { initAnchors } from './components/anchors.js';
 import { initContactForm } from './components/contact-form.js';
 import { initBlogFilters } from './components/blog-filters.js';
@@ -61,8 +63,14 @@ let heroGlassReady = null;
 let revealed = false;
 
 /**
- * Build the hero sphere on desktop only. Below 992px the canvas is display:none
- * and a still image stands in, so there is nothing to drive.
+ * Build the hero sphere.
+ *
+ * It used to be desktop-only — below 992px the canvas was `display: none` and a
+ * still stood in, so the hero was motionless on every phone and tablet. The cost
+ * was never really the width: this is a 2D context drawing arcs, and what it
+ * costs is points times pixels. So both come down on a small screen instead of
+ * the whole thing being switched off. Reduced motion is still the one case where
+ * nothing is built and the still is the sphere.
  *
  * Called twice over: once from `boot`, where `revealed` is still false and the
  * field is therefore built but held, and again on every resize across the 992px
@@ -72,13 +80,48 @@ function initHeroSphere() {
   const canvas = document.getElementById('nebula-canvas');
   if (!canvas) return;
 
-  const shouldRun = !isTabletDown() && !prefersReducedMotion();
+  const shouldRun = !prefersReducedMotion();
+  const small = isTabletDown();
+
+  // Rebuilt rather than reconfigured when the boundary is crossed: the point
+  // count is baked into the field at construction.
+  if (heroSphere && heroSphere.isSmall !== small) {
+    heroSphere.destroy();
+    heroSphere = null;
+  }
 
   if (shouldRun && !heroSphere) {
     // Ice blue rather than the brand blue the sphere carried over the old white
     // hero — brand blue on the glass sheet is barely a step off its own
     // background, and the field disappears into it.
-    heroSphere = new NebulaSphere(canvas, { color: '214,232,255', autoStart: revealed });
+    heroSphere = new NebulaSphere(canvas, {
+      color: '214,232,255',
+      // Running from the moment it is built, behind the panel, rather than held
+      // until the hand-over. It is the cheap half of the hero — a 2D context
+      // drawing twelve batched paths a frame — so there is nothing to save by
+      // holding it, and holding it was what the visitor was seeing: a field that
+      // had been standing still since boot, moving off the instant the panel
+      // lifted. Turning under the panel, it is simply already in motion when the
+      // hero arrives. The glass is still held; that one is worth holding.
+      autoStart: true,
+      // Under 992px: two fifths of the points, and a pixel ratio that stops a
+      // 3x phone drawing nine times the fill for a field of soft dots.
+      particleCount: small ? 1400 : 3500,
+      // The canvas is the full viewport now, so every step of pixel ratio is a
+      // much bigger backing store to clear and fill than when it was the width
+      // of the column. 1.5 is as far as a field of two-pixel dots can tell.
+      maxDpr: small ? 1.25 : 1.5,
+      // On a phone the arc is allowed to run off both sides. Held inside the
+      // width it is a small dome sitting in a tall gap with air all around it;
+      // overrun, it reads as an arc crossing the screen with its ends off-frame,
+      // which is the same shape a wide screen gets.
+      arcWidth: small ? 1.45 : 0.95,
+      // And its dots get a lift to go with it. They are a share of a sphere that
+      // is small on a phone whatever else is done, and they are the whole of
+      // what the field is.
+      dotScale: small ? 1.5 : 1,
+    });
+    heroSphere.isSmall = small;
   } else if (!shouldRun && heroSphere) {
     heroSphere.destroy();
     heroSphere = null;
@@ -154,9 +197,11 @@ function initAfterReveal() {
   // was a fade nobody could see turning into a fade everybody could.
   document.documentElement.classList.add('is-loaded');
 
-  // The two things the hero itself is made of. Both were built behind the panel
-  // and have been sitting still on a finished first frame, so this is only the
-  // ticker being handed over — the frame the panel lifts on stays cheap.
+  // The glass was built behind the panel and has been sitting on a finished
+  // first frame, so this is only the ticker being handed over — the frame the
+  // panel lifts on stays cheap. The sphere has been turning since it was built
+  // and needs nothing here; the call is kept because it is idempotent and this
+  // is the one place that would have to remember, if it were ever held again.
   heroGlass?.start();
   heroSphere?.start();
 
@@ -168,6 +213,8 @@ function initAfterReveal() {
     initMarquees,
     initCardStack,
     initLottieIcons,
+    initWorkRail,
+    initImageTrail,
     () => {
       // Crossing the 992px boundary either needs the sphere or needs it gone.
       onResize(initHeroSphere, 250);

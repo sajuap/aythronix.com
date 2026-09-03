@@ -1,23 +1,6 @@
-// ---------------------------------------------------------------------------
-// Inner-page components — About, Services, Blog
-//
-// Structure follows the supplied reference: a dark banner carrying the page
-// title, chip-labelled sections, a large two-tone statement, a team grid and a
-// post grid. The *language* stays this site's, deliberately — the radius scale
-// in base/_tokens.scss (controls, surfaces and media each take their own step),
-// the existing navy/blue tokens, and Mondwest for the small caps labels.
-//
-// Nothing here restyles a homepage component. Where a homepage component
-// already fits — the bento `.service-card`, the section shell — these pages use
-// it as-is rather than growing a parallel copy.
-// ---------------------------------------------------------------------------
+// Inner-page components — About, Services, Blog.
 
-// --- Page banner -----------------------------------------------------------
-//
-// Carries the class `.hero-section` in the markup as well, which is the hook
-// js/animations/nav.js looks for: with it present the header starts transparent
-// with inverted ink and fills white on scroll, exactly as it does on the home
-// page. Without it the header would be white-on-white over this dark panel.
+// Page banner
 .page-hero {
   display: flex;
   position: relative;
@@ -28,8 +11,7 @@
   overflow: hidden;
   color: var(--base-color-neutral--white);
 
-  // The same pools of light the hero's WebGL backdrop paints, minus the glass —
-  // so the two read as the same place without loading Three.js on every page.
+  // The same pools of light the hero's WebGL backdrop paints, minus the glass.
   @include night-sky;
 
   @include mobile-landscape {
@@ -38,9 +20,7 @@
   }
 }
 
-// The banner is the page. It is sized well past the H1 scale the homepage uses
-// so it reads as the single thing on screen, with one short line under it and
-// nothing else competing.
+// The banner is the page.
 .page-hero_title {
   margin: 0;
   color: var(--base-color-neutral--white);
@@ -60,40 +40,30 @@
   text-align: center;
 }
 
-// --- Section label chip ----------------------------------------------------
-//
-// The reference's rounded pill, taken down to this site's one step of radius. It
-// replaces the tick–label–tick eyebrow on these pages only; the homepage keeps
-// its own.
+// Section label chip
 .label-chip {
   display: inline-block;
   padding: 0.4rem 0.85rem;
   color: var(--base-color-brand--blue);
   background-color: var(--base-color-brand--blue-lightest);
-  // Same corner as `.blog-filter`: they are the same object to look at, and on
-  // the blog page a row of each is on screen at once.
+  // Same corner as `.blog-filter`: they are the same object to look at.
   border-radius: var(--radius--small);
   font-family: $font-display;
   font-size: 1rem;
   line-height: 1;
   text-transform: uppercase;
 
-  // The same chip at card scale, where it is a category tag on a post rather
-  // than a label on a whole section.
+  // The same chip at card scale, where it is a category tag on a post rather than a label on a whole section.
   &.is-small {
     padding: 0.25rem 0.55rem;
     font-size: 0.875rem;
   }
 }
 
-// --- Two-tone statement ----------------------------------------------------
-//
-// One large paragraph where the supporting half is dropped back in tone, so the
-// sentence carries its own emphasis without a second type size.
+// Two-tone statement
 .statement {
   max-width: 46rem;
-  // The section shell's `margin-huge` sits above the statement, not below it,
-  // so without this the sentence butts straight onto the grid beneath.
+  // The section shell's `margin-huge` sits above the statement, not below it.
   margin-bottom: 3.5rem;
   color: var(--base-color-neutral--neutral-darkest);
   font-family: $font-body;
@@ -113,7 +83,7 @@
   }
 }
 
-// --- Team ------------------------------------------------------------------
+// Team
 
 .team_grid {
   display: grid;
@@ -139,9 +109,7 @@
   border-radius: var(--radius--large);
 }
 
-// Initials rather than a face. There are photographs of real people in this
-// repo, left over from the reference build, and putting them under invented
-// names would misrepresent them — see the note in the markup.
+// Initials rather than a face.
 .team-card_initials {
   color: var(--base-color-brand--blue);
   font-family: $font-display;
@@ -166,13 +134,7 @@
   text-transform: uppercase;
 }
 
-// --- Blog: category filters ------------------------------------------------
-//
-// The reference's pill row, kept as pills — a filter chip is the one control
-// that is fully rounded in more or less every design system, and the reference
-// draws them that way too. Real buttons rather than styled links: they change
-// what is on the page, they do not go anywhere, and
-// js/components/blog-filters.js drives them.
+// Blog: category filters
 .blog-filters {
   display: flex;
   flex-wrap: wrap;
@@ -203,9 +165,7 @@
     border-color: var(--base-color-neutral--neutral);
   }
 
-  // Driven from `aria-pressed`, not a second class. The state a screen reader is
-  // told and the state that is drawn cannot drift apart if they are the same
-  // attribute.
+  // Driven from `aria-pressed`, not a second class.
   &[aria-pressed='true'] {
     color: var(--base-color-neutral--white);
     background-color: var(--base-color-brand--black);
@@ -213,14 +173,12 @@
   }
 }
 
-// Hidden by the filter. `display: none` rather than a fade: the grid reflows
-// either way, so an opacity transition would animate the surviving cards
-// jumping into the gaps rather than smoothing anything.
+// Hidden by the filter.
 [data-category].is-filtered-out {
   display: none;
 }
 
-// --- Blog: featured post ---------------------------------------------------
+// Blog: featured post
 
 .featured-post {
   display: grid;
@@ -234,10 +192,7 @@
   }
 }
 
-// Stands in for the cover image, exactly as `.post-card_thumb` does and for the
-// same reason — see the note in the markup about the photographs in this repo.
-// Empty on purpose: the category is already stated in the chip beside it, and a
-// placeholder that repeats it reads as a caption rather than as a picture.
+// Stands in for the cover image, exactly as `.post-card_thumb` does and for the same reason.
 .featured-post_media {
   aspect-ratio: 4 / 3;
   background-image: linear-gradient(
@@ -267,11 +222,7 @@
   line-height: 1.6;
 }
 
-// --- Dot eyebrow -----------------------------------------------------------
-//
-// The reference's bullet-and-label above a section heading. Used where the
-// chip would be too heavy — it sits directly over a large heading rather than
-// labelling a block from the side.
+// Dot eyebrow
 .eyebrow-dot {
   display: inline-flex;
   align-items: center;
@@ -291,7 +242,7 @@
   }
 }
 
-// --- Blog ------------------------------------------------------------------
+// Blog
 
 .posts_grid {
   display: grid;
@@ -324,8 +275,7 @@
   }
 }
 
-// Stands in for a cover image. Flat brand tint rather than a stock photograph,
-// for the same reason the team cards carry initials.
+// Stands in for a cover image.
 .post-card_thumb {
   display: grid;
   place-items: center;
@@ -343,9 +293,7 @@
   text-transform: uppercase;
 }
 
-// The category tag. `align-self` because the card is a flex column, where an
-// inline-block would otherwise be stretched to the full card width by the
-// default `align-items: stretch` and stop reading as a chip.
+// The category tag.
 .post-card .label-chip {
   align-self: flex-start;
   margin-bottom: 0.75rem;

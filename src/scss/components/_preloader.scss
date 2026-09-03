@@ -1,42 +1,13 @@
-// ---------------------------------------------------------------------------
 // Preloader
-//
-// A fixed full-viewport panel: white paper, the mark centred on it, and one
-// colour axis running through both. The panel's `background-color` and the
-// stage's `color` are the two properties the brand reveal animates against each
-// other — the mark takes its fill and its ink from `currentColor`, so a single
-// tween on the stage carries every path with it.
-//
-// The reveal is a straight colour animation, no second copy of the mark and no
-// mask. Both colours travel on a hard in-out curve, which is what keeps the
-// moment they pass each other down to about two frames.
-//
-// Timings live in js/components/preloader.js. Everything here is static state;
-// GSAP owns transform, opacity, colour and the stroke properties from the first
-// frame.
-// ---------------------------------------------------------------------------
 
 .preloader {
   display: flex;
   position: fixed;
   top: 0;
   left: 0;
-  // Above the page transition, so a cold load of the home page shows the
-  // preloader and the transition simply clears behind it. See the stacking table
-  // in the page-transition section below.
+  // Above the page transition, so a cold load of the home page shows the preloader and the transition simply clears behind it.
   z-index: 1200;
   // `100vw`, deliberately, where almost everything else on the site uses `100%`.
-  //
-  // `html` carries `scrollbar-gutter: stable` (base/_reset.scss) so that locking
-  // scroll does not change the layout width. That gutter stays reserved while the
-  // lock is on — which is the whole point — but the scrollbar inside it is gone,
-  // so it is an empty track. `100%` on a fixed element resolves against the
-  // initial containing block, which excludes that gutter, and the panel stopped
-  // short of it: a scrollbar-shaped strip of bare page down the right-hand side
-  // of the preloader. `100vw` includes the gutter and covers it.
-  //
-  // It cannot cause a horizontal scrollbar in return: the panel is fixed, so it
-  // contributes nothing to the document's scrollable overflow.
   width: 100vw;
   height: 100vh;
   // Fall back to the JS-measured unit on mobile, where 100vh overshoots.
@@ -54,8 +25,7 @@
   overflow: hidden;
 }
 
-// The one colour the mark reads from. Tweening this carries the fill and the
-// pen line of all twelve paths at once.
+// The one colour the mark reads from.
 .preloader_stage {
   display: flex;
   position: absolute;
@@ -66,12 +36,7 @@
   color: var(--base-color-brand--blue);
 }
 
-// The bloom that lifts behind the mark as the panel turns brand blue. `screen`
-// is doing real work here: over white it resolves to white and so cannot be
-// seen at all, and it only starts to register as the panel darkens underneath
-// it. That is what keeps it from reading as a shape fading in — it reads as the
-// colour arriving with light behind it. Held at opacity 0; the loader gives it
-// roughly a quarter-second of life and takes it away again.
+// The bloom that lifts behind the mark as the panel turns brand blue.
 .preloader_bloom {
   position: absolute;
   top: 50%;
@@ -92,14 +57,12 @@
   @include will-animate(opacity);
 }
 
-// Sized so the mark is the focal point for how it arrives, not for how much of
-// the frame it takes up — everything around it is deliberately empty.
+// Sized so the mark is the focal point for how it arrives, not for how much of the frame it takes up.
 .preloader_logo {
   width: min(18rem, 60vw);
   height: auto;
 
-  // Strokes straddle the outline, and the mark runs to all four edges of its
-  // own viewBox — so half a stroke sits outside it and would otherwise clip.
+  // Strokes straddle the outline, and the mark runs to all four edges of its own viewBox.
   overflow: visible;
 
   @include tablet {
@@ -111,17 +74,7 @@
   }
 }
 
-// The drawable state: an unpainted outline. Both the ink and the fill read from
-// the stage's `color`, which is what lets the brand reveal recolour the whole
-// mark with one tween instead of twelve.
-//
-// `stroke-opacity` starts at 0 rather than the dash offset starting at the path
-// length, because only JS can know each length. It is raised in the same frame
-// the offsets are written, so nothing is ever shown fully drawn.
-//
-// The widths are the resting weight. Each path is drawn from a thinner nib and
-// eased up to this over the first third of its own stroke, so the line tapers
-// in the way a pen does as it takes the paper.
+// The drawable state: an unpainted outline.
 .preloader_logo path {
   fill: currentColor;
   fill-opacity: 0;
@@ -132,16 +85,12 @@
   stroke-linejoin: round;
 }
 
-// The icon group carries a 1.184 scale from the source artwork, which would
-// scale its stroke with it. Pre-divided here so both halves of the mark are
-// drawn with the same on-screen pen.
+// The icon group carries a 1.184 scale from the source artwork, which would scale its stroke with it.
 .preloader_logo-icon path {
   stroke-width: 1.52;
 }
 
-// Thin progress rule pinned to the bottom of the panel — the readable form of
-// the same 0→100 value the drawing runs on. Above the invert plate, but both it
-// and the readout are faded out before the wipe ever reaches them.
+// Thin progress rule pinned to the bottom of the panel.
 .preloader_progress {
   position: absolute;
   bottom: 0;
@@ -161,22 +110,6 @@
 }
 
 // Numeric readout, bottom-right, in the display face.
-// Numeric readout, bottom-right, in the display face.
-//
-// Fluid rather than stepped. Everything else here changes at the breakpoints,
-// but this is a single line of three digits with nothing to reflow around it, so
-// a ramp tied to the viewport gives it the right presence at every width instead
-// of jumping a whole size at 768px. Bounded at both ends: 1.75rem so it stays
-// legible on the narrowest phone, 3.5rem so it does not start competing with the
-// mark on a wide desktop.
-//
-// Mondwest has no tabular figures, so `font-variant-numeric` is a no-op on it
-// and its "1" is barely half the width of its "0". At the old 1.25rem that was
-// a few pixels of wobble; at this size it is nearly 37, and the number visibly
-// lurches every time a 1 enters or leaves. Each digit therefore gets its own
-// fixed cell below — the declaration is kept as well, so the moment the face
-// gains real tabular figures it takes over and the cells become redundant
-// rather than wrong.
 .preloader_count {
   position: absolute;
   right: 2.5rem;
@@ -195,51 +128,19 @@
   }
 }
 
-// One cell per digit. `ch` is the advance of "0" in whatever face is in use, so
-// the cells are exactly as wide as the widest figure and every digit centres in
-// its own column — the readout cannot change width as it counts.
+// One cell per digit.
 .preloader_count-digit {
   display: inline-block;
   width: 1ch;
   text-align: center;
 }
 
-// Set by JS once the reveal has finished, so the panel stops being a hit target
-// even if a transform leaves it technically on-screen.
+// Set by JS once the reveal has finished, so the panel stops being a hit target even if a transform leaves it technically on-screen.
 .preloader.is-done {
   display: none;
 }
 
-// ---------------------------------------------------------------------------
 // Page transition
-//
-// Five full-height columns that drop in from above to cover the viewport on the
-// way out of a page, and lift back out through the top on the way into the next
-// one — each starting a tenth of a second after the one to its left, so the edge
-// reads as a rake rather than a single straight line.
-//
-// This is the reference build's own transition, matched: five panels, the same
-// stagger, the same curve, and the same 0.85s / 1.05s. Only the colour differs —
-// the reference's dark navy against this site's brand blue, which is already what
-// the preloader resolves to.
-//
-// It covers the viewport from CSS, before any script has run. That is the whole
-// point: the cover is already over the page when the document paints, so a slow
-// bundle shows a held brand colour rather than a half-built page. The resting
-// state below is therefore the *arriving* state — every column down and covering,
-// about to lift. Timings live in js/components/page-transition.js.
-//
-// Stacking order for the two covers and the things they have to cover:
-//
-//   1000  .nav_component
-//   1100  .page-transition   ← the fixed header has to go under this
-//   1200  .preloader         ← and on a cold home load, under this
-//   1300  .skip-link         (utilities/_helpers.scss)
-//
-// The header being a higher layer than the covers was the bug this ordering
-// fixes: it is `position: fixed`, so it stayed painted on top of a full-screen
-// transition and rode across every navigation.
-// ---------------------------------------------------------------------------
 
 .page-transition {
   display: flex;
@@ -247,52 +148,48 @@
   inset: 0;
   z-index: 1100;
 
-  // Clips the columns while they are above the fold, and the last column's
-  // overlap (see below) at the right edge.
+  // Clips the columns while they are above the fold.
   overflow: hidden;
 
-  // Decorative. The navigation is fired by the timeline's `onComplete`, never by
-  // a click landing on the cover, so this never needs to be a hit target — and
-  // without it the container would swallow every click on the page for the whole
-  // visit, since the columns are what travel off-screen, not the container.
+  // Decorative.
   pointer-events: none;
 }
 
-// One column. `flex: 1 1 0` rather than a 20% width so the five divide whatever
-// the viewport is, with no rounding left over at the right edge.
-//
-// The 1px overlap is for the moment they are all down: five flex items at a
-// fractional width (1366 / 5 = 273.2) land on subpixel boundaries, and a
-// transform animating across those boundaries can leave hairline seams of the
-// page showing through a cover that is supposed to be solid. Overlapping by a
-// pixel costs nothing — the columns are the same flat colour — and the last
-// one's pixel of overhang is clipped by the container.
+// The curtain: one sheet, full width.
 .page-transition_panel {
-  flex: 1 1 0;
-  height: 100%;
-  margin-right: -1px;
-  background-color: var(--base-color-brand--blue);
+  width: 100%;
+  // Taller than the screen, because the hem is a curve and the whole of that curve has to sit below the frame before the frame counts as covered.
+  height: 138%;
 
-  // Covering, until JS lifts them. No `will-change`: this runs twice in a session
-  // and holding five full-height composited layers for the whole visit to save a
-  // pair of tweens is the wrong trade. GSAP is configured with force3D, so they
-  // are promoted for the duration of each sweep and released again after.
+  // Brand blue, lit from the middle.
+  background-image: linear-gradient(
+    90deg,
+    var(--base-color-brand--blue-dark) 0%,
+    var(--base-color-brand--blue) 50%,
+    var(--base-color-brand--blue-dark) 100%
+  );
+
+  // The hem, and there are two of them: the curve bends one way going down and the other coming back up.
+  --arch: radial-gradient(55% 24% at 50% 100%, transparent 99.5%, #000 100%);
+
+  mask-image: var(--arch);
+  -webkit-mask-image: var(--arch);
+
+  // Covering, until JS draws it off.
   transform: translateY(0%);
 }
 
-// Without JS there is nothing to lift the cover, so it would sit over the page
-// permanently. Same escape hatch the preloader uses.
+// And the other hem, for the half that goes down: a dome hanging off the bottom of the sheet.
+.page-transition.is-covering .page-transition_panel {
+  --arch: radial-gradient(90% 100% at 50% 0%, #000 99.5%, transparent 100%);
+}
+
+// Without JS there is nothing to lift the cover, so it would sit over the page permanently.
 html.no-js .page-transition {
   display: none;
 }
 
-// ---------------------------------------------------------------------------
-// Elements the preloader hands over to
-//
-// Hidden up front so nothing flashes before the reveal. `.is-preload-hidden`
-// is removed by JS after the intro timeline is built, which means a visitor
-// with JS disabled still sees a fully readable page.
-// ---------------------------------------------------------------------------
+// Elements the preloader hands over to.
 
 .is-preload-hidden {
   opacity: 0;

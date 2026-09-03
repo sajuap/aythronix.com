@@ -1,47 +1,20 @@
-// ---------------------------------------------------------------------------
 // Testimonials
-//
-// One row of cards drifting steadily across the section, fading out into the
-// edges rather than being cut off at them.
-//
-// Deliberately text-only: there are no portraits for these people, and dressing
-// the quotes with stock faces would put a photograph of a real person next to
-// words they never said. The quote and the mark behind it carry the card.
-//
-// The section is a full-bleed band, which is the one place on the page where
-// the framed 80rem column is deliberately dropped. Two reasons it earns that:
-// the cards run edge to edge, so hairlines down each side would be cut straight
-// through by the row passing them; and the band's own edges do the framing
-// instead, more strongly than the hairlines ever did.
-//
-// It is dark for contrast, not decoration. The cards are a pale blue-white
-// gradient — on the tinted background this section might otherwise have taken,
-// they and the surface behind them are within a few percent of each other and
-// the row stops reading as cards at all. On the navy they separate completely,
-// and the section picks up the same palette as the hero and the inner-page
-// banners, so the dark bands down the site read as one family.
-// ---------------------------------------------------------------------------
 
 .testimonials-section {
   position: relative;
-  // Extra air on top of the inner `padding-section-medium`. A dark band needs
-  // more room around its contents than a white section does before it reads as
-  // deliberate rather than cramped.
+  // Extra air on top of the inner `padding-section-medium`.
   padding-block: 2rem;
   color: var(--base-color-neutral--white);
 
   // The hero's palette, minus the glass — the same stack `.page-hero` paints.
   @include night-sky;
 
-  // The band replaces the frame here. The hairlines are an alpha of the navy and
-  // would be invisible on it anyway, and the full-bleed row crosses where they
-  // used to be.
+  // The band replaces the frame here.
   .container-large-bordered {
     border-style: none;
   }
 
-  // The heading block, inverted for the band. Everything else in the section is
-  // already light or is a card, which stays as it is.
+  // The heading block, inverted for the band.
   h2 {
     color: var(--base-color-neutral--white);
   }
@@ -54,24 +27,13 @@
     background-color: rgb(255 255 255 / 30%);
   }
 
-  // Brand blue on navy is barely a step off its own background. The light tint
-  // is the same colour family, read against the dark instead of into it.
+  // Brand blue on navy is barely a step off its own background.
   .rating-badge {
     color: var(--base-color-brand--blue-light);
   }
 }
 
 // The window the track runs behind.
-//
-// The edges are a mask rather than two gradient overlays. An overlay has to be
-// painted the same colour as whatever is behind it, so it only works while the
-// section background stays flat white — change the background and the overlays
-// become two visible white smears. A mask takes the card's own alpha down
-// instead, so the cards dissolve into whatever is behind them and there is
-// nothing to keep in sync.
-//
-// Vertical padding, so the hover lift and its shadow have somewhere to go
-// inside the horizontal clip.
 .testimonials_row {
   --edge-fade: 7rem;
 
@@ -79,14 +41,7 @@
   padding: 1rem 0;
   overflow: hidden;
 
-  // Full bleed, out of the padded 80rem column it is nested in and across the
-  // whole band. `margin-left: 50%` finds the centre of the parent — which is the
-  // centre of the page, since the column is centred — and the transform pulls a
-  // viewport-wide box back over it.
-  //
-  // `100vw` includes the scrollbar gutter, so this overhangs by half a gutter
-  // each side. `.page-wrapper` clips it (`overflow-x: clip`), and the overhang
-  // disappears under a 7rem fade regardless.
+  // Full bleed, out of the padded 80rem column it is nested in and across the whole band.
   width: 100vw;
   max-width: 100vw;
   margin-left: 50%;
@@ -115,17 +70,19 @@
 .testimonials_track {
   display: flex;
   justify-content: flex-start;
-  // Every card takes the height of the tallest, so the row has one baseline
-  // along the bottom however long the individual quotes run.
+  // Every card takes the height of the tallest, so the row has one baseline along the bottom however long the individual quotes run.
   align-items: stretch;
   gap: 1rem;
   @include will-animate(transform);
 }
 
-// --- The card --------------------------------------------------------------
+// The card
 
+// A sheet of glass rather than a filled card: the navy and its pools of light carry on through it.
 .testimonial-card {
   --card-width: 24rem;
+  // The glass, in one place.
+  --glass-blur: 20px;
 
   display: flex;
   position: relative;
@@ -134,21 +91,50 @@
   justify-content: space-between;
   gap: 2rem;
   width: var(--card-width);
-  // `figure` carries `margin: 1em 40px` from the UA stylesheet and the reset
-  // does not zero it, which would inset every card inside its own track slot.
+  // `figure` carries `margin: 1em 40px` from the UA stylesheet and the reset does not zero it.
   margin: 0;
   padding: 2rem;
-  background-image: linear-gradient(112deg, #d2ddf0, #f6f9fe);
+  // Tuned to stand on its own without the blur — see the backdrop-root note under `backdrop-filter` below.
+  background-image: linear-gradient(
+    145deg,
+    rgb(255 255 255 / 22%),
+    rgb(255 255 255 / 10%) 45%,
+    rgb(255 255 255 / 15%)
+  );
+  border: 1px solid rgb(255 255 255 / 20%);
   border-radius: var(--radius--medium);
-  box-shadow: 0 0.25rem 0.75rem rgb(4 23 58 / 4%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 40%),
+    inset 0 -1px 0 rgb(255 255 255 / 8%),
+    0 1rem 2rem rgb(1 6 19 / 26%);
+  // Worth knowing before tuning this: `.testimonials_row` above carries a `mask-image`.
+  backdrop-filter: blur(var(--glass-blur)) saturate(155%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(155%);
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   @include will-animate(transform);
 
-  // Capped against the viewport so the smallest phones still get a sliver of the
-  // next card, which is what tells the visitor the row moves.
+  // Where the light comes from.
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    border-radius: inherit;
+    background-image: radial-gradient(
+      120% 78% at 14% -12%,
+      rgb(255 255 255 / 24%) 0%,
+      rgb(255 255 255 / 0%) 58%
+    );
+    pointer-events: none;
+  }
+
+  // Capped against the viewport so the smallest phones still get a sliver of the next card.
   @include mobile-landscape {
+    // A moving element re-samples and re-blurs its backdrop every frame.
+    --glass-blur: 10px;
     --card-width: min(20rem, 84vw);
 
     gap: 1.5rem;
@@ -157,13 +143,16 @@
 
   &:hover {
     transform: translateY(-4px) scale(1.015);
-    box-shadow: 0 1rem 2rem rgb(4 23 58 / 12%);
+    // The sheet tilting into the light: rim and top edge brighten with the lift.
+    border-color: rgb(255 255 255 / 28%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 52%),
+      inset 0 -1px 0 rgb(255 255 255 / 9%),
+      0 1.5rem 2.75rem rgb(1 6 19 / 36%);
   }
 }
 
-// The mark sits behind the quote rather than beside it — at this weight it
-// reads as a watermark, and holding a column clear for it would cost the copy
-// more width than the decoration is worth.
+// The mark sits behind the quote rather than beside it — at this weight it reads as a watermark.
 .testimonial-card_mark {
   position: absolute;
   top: 1.25rem;
@@ -172,8 +161,9 @@
   width: 5rem;
   height: auto;
   aspect-ratio: 64 / 40;
-  opacity: 0.14;
-  color: var(--base-color-brand--blue);
+  // Brand blue behind glass on navy is one dark blue on another.
+  opacity: 0.22;
+  color: var(--base-color-brand--blue-light);
   pointer-events: none;
 
   @include mobile-landscape {
@@ -183,17 +173,16 @@
   }
 }
 
-// Both sit above the mark. Only the stacking order changes — no offset, so the
-// copy keeps the full width of the card.
+// Both sit above the mark.
 .testimonial-card_quote,
 .testimonial-card_author {
   position: relative;
   z-index: 1;
 }
 
+// The card is now a window onto the navy, so the copy is lit rather than dark.
 .testimonial-card_quote {
-  opacity: 0.85;
-  color: var(--base-color-neutral--neutral-darker);
+  color: rgb(255 255 255 / 86%);
   font-family: $font-body;
   font-size: 1.125rem;
   font-weight: 400;
@@ -209,7 +198,7 @@
 }
 
 .testimonial-card_name {
-  color: var(--base-color-neutral--neutral-darkest);
+  color: var(--base-color-neutral--white);
   font-family: $font-body;
   font-size: 1.125rem;
   font-weight: 500;
@@ -218,7 +207,7 @@
 }
 
 .testimonial-card_role {
-  color: var(--base-color-neutral--neutral-dark);
+  color: rgb(255 255 255 / 60%);
   font-family: $font-display;
   font-size: 1rem;
   font-weight: 400;

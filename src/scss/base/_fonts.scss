@@ -1,25 +1,4 @@
-// ---------------------------------------------------------------------------
 // Typefaces
-//
-// Overused Grotesk carries the whole interface. Mondwest is the pixel/serif
-// display face used for eyebrow labels and the "autonomous" word in the H1.
-//
-// `font-display: block`, not `swap`.
-//
-// `swap` paints the fallback immediately and re-renders when the real face
-// lands, and that re-render is the hero's "flash". The two faces are nothing
-// like their fallbacks — Mondwest is a pixel serif standing in as Times New
-// Roman, and its label text changes width visibly — so the swap is not a
-// refinement, it is the page changing typeface in front of the visitor, taking
-// the H1's line breaks and every label's width with it.
-//
-// `block` holds the text invisible instead, and both covers on this site exist
-// precisely to hold a page that is not ready yet: the preloader waits on
-// `document.fonts.ready` (js/components/preloader.js) so the whole block period
-// happens behind the panel, and the inner pages' transition covers theirs. The
-// 3s cap is the browser's, and after it the fallback paints — so a font that
-// never arrives degrades to `swap` rather than to invisible text.
-// ---------------------------------------------------------------------------
 
 @font-face {
   font-family: 'Overused Grotesk';
@@ -53,7 +32,6 @@
   font-display: block;
 }
 
-// Font stacks — the fallbacks match the reference so metrics stay close while
-// the webfonts are still in flight.
+// Font stacks — the fallbacks match the reference so metrics stay close while the webfonts are still in flight.
 $font-body: 'Overused Grotesk', Arial, sans-serif;
 $font-display: 'Mondwest', 'Times New Roman', sans-serif;
