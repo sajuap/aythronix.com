@@ -6,17 +6,86 @@
   position: relative;
   justify-content: center;
   align-items: center;
-  min-height: 32rem;
-  padding: calc(var(--nav-height) + 5rem) 0 5rem;
+
+  // Brought in from 32rem and 5rem. The banner is a title and one line of lead;
+  // at the old height it was spending half a screen saying which page you are on
+  // before the page itself got a word in.
+  min-height: 22rem;
+  padding: calc(var(--nav-height) + 3rem) 0 3rem;
+
   overflow: hidden;
   color: var(--base-color-neutral--white);
 
   // The same pools of light the hero's WebGL backdrop paints, minus the glass.
   @include night-sky;
 
+  /**
+   * The photograph over it.
+   *
+   * A pseudo-element rather than another layer on `background-image`, because
+   * that property is where the night-sky mixin's four gradients live and adding
+   * to it here would mean restating all of them.
+   *
+   * `z-index: -1` puts it above the section's own background and below its
+   * content, which is the one place it can sit: positioned and at zero it would
+   * paint over the title.
+   */
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    opacity: 0.55;
+    background-image: url('/src/assets/images/blog/abstract.jpg');
+    background-position: center;
+    background-size: cover;
+    border-radius: inherit;
+  }
+
   @include mobile-landscape {
-    min-height: 18rem;
-    padding: calc(var(--nav-height) + 2.5rem) 0 2.5rem;
+    min-height: 14rem;
+    padding: calc(var(--nav-height) + 2rem) 0 2rem;
+  }
+}
+
+/**
+ * The pinned banner.
+ *
+ * The same treatment the home page's hero and the about page's studio band get:
+ * the banner stays where it is and the page is dealt over the top of it,
+ * squeezing it into a rounded card on the way. js/animations/hero-stack.js runs
+ * it.
+ *
+ * The section itself is what scales here — the banner is one full-bleed box with
+ * its own ground, so there is nothing inside it worth singling out.
+ */
+.page-hero.is-pinned {
+  position: sticky;
+
+  // Zero in practice: this banner is well under a viewport tall. The variable is
+  // set by the JS and only does anything where a pinned section is taller than
+  // the screen, which is the about page's band.
+  top: var(--pin-top, 0px);
+
+  // A positioned element paints above its static siblings, which is the opposite
+  // of what this needs. Zero puts it back underneath the sheet.
+  z-index: 0;
+
+  transform-origin: center center;
+  will-change: transform;
+
+  // The veil that takes the banner down as the page covers it. Driven by a
+  // custom property because GSAP can reach a variable on the element and cannot
+  // reach a pseudo-element at all.
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    opacity: var(--pin-veil, 0);
+    background-color: #02091b;
+    border-radius: inherit;
+    pointer-events: none;
   }
 }
 
@@ -192,8 +261,58 @@
   }
 }
 
-// Stands in for the cover image, exactly as `.post-card_thumb` does and for the same reason.
+// The cover photo fills the slot; the gradient underneath is what shows while it
+// decodes, and the whole of it if a post is ever published without one.
+.featured-post_media img,
+.post-card_thumb img,
+.article-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/**
+ * Hover zoom.
+ *
+ * The same 3% and the same curve the work rail already gives its screenshots
+ * (sections/_work-rail.scss), so every picture on the site that answers a
+ * pointer answers it identically — this is one effect stated twice rather than
+ * two effects that happen to look similar.
+ *
+ * Nothing structural was needed for it: the scale goes on the image, the
+ * clipping is on the frame, and all three of these frames were already
+ * `overflow: hidden` because the picture runs out to a rounded edge.
+ *
+ * `scale` as its own property rather than a `transform`, so it cannot collide
+ * with the lift `.post-card` puts on itself at the same moment.
+ */
+@media (hover: hover) {
+  .featured-post_media img,
+  .post-card_thumb img,
+  .article-cover img {
+    transition: scale 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .post-card:hover .post-card_thumb img,
+  .featured-post:hover .featured-post_media img,
+  .article-cover:hover img {
+    scale: 1.03;
+  }
+}
+
+@include reduced-motion {
+  .featured-post_media img,
+  .post-card_thumb img,
+  .article-cover img {
+    transition: none;
+    scale: 1;
+  }
+}
+
 .featured-post_media {
+  overflow: hidden;
   aspect-ratio: 4 / 3;
   background-image: linear-gradient(
     112deg,
@@ -275,10 +394,11 @@
   }
 }
 
-// Stands in for a cover image.
+// The cover photo. The gradient is what shows before it decodes.
 .post-card_thumb {
   display: grid;
   place-items: center;
+  overflow: hidden;
   aspect-ratio: 16 / 10;
   margin-bottom: 1.25rem;
   color: var(--base-color-neutral--white);

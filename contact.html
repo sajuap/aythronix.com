@@ -88,7 +88,7 @@
 
       <main id="content">
       <!-- PLACEHOLDER COPY: invented names; portraits are initials rather than photographs. -->
-        <section class="hero-section page-hero">
+        <section class="hero-section page-hero is-pinned">
           <div class="padding-global">
             <div class="container-large">
               <h1 class="page-hero_title" data-reveal="text">Contact</h1>
@@ -96,6 +96,14 @@
             </div>
           </div>
         </section>
+
+        <!--
+          Everything after the banner, dealt over it as one opaque sheet — the same
+          device the home page uses under its hero. The banner is sticky and stays
+          behind this for the rest of the page, so any gap in the cover is a gap it
+          shows through.
+        -->
+        <div class="page-stack">
 
         <!-- The homepage's contact panel, reused; only the eyebrow changes. -->
         <section id="Contact" class="contact-section">
@@ -106,7 +114,11 @@
                   <div class="contact-section_left-wrapper">
                     <div class="margin-bottom margin-xhuge is-less-tab">
                       <div class="max-width-large">
-                        <div class="label-chip">Book a consultation</div>
+                        <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                          <div class="subtitle-line"></div>
+                          <div class="text-style-subtitle">Book a consultation</div>
+                          <div class="subtitle-line"></div>
+                        </div>
                         <div class="margin-top margin-small">
                           <h2 data-reveal="text">Let's Architect Your Next Advantage</h2>
                         </div>
@@ -177,7 +189,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">Other Ways to Reach Us</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Other Ways to Reach Us</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       <h2 data-reveal="text">However You Prefer to Start</h2>
                       </div>
@@ -250,7 +266,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">What Happens Next</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">What Happens Next</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       <h2 data-reveal="text">From Enquiry to First Call</h2>
                       </div>
@@ -293,6 +313,7 @@
             </div>
           </div>
         </section>
+        </div>
       </main>
 
       <footer class="footer_section">

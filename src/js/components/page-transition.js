@@ -6,20 +6,28 @@
  *
  *   leaving   the arch descends from above the fold, its curve sweeping down the
  *             screen until the sheet covers, then the navigation fires
- *             y -100% → 0%,  1.15s
  *
  *   arriving  the sheet is already covering — from CSS, so it is over the page
  *             before any script runs — and draws back up, the same curve
  *             sweeping up and the page appearing under it
- *             y 0% → -100%,  1.45s
  *
- * The arch is the whole design and it is not this file's doing: it is a mask, in
- * scss/components/_preloader.scss. All that happens here is that one element
- * moves up and down, slowly.
+ * Neither the arch nor the movement is this file's doing. The hem is a mask and
+ * the sweep is a CSS transition, both in scss/components/_preloader.scss; all
+ * that happens here is that classes go on and come off, and something waits for
+ * the sheet to finish before navigating.
  *
- * It was five columns dropping in sequence. That is where the old raked edge
- * came from and it is exactly what a single curve cannot survive — see the note
- * on the panel in the stylesheet.
+ * **Why the movement is not a tween.** It used to be, and it stuttered — badly
+ * enough to read as a glitch rather than as slowness. This animation runs across
+ * the busiest half-second a page ever has: the stylesheet has just landed, the
+ * modules are booting, ScrollTrigger is measuring. A tween has to be advanced by
+ * hand on the main thread every frame, so when that thread stalls the tween does
+ * not pause, it jumps. Recorded on a cold inner-page load, the main thread went
+ * away for 400ms mid-sweep and the sheet moved 508px — 41% of its whole travel —
+ * between one paint and the next. GSAP's own lag smoothing did not catch it
+ * because its threshold is half a second. A transform transition is handed to
+ * the compositor, which carries on interpolating at its own pace however busy
+ * the main thread gets, so what is on screen is the curve rather than whatever
+ * was left of it.
  *
  * Home is the exception at both ends. Arriving there on a cold load the cover is
  * cleared with no animation, and links *to* home never play the covering half —
@@ -27,41 +35,8 @@
  * higher layer, so a sweep underneath it would only be a delay nobody can see.
  */
 
-import { gsap } from '../core/gsap.js';
 import { startScroll, stopScroll } from '../core/smooth-scroll.js';
 import { prefersReducedMotion } from '../utils/env.js';
-
-/**
- * Both halves of the sweep, and the curve they travel on.
- *
- * Slow, and slow at both ends. `power3.inOut` barely moves for the first fifth
- * of its run, carries through the middle and settles rather than stops — which
- * is what makes a heavy sheet read as heavy. `power2` was too eager off the mark
- * and arrived with a tap.
- *
- * The durations are long on purpose. This is the one moment on the site that is
- * asked to feel unhurried, and a cover that snaps is a cover that reads as a
- * flash rather than as something moving.
- */
-const COVER_DURATION = 1.15;
-const REVEAL_DURATION = 1.45;
-
-/**
- * The two halves are eased differently, and deliberately.
- *
- * Covering is a gathering: it barely moves for the first fifth of its run, then
- * carries and settles. That is what makes a heavy sheet read as heavy, and the
- * slow start is free because the visitor has only just clicked.
- *
- * Uncovering is a release, and there the same slow start was the problem. The
- * hem sits below the fold at rest, so the first stretch of the sweep moves the
- * sheet without uncovering anything — and an ease that also creeps at the start
- * turned that into half a second where nothing on screen changed at all. Which
- * is not read as slow, it is read as stuck. Leaving immediately and settling
- * long keeps the honey in the part of it that can actually be seen.
- */
-const COVER_EASE = 'power3.inOut';
-const REVEAL_EASE = 'power2.out';
 
 /**
  * A beat of stillness before the sheet is drawn back off a page that has just
@@ -69,22 +44,22 @@ const REVEAL_EASE = 'power2.out';
  *
  * Partly so it does not read as having been interrupted — a cover that starts
  * leaving in the same frame it appears never looks like it was covering
- * anything. And partly practical: the first frames after a navigation are the
- * busiest ones on the page, and this hands the sweep a settled layout to run
- * against instead of competing with it.
+ * anything. And partly practical: this is measured from a *painted* frame rather
+ * than from DOMContentLoaded, so the cover is provably on screen before it
+ * starts to leave.
  */
-const REVEAL_DELAY = 0.3;
-
-/** Nothing to stagger: the curtain is one sheet. */
-const STAGGER = 0;
+const REVEAL_DELAY = 300;
 
 /**
- * Where the curtain waits, above the fold. The panels are taller than the
- * viewport so the arch cut into their hem still clears the bottom of the screen
- * when they are down; parking them at -100% of that height puts the whole sheet,
- * hem included, above the top of the frame.
+ * Grace on top of the transition's own duration before giving up on
+ * `transitionend`.
+ *
+ * The event is reliable, but "reliable" is not the standard for the callback
+ * that fires the navigation: if it were ever missed — the tab hidden mid-sweep,
+ * the transition interrupted — the visitor would be left sitting on a blue
+ * screen that never goes anywhere. The fallback is what makes that impossible.
  */
-const PARKED = -100;
+const SETTLE_GRACE = 400;
 
 /**
  * The home page, however it is spelled. Deployed under a subpath the site is
@@ -107,10 +82,43 @@ const EXTERNAL = /^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i;
  */
 const ownsLock = () => !document.querySelector('.preloader');
 
+/**
+ * Run `done` when the sheet has finished travelling, once and once only.
+ *
+ * The duration is read back off the element rather than repeated here, so the
+ * stylesheet stays the single place either half of this is timed.
+ */
+function whenSettled(panel, done) {
+  const ms = parseFloat(getComputedStyle(panel).transitionDuration) * 1000 || 0;
+  let finished = false;
+
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    panel.removeEventListener('transitionend', onEnd);
+    clearTimeout(timer);
+    done();
+  };
+
+  // `transform` only, and only from the panel itself — a bubbling `transitionend`
+  // from anything inside it would otherwise end the sweep early.
+  const onEnd = (event) => {
+    if (event.target === panel && event.propertyName === 'transform') finish();
+  };
+
+  panel.addEventListener('transitionend', onEnd);
+  const timer = setTimeout(finish, ms + SETTLE_GRACE);
+}
+
+/** Two frames, so the class that follows is applied to something already drawn. */
+function afterPaint(fn) {
+  requestAnimationFrame(() => requestAnimationFrame(fn));
+}
+
 export function initPageTransition() {
   const cover = document.querySelector('.page-transition');
-  const panels = cover ? cover.querySelectorAll('.page-transition_panel') : [];
-  if (!cover || !panels.length) return;
+  const panel = cover ? cover.querySelector('.page-transition_panel') : null;
+  if (!cover || !panel) return;
 
   const reduced = prefersReducedMotion();
 
@@ -119,8 +127,8 @@ export function initPageTransition() {
   // reach the same flag the handler reads.
   const state = { navigating: false };
 
-  reveal(cover, panels, reduced);
-  bindLinks(cover, panels, reduced, state);
+  reveal(cover, panel, reduced);
+  bindLinks(cover, panel, reduced, state);
 
   // Coming back through the bfcache restores this page exactly as it was left —
   // which, on a page we navigated away from, is mid-cover and mid-navigation.
@@ -132,7 +140,7 @@ export function initPageTransition() {
     (event) => {
       if (!event.persisted) return;
       state.navigating = false;
-      clear(cover, panels);
+      park(cover);
       // Unconditionally, whoever set it. A restored page does not run its
       // preloader again, so on home there is nothing else coming to take the
       // lock off — and this page was left locked, mid-navigation.
@@ -142,19 +150,10 @@ export function initPageTransition() {
   );
 }
 
-/**
- * Park the cover out of the way.
- *
- * `autoAlpha` rather than opacity alone: it takes `visibility` with it, which is
- * what releases the columns' composited layers between navigations. The container
- * is `pointer-events: none`, so nothing here is about hit-testing.
- */
-function clear(cover, panels) {
-  gsap.set(panels, { yPercent: PARKED });
-  gsap.set(cover, { autoAlpha: 0 });
-  // Back to the arriving hem. Matters on a bfcache return, which restores this
-  // page mid-cover with the leaving one still set.
-  cover.classList.remove('is-covering');
+/** Out of the way, off its layer, and back to the arriving hem. */
+function park(cover) {
+  cover.classList.remove('is-revealing', 'is-covering', 'is-down');
+  cover.classList.add('is-idle');
 }
 
 /**
@@ -167,33 +166,35 @@ function clear(cover, panels) {
  * arch would never be seen on the half of the transition the visitor actually
  * waits through.
  */
-function reveal(cover, panels, reduced) {
+function reveal(cover, panel, reduced) {
   const cold = isHome(window.location.pathname) && document.referrer === '';
 
   if (cold || reduced) {
-    clear(cover, panels);
+    park(cover);
     if (ownsLock()) startScroll();
     return;
   }
 
-  gsap.to(panels, {
-    yPercent: PARKED,
-    duration: REVEAL_DURATION,
-    delay: REVEAL_DELAY,
-    stagger: STAGGER,
-    ease: REVEAL_EASE,
-    onComplete: () => {
-      clear(cover, panels);
-      // Not before: until the last column is off the page, everything under it
-      // is still hidden, and a page that scrolls behind a cover is the whole
-      // reason the lock is there.
-      if (ownsLock()) startScroll();
-    },
+  // Measured from a painted frame rather than from DOMContentLoaded. The old
+  // version counted its delay from whenever the module happened to boot, which
+  // on a slow load was before the cover had been composited even once.
+  afterPaint(() => {
+    setTimeout(() => {
+      cover.classList.add('is-revealing');
+
+      whenSettled(panel, () => {
+        park(cover);
+        // Not before: until the sheet is off the page, everything under it is
+        // still hidden, and a page that scrolls behind a cover is the whole
+        // reason the lock is there.
+        if (ownsLock()) startScroll();
+      });
+    }, REVEAL_DELAY);
   });
 }
 
 /** Cover the viewport before following an internal link. */
-function bindLinks(cover, panels, reduced, state) {
+function bindLinks(cover, panel, reduced, state) {
   document.querySelectorAll('a[href]').forEach((link) => {
     const href = link.getAttribute('href');
 
@@ -226,43 +227,38 @@ function bindLinks(cover, panels, reduced, state) {
       // One navigation at a time. The cover does not take clicks — it is
       // `pointer-events: none`, so that it is not left swallowing them for the
       // whole visit — which leaves every link on the page live underneath it
-      // while the columns come down. Without this, a second click during those
-      // 1.25s starts a second set of tweens on the same panels and the two race
-      // to set `location.href`.
+      // while the sheet comes down. Without this, a second click starts a second
+      // sweep on the same panel and the two race to set `location.href`.
       if (state.navigating) return;
       state.navigating = true;
 
-      // Reduced motion still gets the navigation, just not the 1.25s of cover
-      // between here and there.
+      // Reduced motion still gets the navigation, just not the cover between
+      // here and there.
       if (reduced) {
         window.location.href = link.href;
         return;
       }
 
       // The same rule at the leaving end: nothing should slide about under the
-      // columns while they come down. The page we are going to locks itself from
+      // sheet while it comes down. The page we are going to locks itself from
       // its own head, and a bfcache return here is released by `pageshow` above.
       stopScroll();
 
-      // Turn the hem over for the way down. The two curves are in the
-      // stylesheet; this only says which. Safe to set here because the sheet is
-      // parked off-screen at this instant, so the swap cannot be seen.
+      // Turn the hem over for the way down and park the sheet above the fold.
+      // Both are instant — `.is-covering` alone carries no transition — and safe
+      // to do in one go because the sheet is off-screen at this instant.
+      cover.classList.remove('is-idle');
       cover.classList.add('is-covering');
-      gsap.set(cover, { autoAlpha: 1 });
 
-      gsap.fromTo(
-        panels,
-        { yPercent: PARKED },
-        {
-          yPercent: 0,
-          duration: COVER_DURATION,
-          stagger: STAGGER,
-          ease: COVER_EASE,
-          onComplete: () => {
-            window.location.href = link.href;
-          },
-        }
-      );
+      // A frame between parking it and sending it down, so the browser has two
+      // distinct transforms to interpolate between. Set both in the same frame
+      // and there is nothing to transition from: the sheet simply appears.
+      afterPaint(() => {
+        cover.classList.add('is-down');
+        whenSettled(panel, () => {
+          window.location.href = link.href;
+        });
+      });
     });
   });
 }

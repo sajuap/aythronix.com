@@ -1,0 +1,311 @@
+
+
+%sector-row-grid {
+  display: grid;
+  align-items: start;
+  grid-template-columns: 1fr minmax(0, 21rem);
+  gap: 2rem;
+  min-height: 7rem;
+  padding: 2rem 2rem 2.5rem;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    min-height: 0;
+    padding: 1.5rem;
+  }
+
+  @include mobile-landscape {
+    padding: 1.25rem;
+  }
+
+  @include mobile-portrait {
+    padding: 1rem;
+  }
+}
+
+.sector-list {
+  border-top: 1px solid var(--base-color-neutral--neutral-light);
+}
+
+.sector-row {
+  display: block;
+  position: relative;
+  overflow: hidden;
+
+  border-bottom: 1px solid var(--base-color-neutral--neutral-light);
+
+  // It is an `a`, and the global link colour and weight are both wrong here.
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+
+  // A row is a large target, and nothing in it is text anyone means to select.
+  user-select: none;
+}
+
+// The resting layer, and the one that gives the row its height.
+.sector-row_face {
+  @extend %sector-row-grid;
+
+  position: relative;
+  z-index: 0;
+}
+
+
+.sector-row_panel {
+  @include will-animate(transform);
+
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  transform: translateY(100%);
+
+  // Every word inside is a copy of the face; none of it is reachable.
+  pointer-events: none;
+}
+
+
+.sector-row_panel-inner {
+  @extend %sector-row-grid;
+  @include will-animate(transform);
+
+  position: absolute;
+  inset: 0;
+  transform: translateY(-100%);
+}
+
+.sector-row_media {
+  position: absolute;
+  z-index: -1;
+  inset: auto 0 0;
+  height: 16rem;
+  min-height: 100%;
+  overflow: hidden;
+
+  @include night-sky;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      90deg,
+      rgb(2 9 27 / 62%) 0%,
+      rgb(2 9 27 / 10%) 38%,
+      rgb(2 9 27 / 20%) 58%,
+      rgb(2 9 27 / 72%) 100%
+    );
+  }
+}
+
+
+.sector-row_image {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  object-fit: cover;
+  object-position: center 45%;
+}
+
+// Type
+
+.sector-row_title {
+  margin: 0;
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  font-size: clamp(1.375rem, 0.9rem + 1.65vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.sector-row_aside {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-self: stretch;
+}
+
+.sector-row_body {
+  margin: 0;
+  opacity: 1;
+  color: var(--base-color-neutral--neutral-darker);
+  font-family: $font-body;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.45;
+
+  @include mobile-portrait {
+    font-size: 0.875rem;
+  }
+}
+
+
+.sector-row_cta-slot {
+  display: block;
+}
+
+/**
+ * The CTA's own row: alignment, and the gap above it.
+ *
+ * Carries no appearance of its own — the button inside does that. It is here
+ * because the padding has to sit on a box the slot can clip, and because the
+ * button is inline-flex, which needs something to align it against.
+ */
+.sector-row_cta {
+  display: block;
+  padding-top: 2.5rem;
+  text-align: right;
+}
+
+/**
+ * The site's button, filled white.
+ *
+ * `.button.is-small` in the markup, so the padding, radius, uppercase setting
+ * and corner brackets all come from components/_button.scss — the only thing
+ * restated here is the fill, because the primary blue would disappear into the
+ * night sky behind it. The brackets are the shared SVG, brand blue at 55%, which
+ * reads on white without any help.
+ *
+ * It is a `span`, not an `a`: the whole row is already the link, and nesting one
+ * inside another is not something HTML allows. That also means it never receives
+ * a hover of its own — the panel it lives in is `pointer-events: none` — so the
+ * base rule's hover fill is neutralised rather than left to look interactive.
+ */
+.sector-row_button {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--base-color-neutral--white);
+  color: var(--base-color-neutral--neutral-darkest);
+  font-family: $font-body;
+  white-space: nowrap;
+  box-shadow: none;
+
+  &:hover {
+    background-color: var(--base-color-neutral--white);
+  }
+
+  // The brackets sit outside the button, on the night sky — and the shared SVG
+  // is brand blue at 55%, which is not a colour that survives out there. Black
+  // then inverted is the same trick the principles cards use to flip them on a
+  // filled card; the file's own 55% alpha comes through it, so they land as a
+  // soft white rather than a hard one.
+  .select-button-vector {
+    filter: brightness(0) invert(1);
+    transition: translate 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/**
+ * The bracket slide.
+ *
+ * components/_button.scss pairs `.is-ext` brackets with
+ * js/animations/button-brackets.js, which listens for a pointer on the button
+ * itself. That cannot work here: this button lives inside a panel that is
+ * `pointer-events: none`, and its resting twin is `visibility: hidden`, so
+ * neither ever sees one — which is why the brackets were sitting there dead.
+ *
+ * `.is-live` is on the *row*, set by sector-list.js the moment the reveal
+ * starts, so the brackets open with the panel and answer keyboard focus for
+ * free. CSS `translate` rather than `transform`, because each bracket's own
+ * corner rotation lives in `transform` and would be overwritten.
+ */
+.sector-row.is-live .sector-row_button .select-button-vector {
+  // Held until the panel has arrived, so the brackets open onto a button that
+  // is already there rather than riding up with it. Scoped to this rule, so
+  // letting go returns them immediately.
+  transition-delay: 0.3s;
+
+  &.is-top-left {
+    translate: -4px -4px;
+  }
+
+  &.is-top-right {
+    translate: 4px -4px;
+  }
+
+  &.is-bottom-left {
+    translate: -4px 4px;
+  }
+
+  &.is-bottom-right {
+    translate: 4px 4px;
+  }
+}
+
+// Everything inside the window is white, over a surface that is never light.
+.sector-row_panel-inner {
+  .sector-row_title {
+    color: var(--base-color-neutral--white);
+  }
+
+  .sector-row_body {
+    color: rgb(255 255 255 / 78%);
+  }
+}
+
+.sector-row:focus-visible {
+  z-index: 2;
+  outline: 2px solid var(--base-color-system--focus-state);
+  outline-offset: -3px;
+}
+
+@include tablet {
+  .sector-row_aside {
+    align-self: auto;
+  }
+
+  // The stacked layout has the CTA directly under the paragraph rather than
+  // across the row from it, so the desktop gap reads as a hole there.
+  .sector-row_cta {
+    padding-top: 1.25rem;
+    text-align: left;
+  }
+}
+
+@media (hover: hover) {
+  .sector-row_face .sector-row_cta-slot {
+    height: 0;
+    visibility: hidden;
+    overflow: hidden;
+  }
+}
+
+@media (hover: none) {
+  .sector-row_panel {
+    display: none;
+  }
+
+  .sector-row_face .sector-row_cta {
+    text-align: left;
+  }
+
+  // White on a white page would be an invisible button. Touch never sees the
+  // panel, so here it takes the brand fill every other CTA on the site has —
+  // and the brackets go, because blue-on-blue is not a corner anybody can see.
+  .sector-row_face .sector-row_button {
+    background-color: var(--background-color--background-primary);
+    color: var(--base-color-brand--white);
+
+    .select-button-vector {
+      display: none;
+    }
+  }
+}
+
+// Reduced motion — sector-list.js already drops the travel to zero, so the row
+// opens rather than sweeps. The compositor hints are all that is left to drop.
+@include reduced-motion {
+  .sector-row_panel,
+  .sector-row_panel-inner {
+    will-change: auto;
+  }
+
+  // The brackets arrive with the button rather than opening out of it.
+  .sector-row_button .select-button-vector {
+    transition: none;
+  }
+}

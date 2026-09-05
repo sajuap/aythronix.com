@@ -88,7 +88,7 @@
 
       <main id="content">
       <!-- PLACEHOLDER COPY: invented names; portraits are initials rather than photographs. -->
-        <section class="hero-section page-hero">
+        <section class="hero-section page-hero is-pinned">
           <div class="padding-global">
             <div class="container-large">
               <h1 class="page-hero_title" data-reveal="text">About Us</h1>
@@ -97,6 +97,14 @@
           </div>
         </section>
 
+        <!--
+          Everything after the banner, dealt over it as one opaque sheet — the same
+          device the home page uses under its hero. The banner is sticky and stays
+          behind this for the rest of the page, so any gap in the cover is a gap it
+          shows through.
+        -->
+        <div class="page-stack">
+
         <section id="About" class="value-prop-section">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -104,7 +112,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom">
                     <div class="max-width-large">
-                      <div class="label-chip">Principles</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Principles</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       </div>
                     </div>
@@ -217,7 +229,7 @@
         </section>
 
         <!-- Studio band: wordmark z-0, cut-out PNG z-1, copy z-2. Decorative, alt="". -->
-        <section class="studio-band">
+        <section class="studio-band is-pinned">
           <div class="padding-global">
             <div class="studio-band_inner">
               <div class="padding-section-medium pt-0">
@@ -271,6 +283,13 @@
         </section>
 
         <!--
+          Everything after the band, dealt over it as one opaque sheet — the same
+          device the home page uses under its hero. The band is sticky and stays
+          behind this for the rest of the page, so any gap in the cover is a gap it
+          shows through.
+        -->
+        <div class="page-stack">
+        <!--
           Our Team — hidden, not deleted. Commented out rather than display:none'd,
           so there is no markup in the DOM and nothing for a screen reader to
           reach. Vite keeps comments through the build, so the block itself still
@@ -290,7 +309,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">Our Team</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Our Team</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       <h2 data-reveal="text">People building clarity into everyday engineering decisions</h2>
                       </div>
@@ -344,7 +367,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">How We Got Here</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">How We Got Here</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       <h2 data-reveal="text">A Short History</h2>
                       </div>
@@ -405,7 +432,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">Work With Us</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Work With Us</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       <h2 data-reveal="text">Start a Conversation</h2>
                       <div class="margin-top margin-small">
@@ -429,6 +460,8 @@
             </div>
           </div>
         </section>
+        </div>
+        </div>
       </main>
 
       <footer class="footer_section">

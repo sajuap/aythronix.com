@@ -1,5 +1,99 @@
 // Hero
 
+/**
+ * The pinned hero.
+ *
+ * The home page's hero stays where it is and the rest of the page is dealt over
+ * the top of it: it pins at the viewport's top, squeezes down into a rounded
+ * card as the first screenful is scrolled, and `.page-stack` slides up and
+ * covers it. js/animations/hero-stack.js runs the squeeze.
+ *
+ * Opted into by class rather than by `#Hero`, because `.hero-section` is also
+ * the inner pages' banner — and `:not(.page-hero)` is what keeps the two apart
+ * now that the banner is pinned as well. Without it the `height: 100vh` below
+ * lands on every inner page and the banner is a full screen tall again, which is
+ * the opposite of what it was just shortened for.
+ */
+.hero-section.is-pinned:not(.page-hero) {
+  position: sticky;
+
+  // Zero here, because the hero is exactly one viewport tall. The variable is
+  // set by js/animations/hero-stack.js and only earns its keep on the about
+  // page's band, which is taller than the screen — see the note there.
+  top: var(--pin-top, 0px);
+
+  // Sticky needs a height it can pin. The same 100vh the inner already asks
+  // for as a minimum, stated once so the two cannot disagree — and the offset
+  // `.page-stack` corrects its plume by depends on this being exact.
+  height: 100vh;
+
+  // A positioned element paints above its static siblings, which is the
+  // opposite of what this needs. Zero puts it back underneath the stack.
+  z-index: 0;
+
+  .hero-section_background-image {
+    height: 100%;
+
+    // Both halves of the squeeze are compositor properties, and neither changes
+    // the canvas's backing size — so the WebGL scene is scaled rather than
+    // re-measured, and never re-allocates its drawing buffer mid-scroll.
+    transform-origin: center center;
+    will-change: transform;
+
+    /**
+     * The veil that takes the hero down as the page covers it.
+     *
+     * A pseudo-element whose opacity is driven by a custom property, because
+     * GSAP can reach a variable on the parent and cannot reach a pseudo-element
+     * at all. Cheaper than a filter, which would have to re-run over the whole
+     * WebGL surface every frame of the scroll.
+     */
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      opacity: var(--pin-veil, 0);
+      background-color: #02091b;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+  }
+}
+
+/**
+ * Everything after a pinned section, as one opaque sheet.
+ *
+ * The pinned section sits behind all of it for the rest of the page, so any
+ * transparent pixel here is one it shows through — which is why the ground moves
+ * onto this box rather than being added section by section. There are eleven
+ * sections on the home page, two of them deliberately dark, and every future one
+ * would otherwise have to remember.
+ */
+.page-stack {
+  position: relative;
+  z-index: 1;
+  background-color: var(--base-color-neutral--white);
+}
+
+/**
+ * The home page's, which has one more thing to carry.
+ *
+ * `body` paints the white plus a smoke plume anchored to the top of the
+ * *document*, and the hero now hides the top of that. This box starts exactly
+ * one viewport down, so the plume comes with it, offset back up by the same
+ * amount so it lands where it always did.
+ *
+ * Only here: the about page's band is most of the way down its page, well past
+ * anything the plume reaches, so plain white is the whole of its ground.
+ */
+.page-stack.is-home {
+  background-image: url('/src/assets/images/hero-background-smoke.avif');
+  background-position: 50% -100vh;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
 .hero-section_background-image {
   position: relative;
   min-height: 100vh;
@@ -24,21 +118,33 @@
   // What paints before the first WebGL frame, and the entire backdrop if the context never comes up.
   @include night-sky;
 
-  // The fallback's own slats, so a machine without WebGL still gets glass rather than a plain gradient.
+  // The fallback's own slats, so a machine without WebGL still gets glass
+  // rather than a plain gradient.
+  //
+  // This carried `display: none` on the base rule as well as on `.is-live`,
+  // which meant it never painted at all — the second rule had nothing left to
+  // turn off. So every way of not getting a WebGL frame (context creation
+  // refused, hardware acceleration off, the context lost mid-session, an
+  // embedded webview) fell all the way through to a bare gradient, which is
+  // the one thing this exists to prevent.
+  //
+  // The pitch matches the real wall: `slabWidth: 92` in js/main.js, a hairline
+  // seam, a highlight down the leading edge of each panel. Flat, but it is the
+  // same composition.
   &::after {
-    display: none;
     content: '';
     position: absolute;
     inset: 0;
     background-image: repeating-linear-gradient(
       90deg,
-      rgb(255 255 255 / 6%) 0,
-      rgb(255 255 255 / 0%) 12px,
-      rgb(0 0 0 / 16%) 28px,
-      rgb(0 0 0 / 0%) 34px
+      rgb(255 255 255 / 5%) 0,
+      rgb(255 255 255 / 0%) 46px,
+      rgb(0 0 0 / 20%) 88px,
+      rgb(0 0 0 / 0%) 92px
     );
   }
 
+  // Dropped the moment the canvas is live, or the two would double up.
   &.is-live::after {
     display: none;
   }

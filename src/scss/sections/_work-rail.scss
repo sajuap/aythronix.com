@@ -18,8 +18,6 @@
 }
 
 .work-rail_viewport {
-  --edge-fade: 6rem;
-
   overflow-x: auto;
   // Nothing here is taller than the row; this only stops a stray descender from turning into a second scrollbar.
   overflow-y: hidden;
@@ -27,31 +25,21 @@
   // Room for the hover lift and its shadow to go somewhere.
   padding-block: 1.25rem;
 
-  // The row loops, so there is always more of it past both edges and the fade is always true.
-  mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    #000 var(--edge-fade),
-    #000 calc(100% - var(--edge-fade)),
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    #000 var(--edge-fade),
-    #000 calc(100% - var(--edge-fade)),
-    transparent 100%
-  );
+  // No edge fade.
+  //
+  // There was a `mask-image` here taking 6rem of each end down to transparent,
+  // on the argument that the row loops so there is always more of it past both
+  // edges. It cost more than it bought. A mask puts the whole row on its own
+  // composited layer, and the text inside it loses subpixel antialiasing as a
+  // result — so the fade was not only whitening the cards at the ends, it was
+  // greying every card in between. The row runs off both edges of a full-bleed
+  // container; that it continues is already obvious without dissolving it.
 
   // The bar is never the affordance here — the row moving is.
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
-  }
-
-  @include mobile-landscape {
-    --edge-fade: 1.5rem;
   }
 }
 

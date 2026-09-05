@@ -98,6 +98,7 @@
 
 // Cover
 .article-cover {
+  overflow: hidden;
   aspect-ratio: 16 / 9;
   margin: 3rem 0;
   background-image: linear-gradient(

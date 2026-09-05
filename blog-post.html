@@ -90,8 +90,7 @@
       </header>
 
       <main id="content">
-      <!-- PLACEHOLDER COPY: invented names; portraits are initials rather than photographs. -->
-        <section class="inner-page_top">
+        <section class="inner-page_top" data-post>
           <div class="padding-global">
             <div class="container-large-bordered">
               <div class="padding-section-medium">
@@ -101,10 +100,10 @@
                     <a href="blog.html" class="article-back">Go back</a>
 
                     <div>
-                      <h1 class="article-title">
+                      <h1 class="article-title" data-post-title>
                         Rebuilding a system while it is still serving traffic
                       </h1>
-                      <p class="article-lead">
+                      <p class="article-lead" data-post-lead>
                         The migration nobody notices is the one planned backwards from the
                         cutover.
                       </p>
@@ -113,23 +112,23 @@
                     <aside class="article-meta" aria-label="Article details">
                       <div>
                         <div class="article-meta_label">Date</div>
-                        <div class="article-meta_value">Placeholder date</div>
+                        <time class="article-meta_value" data-post-date data-post-datetime datetime="2026-08-12">12 August 2026</time>
                       </div>
                       <div>
                         <div class="article-meta_label">Category</div>
-                        <div class="article-meta_value">Architecture</div>
+                        <div class="article-meta_value" data-post-category>Architecture</div>
                       </div>
                       <div>
                         <div class="article-meta_label">Reading time</div>
-                        <div class="article-meta_value">8 min</div>
+                        <div class="article-meta_value" data-post-readtime>8 min</div>
                       </div>
                     </aside>
                   </div>
 
-                  <div class="article-cover"></div>
+                  <div class="article-cover"><img data-post-cover src="/src/assets/images/blog/migration-cover.jpg" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async" alt="A collage of source code and markup" /></div>
 
                   <div class="article-body">
-                    <div class="article-prose">
+                    <div class="article-prose" data-post-body>
                       <h2>Start from the cutover, not from the code</h2>
                       <p>
                         Most rewrites are planned forwards. Someone lists what the old system
@@ -221,8 +220,8 @@
 
                     <aside class="article-aside" aria-label="About the author">
                       <div class="article-aside_label">Author</div>
-                      <div class="article-aside_name">Placeholder Name</div>
-                      <p class="article-aside_bio">
+                      <div class="article-aside_name" data-post-author>Priya Raman</div>
+                      <p class="article-aside_bio" data-post-author-bio>
                         Engineering lead at Aythronix. Writes about the parts of delivery that
                         do not fit in a ticket.
                       </p>
@@ -234,6 +233,7 @@
                           href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.aythronix.com%2Fblog-post"
                           target="_blank"
                           rel="noopener"
+                          data-share="linkedin"
                           aria-label="Share this article on LinkedIn"
                           >In</a
                         >
@@ -242,6 +242,7 @@
                           href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.aythronix.com%2Fblog-post"
                           target="_blank"
                           rel="noopener"
+                          data-share="x"
                           aria-label="Share this article on X"
                           >X</a
                         >
@@ -277,23 +278,23 @@
                     </a>
                   </div>
 
-                  <div class="posts_grid" data-reveal="fade">
+                  <div class="posts_grid" data-post-related data-reveal="fade">
                     <a href="blog-post.html" class="post-card">
-                      <div class="post-card_thumb"></div>
+                      <div class="post-card_thumb"><img src="/src/assets/images/blog/scale.jpg" width="800" height="500" loading="lazy" decoding="async" alt="Racks of servers in a data centre aisle" /></div>
                       <div class="label-chip is-small">Architecture</div>
                       <div class="post-card_title">Designing for the day the traffic triples</div>
                       <p class="post-card_excerpt">When to rearchitect instead of tune.</p>
                     </a>
 
                     <a href="blog-post.html" class="post-card">
-                      <div class="post-card_thumb"></div>
+                      <div class="post-card_thumb"><img src="/src/assets/images/blog/estimates.jpg" width="800" height="500" loading="lazy" decoding="async" alt="Two colleagues reading through work on a shared screen" /></div>
                       <div class="label-chip is-small">Delivery</div>
                       <div class="post-card_title">Estimates that survive contact with the codebase</div>
                       <p class="post-card_excerpt">Why we read the repo before quoting.</p>
                     </a>
 
                     <a href="blog-post.html" class="post-card">
-                      <div class="post-card_thumb"></div>
+                      <div class="post-card_thumb"><img src="/src/assets/images/blog/latency.jpg" width="800" height="500" loading="lazy" decoding="async" alt="Abstract blue technology visualisation" /></div>
                       <div class="label-chip is-small">Performance</div>
                       <div class="post-card_title">Treating latency as a business metric</div>
                       <p class="post-card_excerpt">Three seconds to under one.</p>

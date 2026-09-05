@@ -88,7 +88,7 @@
 
       <main id="content">
       <!-- PLACEHOLDER COPY: invented names; portraits are initials rather than photographs. -->
-        <section class="hero-section page-hero">
+        <section class="hero-section page-hero is-pinned">
           <div class="padding-global">
             <div class="container-large">
               <h1 class="page-hero_title" data-reveal="text">Blog</h1>
@@ -96,6 +96,14 @@
             </div>
           </div>
         </section>
+
+        <!--
+          Everything after the banner, dealt over it as one opaque sheet — the same
+          device the home page uses under its hero. The banner is sticky and stays
+          behind this for the rest of the page, so any gap in the cover is a gap it
+          shows through.
+        -->
+        <div class="page-stack">
 
         <!-- Filters: data-filter chips against data-category items; js/components/blog-filters.js. -->
         <section id="Blog" class="value-prop-section">
@@ -112,8 +120,7 @@
                   </div>
 
                   <article class="featured-post" data-category="architecture" data-reveal="fade">
-                    <!-- A flat brand tint stands in for the cover image. -->
-                    <div class="featured-post_media"></div>
+                    <div class="featured-post_media"><img src="/src/assets/images/blog/migration.jpg" width="1200" height="900" loading="eager" fetchpriority="high" decoding="async" alt="Two engineers reviewing code together in a data centre" /></div>
 
                     <div>
                       <div class="label-chip is-small">Architecture</div>
@@ -125,7 +132,7 @@
                         so the risky day is a quiet one.
                       </p>
 
-                      <a href="blog-post.html" class="button is-icon" data-brackets>
+                      <a href="blog-post.html?post=migration" class="button is-icon" data-brackets>
                         <div>Read more</div>
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
                         <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
@@ -155,43 +162,43 @@
                   </div>
 
                   <div class="posts_grid" data-reveal="fade">
-                    <a href="blog-post.html" class="post-card" data-category="architecture">
-                      <div class="post-card_thumb"></div>
+                    <a href="blog-post.html?post=scale" class="post-card" data-category="architecture">
+                      <div class="post-card_thumb"><img src="/src/assets/images/blog/scale.jpg" width="800" height="500" loading="lazy" decoding="async" alt="Racks of servers in a data centre aisle" /></div>
                       <div class="label-chip is-small">Architecture</div>
                       <div class="post-card_title">Designing for the day the traffic triples</div>
                       <p class="post-card_excerpt">When to rearchitect instead of tune.</p>
                     </a>
 
-                    <a href="blog-post.html" class="post-card" data-category="delivery">
-                      <div class="post-card_thumb"></div>
+                    <a href="blog-post.html?post=estimates" class="post-card" data-category="delivery">
+                      <div class="post-card_thumb"><img src="/src/assets/images/blog/estimates.jpg" width="800" height="500" loading="lazy" decoding="async" alt="Two colleagues reading through work on a shared screen" /></div>
                       <div class="label-chip is-small">Delivery</div>
                       <div class="post-card_title">Estimates that survive contact with the codebase</div>
                       <p class="post-card_excerpt">Why we read the repo before quoting.</p>
                     </a>
 
-                    <a href="blog-post.html" class="post-card" data-category="performance">
-                      <div class="post-card_thumb"></div>
+                    <a href="blog-post.html?post=latency" class="post-card" data-category="performance">
+                      <div class="post-card_thumb"><img src="/src/assets/images/blog/latency.jpg" width="800" height="500" loading="lazy" decoding="async" alt="Abstract blue technology visualisation" /></div>
                       <div class="label-chip is-small">Performance</div>
                       <div class="post-card_title">Treating latency as a business metric</div>
                       <p class="post-card_excerpt">Three seconds to under one.</p>
                     </a>
 
-                    <a href="blog-post.html" class="post-card" data-category="platform">
-                      <div class="post-card_thumb"></div>
+                    <a href="blog-post.html?post=observability" class="post-card" data-category="platform">
+                      <div class="post-card_thumb"><img src="/src/assets/images/blog/observability.jpg" width="800" height="500" loading="lazy" decoding="async" alt="A collage of source code and interface panels" /></div>
                       <div class="label-chip is-small">Platform</div>
                       <div class="post-card_title">Observability you will still use in a year</div>
                       <p class="post-card_excerpt">The dashboards a team actually keeps.</p>
                     </a>
 
-                    <a href="blog-post.html" class="post-card" data-category="platform">
-                      <div class="post-card_thumb"></div>
+                    <a href="blog-post.html?post=automation" class="post-card" data-category="platform">
+                      <div class="post-card_thumb"><img src="/src/assets/images/blog/automation.jpg" width="800" height="500" loading="lazy" decoding="async" alt="A single developer at a laptop late at night" /></div>
                       <div class="label-chip is-small">Platform</div>
                       <div class="post-card_title">Automation that removes work, not adds it</div>
                       <p class="post-card_excerpt">Which workflows are worth automating.</p>
                     </a>
 
-                    <a href="blog-post.html" class="post-card" data-category="delivery">
-                      <div class="post-card_thumb"></div>
+                    <a href="blog-post.html?post=handover" class="post-card" data-category="delivery">
+                      <div class="post-card_thumb"><img src="/src/assets/images/blog/handover.jpg" width="800" height="500" loading="lazy" decoding="async" alt="Close-up of hands writing code on a laptop" /></div>
                       <div class="label-chip is-small">Delivery</div>
                       <div class="post-card_title">Writing for whoever inherits the system</div>
                       <p class="post-card_excerpt">Docs and tests for the next team.</p>
@@ -210,7 +217,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">Stay in Touch</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Stay in Touch</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       <h2 data-reveal="text">Get New Posts by Email</h2>
                       <div class="margin-top margin-small">
@@ -234,6 +245,7 @@
             </div>
           </div>
         </section>
+        </div>
       </main>
 
       <footer class="footer_section">

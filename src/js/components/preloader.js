@@ -433,19 +433,38 @@ export function initPreloader({ onComplete, waitFor } = {}) {
       new Promise((resolve) => {
         const readout = { value: 0 };
 
-        const tl = gsap.timeline({
-          onComplete: () => {
-            panel.classList.add('is-done');
-            // The initial state wrote `display: flex` as an inline style, which
-            // outranks `.is-done { display: none }`. Clear it directly or the
-            // panel stays a live fixed-position layer for the rest of the
-            // session, translated off-screen but still composited.
-            panel.style.display = 'none';
-            startScroll();
-            onComplete?.();
-            resolve();
-          },
-        });
+        let done = false;
+        let failsafe = 0;
+
+        /**
+         * Take the panel down and hand the page over. Runs once, from whichever
+         * of the two gets here first — the timeline finishing, or the failsafe
+         * below deciding it never will.
+         */
+        const settle = (jumped) => {
+          if (done) return;
+          done = true;
+          clearTimeout(failsafe);
+
+          // Cut short: the playhead is somewhere mid-intro, so put everything
+          // it still had to animate into its finished state by hand.
+          if (jumped) {
+            tl.kill();
+            revealImmediately();
+          }
+
+          panel.classList.add('is-done');
+          // The initial state wrote `display: flex` as an inline style, which
+          // outranks `.is-done { display: none }`. Clear it directly or the
+          // panel stays a live fixed-position layer for the rest of the
+          // session, translated off-screen but still composited.
+          panel.style.display = 'none';
+          startScroll();
+          onComplete?.();
+          resolve();
+        };
+
+        const tl = gsap.timeline({ onComplete: () => settle(false) });
 
         // --- 1-2. The drawing -------------------------------------------------
         const iconEnd = drawRun(tl, icon, { budget: t.iconDraw, lead: t.iconLead }, 0);
@@ -582,6 +601,30 @@ export function initPreloader({ onComplete, waitFor } = {}) {
             exitAt + t.navAt
           );
         }
+
+        // Wall-clock failsafe. Nothing is allowed to hold the page longer than
+        // the intro could honestly need.
+        //
+        // The timeline advances on `gsap.ticker`, which is frame-driven, and
+        // GSAP's lag smoothing reports any frame longer than 500ms as 33ms. So
+        // on a machine that misses that threshold repeatedly the intro does not
+        // merely stutter — it crawls, at roughly the ratio of the real frame
+        // time to 33ms. Measured on a software renderer: 0.78s of timeline in
+        // 18s of wall clock, which is 5.44s of intro turned into minutes.
+        //
+        // Everything downstream is gated on this timeline reaching its end —
+        // the scroll unlock, `is-loaded`, and the hero backdrop being handed
+        // its ticker — so the visitor was left locked behind the panel on a
+        // hero that never started. The scene the panel is covering for is the
+        // expensive one, which makes the machines that trip this exactly the
+        // machines this is covering for.
+        //
+        // Derived rather than fixed: the intro's own length, plus the longest
+        // the exit gate may hold for the backdrop, plus a second of slack.
+        failsafe = setTimeout(
+          () => settle(true),
+          tl.duration() * 1000 + HERO_WAIT_CAP + 1000
+        );
       })
   );
 }

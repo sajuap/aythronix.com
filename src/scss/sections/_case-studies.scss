@@ -85,9 +85,15 @@
 
   padding-bottom: 2rem;
 
-  // Nothing is sticky down here, so the hold would be real white space.
+  // The stack runs on a phone too, so the panels have to fit between where they
+  // park and the bottom of the viewport — otherwise the next one starts covering
+  // a panel the reader has not finished. A phone panel is roughly 420-460px
+  // tall, and the tightest screen worth designing for is 640px, so the parking
+  // offsets come in: less air over the first panel, and a narrower peek so the
+  // fifth is not parked 80px further down than the first.
   @include mobile-landscape {
-    padding-bottom: 0;
+    --stack-top: calc(var(--nav-height) + 0.75rem);
+    --peek: 0.75rem;
   }
 }
 
@@ -119,9 +125,7 @@
     padding: 2.5rem 1.5rem;
   }
 
-  // Below 768px the panel would be most of the screen and the stack turns into a long hold on a small viewport.
   @include mobile-landscape {
-    position: static;
     padding: 2rem 1.25rem;
   }
 }
@@ -154,10 +158,6 @@
   color: #5aa2ff;
 }
 
-.case-stack_card .case-stack_index {
-  color: rgb(255 255 255 / 40%);
-}
-
 // `p` carries its colour and a 0.8 opacity globally, both tuned for navy on white.
 .case-stack_card p {
   opacity: 1;
@@ -168,14 +168,6 @@
   display: flex;
   flex-flow: column;
   gap: 1.25rem;
-}
-
-.case-stack_index {
-  color: var(--base-color-neutral--neutral);
-  font-family: $font-display;
-  font-size: 1.25rem;
-  line-height: 1;
-  text-transform: uppercase;
 }
 
 // The hairline between the two halves, drawn by the body column so it is exactly as tall as the taller of the two.

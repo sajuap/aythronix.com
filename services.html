@@ -88,7 +88,7 @@
 
       <main id="content">
       <!-- PLACEHOLDER COPY: invented names; portraits are initials rather than photographs. -->
-        <section class="hero-section page-hero">
+        <section class="hero-section page-hero is-pinned">
           <div class="padding-global">
             <div class="container-large">
               <h1 class="page-hero_title" data-reveal="text">Services</h1>
@@ -97,6 +97,14 @@
           </div>
         </section>
 
+        <!--
+          Everything after the banner, dealt over it as one opaque sheet — the same
+          device the home page uses under its hero. The banner is sticky and stays
+          behind this for the rest of the page, so any gap in the cover is a gap it
+          shows through.
+        -->
+        <div class="page-stack">
+
         <section id="Services" class="value-prop-section">
           <div class="padding-global">
             <div class="container-large-bordered">
@@ -104,14 +112,24 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom">
                     <div class="max-width-large">
-                      <div class="label-chip">What We Do</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">What We Do</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       </div>
                     </div>
                   </div>
 
-                  <div class="statement" data-reveal="fade">Everything under one roof: <span class="statement_muted">one roadmap, one point of contact,</span></div>
+                  <div class="statement" data-reveal="fade">Everything under one roof: <span class="statement_muted">one roadmap, one point of contact, one team accountable for the result.</span></div>
 
+                  <!--
+                    A shade fuller than the home page's version of the same grid. There a
+                    card is a pointer — enough to say the discipline exists and send the
+                    reader here. This is where they arrived, so the paragraph names what
+                    the work consists of rather than only what it is called.
+                  -->
                   <div class="services_grid" data-reveal="fade">
                     <article class="service-card is-featured">
                       <div class="service-card_head">
@@ -119,7 +137,12 @@
                       </div>
                       <div>
                         <h3 class="service-card_title">Enterprise Web Development</h3>
-                        <p class="service-card_body">Architectures that stay fast under load.</p>
+                        <p class="service-card_body">
+                          Applications that keep their shape as traffic, data and team size
+                          grow. The architecture and the data model are agreed before the
+                          first line of code, so what ships is something you can extend
+                          rather than something that has to be rewritten.
+                        </p>
                       </div>
                     </article>
 
@@ -129,7 +152,11 @@
                       </div>
                       <div>
                         <h3 class="service-card_title">Mobile Applications</h3>
-                        <p class="service-card_body">iOS and Android from one codebase.</p>
+                        <p class="service-card_body">
+                          One cross-platform codebase reaching both stores, so a fix is
+                          written once and everybody gets it. Native modules only where the
+                          platform genuinely needs them.
+                        </p>
                       </div>
                     </article>
 
@@ -139,7 +166,11 @@
                       </div>
                       <div>
                         <h3 class="service-card_title">AI &amp; Automation</h3>
-                        <p class="service-card_body">Pipelines that remove repeated manual work.</p>
+                        <p class="service-card_body">
+                          The repeated work between your systems, handed to a pipeline. We
+                          start with the process costing the most hours and measure what it
+                          gives back rather than assuming.
+                        </p>
                       </div>
                     </article>
 
@@ -149,7 +180,11 @@
                       </div>
                       <div>
                         <h3 class="service-card_title">E-Commerce Platforms</h3>
-                        <p class="service-card_body">Secure checkout, built for peak days.</p>
+                        <p class="service-card_body">
+                          Storefronts built around the checkout, because that is where the
+                          revenue is won or lost. Payments, tax and fraud handled, and sized
+                          for the peak day rather than the average one.
+                        </p>
                       </div>
                     </article>
 
@@ -159,7 +194,11 @@
                       </div>
                       <div>
                         <h3 class="service-card_title">Data-Driven SEO</h3>
-                        <p class="service-card_body">Optimisation grounded in measurement.</p>
+                        <p class="service-card_body">
+                          Technical foundations a crawler can actually read, then content and
+                          internal linking on top. Every change is tied to a number we agreed
+                          to move before starting.
+                        </p>
                       </div>
                     </article>
 
@@ -169,7 +208,11 @@
                       </div>
                       <div>
                         <h3 class="service-card_title">Platform &amp; Cloud</h3>
-                        <p class="service-card_body">Infrastructure that keeps it running.</p>
+                        <p class="service-card_body">
+                          The part that matters after launch: releases you can reverse,
+                          alerts that name a cause, and the unglamorous upkeep that stops a
+                          good build quietly decaying in production.
+                        </p>
                       </div>
                     </article>
                   </div>
@@ -179,85 +222,568 @@
           </div>
         </section>
 
-        <section id="Process" class="services-section">
+        <section id="Disciplines" class="sector-list-section">
+          <div class="padding-global">
+            <div class="container-large-bordered">
+              <div class="padding-section-medium pb-0">
+                <div class="padding-horizontal padding-medium">
+                  <div class="margin-bottom margin-huge">
+                    <div class="max-width-large">
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Disciplines</div>
+                        <div class="subtitle-line"></div>
+                      </div>
+                      <div class="margin-top margin-small">
+                        <h2 data-reveal="text">From Brand to Launch</h2>
+                        <div class="margin-top margin-small">
+                          <p>
+                            The five practices we keep in-house. Most engagements use more
+                            than one, and none of them get handed to a subcontractor you
+                            never meet.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="sector-list" data-sector-list>
+                  <a
+                    class="sector-row"
+                    href="contact.html"
+                    data-sector-row
+                    aria-label="Branding — book a call"
+                  >
+                    <div class="sector-row_face">
+                      <h3 class="sector-row_title">Branding</h3>
+                      <div class="sector-row_aside">
+                        <p class="sector-row_body">
+                          Positioning, identity and the rules that keep it intact — a system
+                          your own team can apply confidently without checking with us first.
+                        </p>
+                        <span class="sector-row_cta-slot" data-sector-grow>
+                          <span class="sector-row_cta">
+                            <span class="button is-small sector-row_button">
+                              <span>Book a call</span>
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                            </span>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="sector-row_panel" data-sector-panel aria-hidden="true">
+                      <div class="sector-row_panel-inner" data-sector-panel-inner>
+                        <div class="sector-row_media">
+                          <img
+                            src="/src/assets/images/blog/abstract.jpg"
+                            loading="lazy"
+                            decoding="async"
+                            alt=""
+                            class="sector-row_image"
+                          />
+                        </div>
+                        <h3 class="sector-row_title">Branding</h3>
+                        <div class="sector-row_aside">
+                          <p class="sector-row_body">
+                            Positioning, identity and the rules that keep it intact — a system
+                            your own team can apply confidently without checking with us first.
+                          </p>
+                          <span class="sector-row_cta-slot">
+                            <span class="sector-row_cta">
+                              <span class="button is-small sector-row_button">
+                                <span>Book a call</span>
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                              </span>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a
+                    class="sector-row"
+                    href="contact.html"
+                    data-sector-row
+                    aria-label="Web development — book a call"
+                  >
+                    <div class="sector-row_face">
+                      <h3 class="sector-row_title">Web Development</h3>
+                      <div class="sector-row_aside">
+                        <p class="sector-row_body">
+                          Architecture and data model agreed before the first commit, so what
+                          ships is something you can extend rather than something that has to
+                          be rewritten.
+                        </p>
+                        <span class="sector-row_cta-slot" data-sector-grow>
+                          <span class="sector-row_cta">
+                            <span class="button is-small sector-row_button">
+                              <span>Book a call</span>
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                            </span>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="sector-row_panel" data-sector-panel aria-hidden="true">
+                      <div class="sector-row_panel-inner" data-sector-panel-inner>
+                        <div class="sector-row_media">
+                          <img
+                            src="/src/assets/images/blog/abstract.jpg"
+                            loading="lazy"
+                            decoding="async"
+                            alt=""
+                            class="sector-row_image"
+                          />
+                        </div>
+                        <h3 class="sector-row_title">Web Development</h3>
+                        <div class="sector-row_aside">
+                          <p class="sector-row_body">
+                            Architecture and data model agreed before the first commit, so what
+                            ships is something you can extend rather than something that has to
+                            be rewritten.
+                          </p>
+                          <span class="sector-row_cta-slot">
+                            <span class="sector-row_cta">
+                              <span class="button is-small sector-row_button">
+                                <span>Book a call</span>
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                              </span>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a
+                    class="sector-row"
+                    href="contact.html"
+                    data-sector-row
+                    aria-label="UX and UI design — book a call"
+                  >
+                    <div class="sector-row_face">
+                      <h3 class="sector-row_title">UX/UI Design</h3>
+                      <div class="sector-row_aside">
+                        <p class="sector-row_body">
+                          Interfaces designed against real tasks and real data, then handed
+                          over as working components rather than as pictures of components.
+                        </p>
+                        <span class="sector-row_cta-slot" data-sector-grow>
+                          <span class="sector-row_cta">
+                            <span class="button is-small sector-row_button">
+                              <span>Book a call</span>
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                            </span>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="sector-row_panel" data-sector-panel aria-hidden="true">
+                      <div class="sector-row_panel-inner" data-sector-panel-inner>
+                        <div class="sector-row_media">
+                          <img
+                            src="/src/assets/images/blog/abstract.jpg"
+                            loading="lazy"
+                            decoding="async"
+                            alt=""
+                            class="sector-row_image"
+                          />
+                        </div>
+                        <h3 class="sector-row_title">UX/UI Design</h3>
+                        <div class="sector-row_aside">
+                          <p class="sector-row_body">
+                            Interfaces designed against real tasks and real data, then handed
+                            over as working components rather than as pictures of components.
+                          </p>
+                          <span class="sector-row_cta-slot">
+                            <span class="sector-row_cta">
+                              <span class="button is-small sector-row_button">
+                                <span>Book a call</span>
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                              </span>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a
+                    class="sector-row"
+                    href="contact.html"
+                    data-sector-row
+                    aria-label="App development — book a call"
+                  >
+                    <div class="sector-row_face">
+                      <h3 class="sector-row_title">App Development</h3>
+                      <div class="sector-row_aside">
+                        <p class="sector-row_body">
+                          One cross-platform codebase reaching both stores, so a fix is written
+                          once and everybody gets it, native only where the platform needs it.
+                        </p>
+                        <span class="sector-row_cta-slot" data-sector-grow>
+                          <span class="sector-row_cta">
+                            <span class="button is-small sector-row_button">
+                              <span>Book a call</span>
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                            </span>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="sector-row_panel" data-sector-panel aria-hidden="true">
+                      <div class="sector-row_panel-inner" data-sector-panel-inner>
+                        <div class="sector-row_media">
+                          <img
+                            src="/src/assets/images/blog/abstract.jpg"
+                            loading="lazy"
+                            decoding="async"
+                            alt=""
+                            class="sector-row_image"
+                          />
+                        </div>
+                        <h3 class="sector-row_title">App Development</h3>
+                        <div class="sector-row_aside">
+                          <p class="sector-row_body">
+                            One cross-platform codebase reaching both stores, so a fix is written
+                            once and everybody gets it, native only where the platform needs it.
+                          </p>
+                          <span class="sector-row_cta-slot">
+                            <span class="sector-row_cta">
+                              <span class="button is-small sector-row_button">
+                                <span>Book a call</span>
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                              </span>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a
+                    class="sector-row"
+                    href="contact.html"
+                    data-sector-row
+                    aria-label="Social media management — book a call"
+                  >
+                    <div class="sector-row_face">
+                      <h3 class="sector-row_title">Social Media Management</h3>
+                      <div class="sector-row_aside">
+                        <p class="sector-row_body">
+                          Channels run as a system rather than as a scramble: a calendar, a
+                          tone of voice, and reporting that says which of it actually worked.
+                        </p>
+                        <span class="sector-row_cta-slot" data-sector-grow>
+                          <span class="sector-row_cta">
+                            <span class="button is-small sector-row_button">
+                              <span>Book a call</span>
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                            </span>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="sector-row_panel" data-sector-panel aria-hidden="true">
+                      <div class="sector-row_panel-inner" data-sector-panel-inner>
+                        <div class="sector-row_media">
+                          <img
+                            src="/src/assets/images/blog/abstract.jpg"
+                            loading="lazy"
+                            decoding="async"
+                            alt=""
+                            class="sector-row_image"
+                          />
+                        </div>
+                        <h3 class="sector-row_title">Social Media Management</h3>
+                        <div class="sector-row_aside">
+                          <p class="sector-row_body">
+                            Channels run as a system rather than as a scramble: a calendar, a
+                            tone of voice, and reporting that says which of it actually worked.
+                          </p>
+                          <span class="sector-row_cta-slot">
+                            <span class="sector-row_cta">
+                              <span class="button is-small sector-row_button">
+                                <span>Book a call</span>
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left is-ext" />
+                                <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right is-ext" />
+                              </span>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!--
+          Process — the home page's Engineering Lifecycle design, to the class.
+          A heading over a two-column body: the four stages run down the left as
+          one column, and the dot sphere stands in the right, cropped by the
+          frame's edge.
+
+          Only a left gutter on the column — `padding-left` rather than
+          `padding-horizontal` — because the sphere is meant to run out past the
+          right edge and be cut by the container rather than sit inside a margin.
+          `.is-overflow-hidden` on the container is what does the cutting. The
+          reasoning behind each of these classes is beside the rules in
+          scss/sections/_lifecycle.scss.
+
+          The copy and the stage icons are the services page's own, unchanged —
+          only the layout is borrowed.
+        -->
+        <section id="Process" class="lifecycle-section">
+          <div class="padding-global">
+            <div class="container-large-bordered is-relative is-overflow-hidden">
+              <div class="padding-top padding-huge is-bottom-tab-added">
+                <!-- Left gutter only: the sphere is meant to run out past the right edge. -->
+                <div class="padding-left padding-medium">
+                  <div class="padding-right-tab">
+                    <div class="margin-bottom margin-huge">
+                      <div class="max-width-large">
+                        <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                          <div class="subtitle-line"></div>
+                          <div class="text-style-subtitle">How We Work</div>
+                          <div class="subtitle-line"></div>
+                        </div>
+                        <h2 data-reveal="text">From Brief to Production</h2>
+                        <div class="margin-top margin-small">
+                          <p>
+                            The same four stages, every engagement — whether it is a six-week
+                            build or a year of platform work. Each one ends in something
+                            written down, so you always know what was decided and why.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="fs-styleguide_2-col">
+                    <div class="padding-right-tab">
+                      <div class="padding-bottom padding-huge is-no-tab">
+                        <div class="lifecycle_list" data-reveal="fade">
+                          <div class="lifecycle-step">
+                            <div class="icon-container">
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                              <div class="arrow-icon" data-lottie="discovery"></div>
+                            </div>
+                            <h3 class="lifecycle-step_title">Discovery</h3>
+                            <div class="lifecycle-step_rule"></div>
+                            <p>
+                              We map what you are actually trying to change before anyone
+                              estimates it: the people who will use it, the systems it has to
+                              live alongside, and the constraints nobody thought to write down.
+                              It ends in a written estimate you can hold us to.
+                            </p>
+                          </div>
+
+                          <div class="lifecycle-step">
+                            <div class="icon-container">
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                              <div class="arrow-icon" data-lottie="blueprint"></div>
+                            </div>
+                            <h3 class="lifecycle-step_title">Blueprinting</h3>
+                            <div class="lifecycle-step_rule"></div>
+                            <p>
+                              Architecture, data model and interface settled on paper, with the
+                              trade-off behind each choice recorded next to it. Disagreeing at
+                              this stage costs a conversation; disagreeing later costs a rebuild.
+                              You get a blueprint and a dated delivery plan.
+                            </p>
+                          </div>
+
+                          <div class="lifecycle-step">
+                            <div class="icon-container">
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                              <div class="arrow-icon" data-lottie="icon-3"></div>
+                            </div>
+                            <h3 class="lifecycle-step_title">Delivery</h3>
+                            <div class="lifecycle-step_rule"></div>
+                            <p>
+                              Two-week cycles, each ending in a deployed build you can open
+                              yourself. You see progress in working software rather than in a
+                              status report, which is also how a change in scope gets caught
+                              while it is still cheap.
+                            </p>
+                          </div>
+
+                          <div class="lifecycle-step">
+                            <div class="icon-container">
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
+                              <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
+                              <div class="arrow-icon" data-lottie="built-icon"></div>
+                            </div>
+                            <h3 class="lifecycle-step_title">Operate</h3>
+                            <div class="lifecycle-step_rule"></div>
+                            <p>
+                              Launch is the start of the expensive half. Alerting, security
+                              patching and a named contact on agreed response times — because
+                              most software fails slowly, and slowly is the failure you can
+                              still do something about.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Decorative: the site's own dot sphere, stood on its end and cut
+                         by the frame. Hidden below 992px, where there is no second
+                         column for it to stand in. -->
+                    <img
+                      src="/src/assets/images/side-sphere.avif"
+                      width="3728"
+                      height="3924"
+                      loading="lazy"
+                      decoding="async"
+                      alt=""
+                      aria-hidden="true"
+                      class="sphere-clip"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="Engagement" class="case-studies-section">
           <div class="padding-global">
             <div class="container-large-bordered">
               <div class="padding-section-medium">
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">How We Work</div>
-                      <div class="margin-top margin-small">
-                      <h2 data-reveal="text">From Brief to Production</h2>
-                      <div class="margin-top margin-small">
-                        <p>The same four stages, every engagement.</p>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Engagement Models</div>
+                        <div class="subtitle-line"></div>
                       </div>
+                      <div class="margin-top margin-small">
+                        <h2 data-reveal="text">Four Ways This Starts</h2>
+                        <div class="margin-top margin-small">
+                          <p>
+                            Most work arrives in one of these shapes. If yours does not,
+                            say so — the model should fit the problem, not the other way
+                            round.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="services_grid" data-reveal="fade">
-                    <article class="service-card">
-                      <div class="service-card_head">
-                        <div class="icon-container">
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="discovery"></div>
-                        </div>
+                  <!-- No data-reveal: the panels arrive by being scrolled to. -->
+                  <div class="case-stack" data-card-stack>
+                    <article class="case-stack_card">
+                      <div class="case-stack_lead">
+                        <div class="case-card_metric">Fixed Scope, Fixed Price</div>
                       </div>
-                      <div>
-                        <h3 class="service-card_title">Discovery</h3>
-                        <p class="service-card_body">Requirements and constraints, mapped.</p>
-                      </div>
-                    </article>
-
-                    <article class="service-card">
-                      <div class="service-card_head">
-                        <div class="icon-container">
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="blueprint"></div>
-                        </div>
-                      </div>
-                      <div>
-                        <h3 class="service-card_title">Blueprinting</h3>
-                        <p class="service-card_body">Decisions agreed before any code.</p>
+                      <div class="case-stack_body">
+                        <h3 class="case-card_title">
+                          A Defined Build With a Date You Can Put in a Plan
+                        </h3>
+                        <p>
+                          For work whose shape is already clear. We blueprint it, quote it
+                          once, and carry the risk of our own estimate — the figure you
+                          approve is the figure you pay, and a change of scope is a
+                          conversation before it is an invoice.
+                        </p>
                       </div>
                     </article>
 
-                    <article class="service-card">
-                      <div class="service-card_head">
-                        <div class="icon-container">
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="icon-3"></div>
-                        </div>
+                    <article class="case-stack_card">
+                      <div class="case-stack_lead">
+                        <div class="case-card_metric">An Embedded Squad</div>
                       </div>
-                      <div>
-                        <h3 class="service-card_title">Delivery</h3>
-                        <p class="service-card_body">Short cycles. No surprises at the demo.</p>
+                      <div class="case-stack_body">
+                        <h3 class="case-card_title">
+                          Engineers Who Join Your Standups, Not Just Your Inbox
+                        </h3>
+                        <p>
+                          When the direction is yours and what you need is capacity behind
+                          it. Our people work inside your process, on your board and under
+                          your review — and everything they write is yours, documented well
+                          enough that your team can carry it on alone.
+                        </p>
                       </div>
                     </article>
 
-                    <article class="service-card">
-                      <div class="service-card_head">
-                        <div class="icon-container">
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-left" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-left" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-bottom-right" />
-                          <img src="/src/assets/icons/angle-vector.svg" loading="lazy" alt="" class="select-button-vector is-top-right" />
-                          <div class="arrow-icon" data-lottie="built-icon"></div>
-                        </div>
+                    <article class="case-stack_card">
+                      <div class="case-stack_lead">
+                        <div class="case-card_metric">Modernisation in Slices</div>
                       </div>
-                      <div>
-                        <h3 class="service-card_title">Operate</h3>
-                        <p class="service-card_body">Monitoring and the upkeep that follows.</p>
+                      <div class="case-stack_body">
+                        <h3 class="case-card_title">
+                          Replacing a Legacy System While It Keeps Serving Customers
+                        </h3>
+                        <p>
+                          Nobody can afford a cutover weekend any more. We open a seam
+                          through the existing system and move it across one capability at
+                          a time, so every step is small enough to reverse and the old
+                          platform is never switched off before the new one has earned it.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article class="case-stack_card">
+                      <div class="case-stack_lead">
+                        <div class="case-card_metric">A Second Opinion First</div>
+                      </div>
+                      <div class="case-stack_body">
+                        <h3 class="case-card_title">
+                          Two Weeks of Audit Before You Commit to Anything
+                        </h3>
+                        <p>
+                          For teams who cannot yet tell whether the problem is the
+                          architecture, the process or the roadmap. You get the findings and
+                          an honest recommendation — including the one where the right
+                          answer is your current team and a smaller change than expected.
+                        </p>
                       </div>
                     </article>
                   </div>
@@ -274,7 +800,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">Next Step</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Next Step</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       <h2 data-reveal="text">Tell Us What You Are Building</h2>
                       <div class="margin-top margin-small">
@@ -298,6 +828,7 @@
             </div>
           </div>
         </section>
+        </div>
       </main>
 
       <footer class="footer_section">

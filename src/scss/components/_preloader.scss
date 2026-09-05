@@ -155,7 +155,6 @@
   pointer-events: none;
 }
 
-// The curtain: one sheet, full width.
 .page-transition_panel {
   width: 100%;
   // Taller than the screen, because the hem is a curve and the whole of that curve has to sit below the frame before the frame counts as covered.
@@ -169,19 +168,66 @@
     var(--base-color-brand--blue-dark) 100%
   );
 
-  // The hem, and there are two of them: the curve bends one way going down and the other coming back up.
-  --arch: radial-gradient(55% 24% at 50% 100%, transparent 99.5%, #000 100%);
 
-  mask-image: var(--arch);
-  -webkit-mask-image: var(--arch);
+  --hem: clamp(3rem, 20vw, min(17rem, 30vh));
+
+  // Arriving: a valley cut out of the hem, deepest in the middle.
+  --hem-curve: radial-gradient(62vw var(--hem) at 50% 100%, transparent 99.5%, #000 100%);
+
+
+  mask-image: linear-gradient(#000, #000), var(--hem-curve);
+  mask-size: 100% calc(100% - var(--hem)), 100% var(--hem);
+  mask-position: top, bottom;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(#000, #000), var(--hem-curve);
+  -webkit-mask-size: 100% calc(100% - var(--hem)), 100% var(--hem);
+  -webkit-mask-position: top, bottom;
+  -webkit-mask-repeat: no-repeat;
 
   // Covering, until JS draws it off.
   transform: translateY(0%);
+
+  // Kept on its own layer for the whole visit. The sheet is one element and
+  // there are only ever two of these on a page.
+  will-change: transform;
 }
 
-// And the other hem, for the half that goes down: a dome hanging off the bottom of the sheet.
+// Leaving: the other hem — a dome hanging off the foot of the sheet, lowest in
+// the middle, so the curve always bulges the way the sheet is travelling.
 .page-transition.is-covering .page-transition_panel {
-  --arch: radial-gradient(90% 100% at 50% 0%, #000 99.5%, transparent 100%);
+  --hem-curve: radial-gradient(62vw var(--hem) at 50% 0%, #000 99.5%, transparent 100%);
+
+  // Parked above the fold, ready to come down. No transition on the way here.
+  transform: translateY(-100%);
+}
+
+.page-transition.is-revealing .page-transition_panel {
+  transform: translateY(-100%);
+  transition: transform 1.45s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.page-transition.is-covering.is-down .page-transition_panel {
+  transform: translateY(0%);
+  transition: transform 1.15s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+// Parked and out of the way between navigations. Last, so it wins over both
+// sweep rules at equal specificity, and `visibility` releases the layer.
+.page-transition.is-idle {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.page-transition.is-idle .page-transition_panel {
+  transform: translateY(-100%);
+  transition: none;
+}
+
+// Someone who asked for less motion gets the navigation without the curtain.
+@include reduced-motion {
+  .page-transition_panel {
+    transition: none !important;
+  }
 }
 
 // Without JS there is nothing to lift the cover, so it would sit over the page permanently.

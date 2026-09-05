@@ -1,5 +1,179 @@
 // Value proposition
 
+// Why Aythronix — the banner is the section's ground.
+//
+// The shot was framed for this: the machine hard right, the studio sweep
+// running off to the left across two thirds of the frame. That sweep is not
+// empty space to be filled, it is the copy's bed — so the image goes in as a
+// background rather than as a figure beside the text, and the text is held off
+// the half the machine stands in.
+//
+// Everything that makes it sit on the page rather than on top of it is in one
+// layered background: the shot, an edge fade, and a wash over the copy side.
+// One box, so all three share a coordinate system and stay registered to each
+// other at every width.
+
+.why-section {
+  position: relative;
+
+  // Scopes the backdrop to the section, so `z-index: -1` below means "behind
+  // this section's copy" rather than "behind the page".
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+
+    // Registered to the framed column exactly, not approximately: the container
+    // draws a hairline down each side, and a backdrop even a few pixels wider
+    // reads as the photograph having escaped the frame rather than as the frame
+    // having been filled.
+    //
+    // Both halves of that are needed. The gutter is what matches the column
+    // below 1280 + gutters, where the column is the viewport less
+    // `.padding-global`; the max-width is what matches it above, where the
+    // column stops growing and auto margins centre what is left over. With only
+    // the max-width the shot ran past the border on every laptop.
+    inset: 0 2.5rem;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    z-index: -1;
+
+    background-image:
+      // 1. The wash. Solid across the copy, gone by the time it reaches the
+      //    machine — so the type is always on white and never on photograph.
+      linear-gradient(
+        90deg,
+        rgb(255 255 255 / 100%) 0%,
+        rgb(255 255 255 / 100%) 44%,
+        rgb(255 255 255 / 82%) 58%,
+        rgb(255 255 255 / 0%) 76%
+      ),
+      // 2. The edge fade, which is what keeps the shot from reading as a pasted
+      //    rectangle: the studio sweep is a light grey, the sections above and
+      //    below are white, and a hard seam between the two would be the first
+      //    thing the eye found. It only has anything to do on the right, where
+      //    the wash above has already run out.
+      linear-gradient(
+        180deg,
+        rgb(255 255 255 / 100%) 0%,
+        rgb(255 255 255 / 0%) 24%,
+        rgb(255 255 255 / 0%) 72%,
+        rgb(255 255 255 / 100%) 100%
+      ),
+      // 3. The shot itself, at its own proportions against the right edge.
+      //    `cover` would crop the machine's reflection off the bottom and blow
+      //    the whole thing up past the frame; sized to the height, it keeps its
+      //    footing and the sweep fills whatever is left.
+      url('/src/assets/images/banner-img.jpg');
+    background-repeat: no-repeat;
+    background-position: center, center, right bottom;
+    background-size: cover, cover, auto 100%;
+  }
+
+  /**
+   * Room for the banner to be a banner. Without it the section collapses to the
+   * height of its copy and the machine is squeezed into a letterbox.
+   *
+   * On the *frame*, not on the section — and that is the whole of a bug that
+   * only showed on some screens. Held on the section, the section grew to 32rem
+   * while the bordered column inside it stayed at whatever its copy needed, and
+   * `::before` is inset to the section: so the photograph painted the full 32rem
+   * and the frame's bottom hairline crossed it 27–51px early, leaving the
+   * machine standing below the frame in the white gap before the next section.
+   *
+   * It came and went with the viewport because the shortfall is a wrapping
+   * question: wide enough and the two columns of copy come out short of 32rem,
+   * narrow enough and they overrun it and there is no gap to see. Hence "some
+   * laptops". Putting the minimum on the column makes the frame and the backdrop
+   * the same box by construction, at every width.
+   */
+  @include desktop {
+    .container-large-bordered {
+      min-height: 32rem;
+    }
+  }
+
+
+  // Below 992px there is no room to stand the machine beside the copy, so the
+  // portrait crop takes over — and it is composed the other way round: the sweep
+  // on top for the copy, the machine standing in the bottom right. Same idea
+  // turned through ninety degrees, so the wash turns with it.
+  //
+  // Anchored bottom, sized by width. Anchoring to the bottom is what makes the
+  // reserved space below the copy the only number that has to be right: the
+  // machine keeps its footing whatever the frame does, and a frame taller than
+  // the shot needs simply shows less of the empty sweep above it rather than
+  // lifting the machine off the floor.
+  @include tablet {
+    &::before {
+      inset: 0 1.5rem;
+      background-image:
+        // Solid past where the copy ends at every width in the range — the copy
+        // is a little under a third of the section once the machine's standing
+        // room is reserved, and type on even a faint tint of the sweep is the
+        // one thing that would give the composition away.
+        linear-gradient(
+          180deg,
+          rgb(255 255 255 / 100%) 0%,
+          rgb(255 255 255 / 100%) 32%,
+          rgb(255 255 255 / 0%) 56%
+        ),
+        linear-gradient(
+          180deg,
+          rgb(255 255 255 / 0%) 94%,
+          rgb(255 255 255 / 100%) 100%
+        ),
+        url('/src/assets/images/banner-img-verticle.jpg');
+      background-position: center, center, right bottom;
+
+      // Full width of the frame, not a floated inset. Sized to anything less and
+      // the sweep ends in a hard vertical seam partway across the section, which
+      // is the shot announcing itself as a rectangle — the crop is composed as a
+      // full portrait frame and wants to be used as its own ground.
+      background-size: cover, cover, 100% auto;
+    }
+
+    // Room under the copy for the machine to stand in.
+    //
+    // A percentage, because percentage padding resolves against the containing
+    // block's *width* — which is exactly what the machine's height is a function
+    // of, now that the shot is sized by width. Anything in `rem` would hold
+    // still while the machine grew, and the two would collide on the way up to
+    // 991px.
+    //
+    // The machine's top sits 38.7% of the way up the crop, which at full width
+    // puts it 0.84 frame-widths off the floor. Two points of slack on top of
+    // that, and the copy lands just clear of the monitor at every width — the
+    // sweep between them is exactly the section's own top padding rather than a
+    // gap that has to be tuned.
+    .padding-section-medium {
+      padding-bottom: 86%;
+    }
+  }
+
+  @include mobile-landscape {
+    &::before {
+      inset: 0 1.25rem;
+    }
+  }
+
+  @include mobile-portrait {
+    &::before {
+      inset: 0 1rem;
+    }
+  }
+}
+
+// The copy keeps to the sweep. Without this the second paragraph of the pair
+// runs on under the machine, and no amount of wash saves type that is sitting
+// on a keyboard.
+.why-section_copy {
+  @include desktop {
+    max-width: 58%;
+  }
+}
+
 // Ticker items — the capability strip and the tech stack ribbon.
 
 .capability_item,

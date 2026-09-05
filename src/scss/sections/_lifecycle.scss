@@ -1,19 +1,44 @@
 // Engineering lifecycle
+//
+// A heading over a two-column body: the four steps run down the left as one
+// column, and a dot sphere stands in the right, cropped by the frame's edge.
+//
+// The column only carries a left gutter — `padding-left` rather than
+// `padding-horizontal` in the markup — because the sphere is supposed to run out
+// past the right edge and be cut by the container rather than sit inside a
+// margin. `.is-overflow-hidden` on the container is what does the cutting.
 
-.lifecycle_grid {
-  display: grid;
-  position: relative;
-  width: 100%;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+// A light thrown in from the top-left corner, falling away before it reaches the
+// sphere — so the copy side sits in the lit half and the artwork stays on clean
+// white.
+//
+// Painted on the frame rather than on the section, so it starts at the corner of
+// the bordered column the page is drawn in rather than at the corner of the
+// viewport, and so `.is-overflow-hidden` keeps it inside the rule. It is a
+// background on the container, which puts it behind every child without needing
+// a stacking context of its own.
+//
+// Mixed from the navy the page is set in rather than a neutral grey: at these
+// alphas it reads as grey, but as the cool grey the rest of the palette is
+// built from.
+.lifecycle-section .container-large-bordered {
+  background-image: radial-gradient(
+    118% 88% at 0% 0%,
+    rgb(4 23 58 / 9%) 0%,
+    rgb(4 23 58 / 4.5%) 30%,
+    rgb(4 23 58 / 0%) 68%
+  );
+}
 
-  @include tablet {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2.5rem 2rem;
-  }
+.lifecycle_list {
+  display: flex;
+  flex-flow: column;
+
+  // The steps carry their own hairline rule, so this is the whole separation
+  // between one and the next.
+  gap: 3.5rem;
 
   @include mobile-landscape {
-    grid-template-columns: 1fr;
     gap: 2.5rem;
   }
 }
@@ -24,16 +49,6 @@
   flex-flow: column;
   align-items: flex-start;
   gap: 1rem;
-}
-
-// The step number, in the display face, sitting above the glyph.
-.lifecycle-step_index {
-  color: var(--base-color-brand--blue);
-  font-family: $font-display;
-  font-size: 1.25rem;
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.05em;
 }
 
 .lifecycle-step_title {
@@ -49,7 +64,7 @@
   }
 }
 
-// Hairline running from the glyph out to the next step.
+// Hairline under the title, running the width of the column.
 .lifecycle-step_rule {
   width: 100%;
   height: 1px;
@@ -57,4 +72,58 @@
   background-color: var(--base-color-neutral--neutral-lighter);
 }
 
+// The sphere.
+//
+// `side-sphere.avif` — the upper-left quadrant of a dot sphere: the limb arcing
+// bottom-left to top-right, the body running off the corner. 3728x3924 in 20KB,
+// which is what AVIF does with sparse dots on a flat ground, and far more
+// resolution than it is ever asked for here. Drawn at full strength: the dots
+// are mid-grey in the file itself, so it sits behind the copy without any help.
+//
+// AVIF has no fallback wired up, matching how base/_reset.scss already serves the
+// body's smoke plume. A browser too old for it gets no sphere, which is the right
+// outcome for decoration.
+//
+// The `img` rules the source design pairs with this — `max-width: 100%` and
+// `display: inline-block` — are already in base/_reset.scss, so nothing is
+// restated here.
+//
+// A grid item in the second column, exactly as the source design has it.
+//
+// `aspect-ratio` is the load-bearing line, though not for the reason it looks
+// like. It does not end up governing the box: the row is sized by the four steps
+// and comes out definite, so `height: 100%` resolves against it and wins — the
+// image measures roughly 591x1186 here, not a square.
+//
+// What the ratio changes is the *row sizing* pass that happens first. Without it
+// the item offers its own intrinsic height, all 3924px of it, the row is built
+// around that, and the section grows to twice its copy with the last stretch of
+// it sphere and nothing else — which is exactly what happened here before this
+// line went back in. With it, the item contributes a width-derived square
+// instead, the steps decide the row, and `height: 100%` then fills it.
+//
+// `place-self: end` is therefore doing nothing at present, since the item
+// stretches to the full row. It is kept because it is what the source design
+// carries, and it is what would drop the artwork to the foot of the column if
+// the row ever grew taller than the image.
+.sphere-clip {
+  aspect-ratio: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0% 0%;
+  overflow: hidden;
+  place-self: end;
 
+  // The file is opaque white, not transparent, so over the corner wash above it
+  // was cutting a hard white rectangle out of the grey. Multiply drops the white
+  // — white against any backdrop returns the backdrop — and keeps the dots,
+  // which darken what they sit on. The artwork now takes the wash with it
+  // instead of masking it out.
+  mix-blend-mode: multiply;
+
+  // No second column to stand in down here.
+  @include tablet {
+    display: none;
+  }
+}

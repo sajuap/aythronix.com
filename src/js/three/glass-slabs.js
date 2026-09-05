@@ -197,6 +197,13 @@ const PANEL_GLOW_VARIANCE = 0.05;
  *
  * It only ever steps down. A governor that could climb back up would sit on the
  * boundary and hunt between two settings for the length of the visit.
+ *
+ * Resolution is the only thing it is allowed to touch. The steps used to widen
+ * the panels as well, and that was a mistake twice over: the wall covers the
+ * frame whatever the pitch, so fewer panels is the same transmissive fill area
+ * and saves close to nothing — while restriping the wall mid-visit is the most
+ * conspicuous change the scene can possibly make. The composition is not a
+ * performance dial. It is decided by the viewport and then left alone.
  */
 const QUALITY_STEPS = [
   // Opens at 0.82 rather than 1. Every pixel here is paid for three times over —
@@ -205,18 +212,31 @@ const QUALITY_STEPS = [
   // the most expensive thing on the page by a wide margin. Nothing in this scene
   // has an edge sharp enough to show the difference: it is a soft light field
   // behind frosted panels. What it does show is roughly a third off the fill.
-  { dprScale: 0.82, slabScale: 1 },
-  { dprScale: 0.66, slabScale: 1 },
-  { dprScale: 0.5, slabScale: 1.6 },
+  { dprScale: 0.82 },
+  { dprScale: 0.66 },
+  { dprScale: 0.5 },
   // A floor for the machines that cannot hold even that. Soft, but running.
-  { dprScale: 0.38, slabScale: 2.2 },
+  { dprScale: 0.38 },
 ];
 
 /** Roughly 45fps. Above this the scene is costing the page real frames. */
 const FRAME_BUDGET_MS = 22;
 
-/** Ignored after start and after each step down — shader compiles land here. */
-const WARMUP_MS = 500;
+/**
+ * Ignored after start and after each step down.
+ *
+ * Two things land in here and neither is the scene's steady-state cost. Shader
+ * compiles and the first mip build are the obvious ones. The larger one is the
+ * rest of the page: the ticker is handed over the instant the preloader lifts,
+ * and `initAfterReveal` immediately spends the next several frames building
+ * reveals, marquees, the card stack, the Lottie icons, the work rail and the
+ * image trail, then calls `ScrollTrigger.refresh()` — forced layout over the
+ * whole document. The governor times whole frames, so all of that reads as the
+ * scene being too expensive, and it used to step down on the strength of it
+ * within half a second of the hero appearing. This window is long enough to sit
+ * out that storm and judge the scene on frames it is actually responsible for.
+ */
+const WARMUP_MS = 1100;
 
 /**
  * A verdict needs either enough frames for a stable median or enough wall clock,
@@ -224,11 +244,10 @@ const WARMUP_MS = 500;
  * that actually need the governor — wait longest to hear from it.
  *
  * Short windows on purpose. Every millisecond before the first verdict is a
- * millisecond of the stutter the governor exists to end, and on a machine that
- * needs two steps down the old windows meant three seconds of it. A median of
- * six frames is coarse, but it only has to answer "is this obviously too slow".
+ * millisecond of the stutter the governor exists to end. Ten frames is coarse,
+ * but the median only has to answer "is this obviously too slow".
  */
-const MIN_SAMPLES = 6;
+const MIN_SAMPLES = 10;
 const SAMPLE_FRAMES = 40;
 const SAMPLE_MS = 700;
 
@@ -472,6 +491,13 @@ export default class GlassSlabs {
     this._inView = true;
     this._listeners = [];
     this._tick = this._tick.bind(this);
+
+    // The last size actually applied to the drawing buffer. resize() compares
+    // against all four, and only reallocates when one of them has moved.
+    this._w = 0;
+    this._h = 0;
+    this._dpr = 0;
+    this._slabCount = 0;
 
     this._qualityLevel = 0;
     this._samples = [];
@@ -915,6 +941,32 @@ export default class GlassSlabs {
     this.slabs.instanceColor.needsUpdate = true;
   }
 
+  /**
+   * How many panels a frame of this width gets.
+   *
+   * Rounding on its own puts a hard boundary every half panel, and a width that
+   * comes to rest near one restripes the entire wall on a 1px wobble — a
+   * scrollbar arriving, a mobile chrome bar, Lenis re-measuring after a font
+   * lands. Once a count is chosen it is held until the ideal has moved most of
+   * a panel away from it, so the pitch changes on a real resize and never on a
+   * jitter.
+   */
+  _countFor(width) {
+    const ideal = width / this.config.slabWidth;
+
+    if (this._slabCount && Math.abs(ideal - this._slabCount) < 0.8) return this._slabCount;
+
+    return Math.max(
+      this.config.minSlabs,
+      Math.min(this.config.maxSlabs, Math.round(ideal))
+    );
+  }
+
+  /**
+   * @returns true only when the drawing buffer was actually reallocated — which
+   *   is to say, when the canvas has just been cleared and the caller owes it a
+   *   frame. A call that changed nothing returns false so nobody redraws for it.
+   */
   resize() {
     const parent = this.canvas.parentElement;
     if (!parent || !this.renderer) return false;
@@ -923,20 +975,25 @@ export default class GlassSlabs {
     const height = parent.clientHeight;
     if (!width || !height) return false;
 
-    const step = QUALITY_STEPS[this._qualityLevel];
-    const dpr = Math.min(window.devicePixelRatio || 1, this.config.maxDpr) * step.dprScale;
-    const count = Math.max(
-      this.config.minSlabs,
-      Math.min(
-        this.config.maxSlabs,
-        Math.round(width / (this.config.slabWidth * step.slabScale))
-      )
-    );
+    const dpr =
+      Math.min(window.devicePixelRatio || 1, this.config.maxDpr) *
+      QUALITY_STEPS[this._qualityLevel].dprScale;
+    const count = this._countFor(width);
 
-    if (width === this._w && height === this._h && count === this._slabCount) return true;
+    // dpr is in the guard so a quality step is a real change on its own terms,
+    // rather than something the governor has to force through by faking a width.
+    if (
+      width === this._w &&
+      height === this._h &&
+      count === this._slabCount &&
+      dpr === this._dpr
+    ) {
+      return false;
+    }
 
     this._w = width;
     this._h = height;
+    this._dpr = dpr;
     this._slabCount = count;
 
     this.renderer.setPixelRatio(dpr);
@@ -956,8 +1013,25 @@ export default class GlassSlabs {
   _bindEvents() {
     const onResize = () => {
       if (!this.renderer) return;
-      this.resize();
-      if (this._static) this._render();
+
+      // `setSize` reallocates the drawing buffer, so whatever was on screen is
+      // gone the moment it returns — and because the context is opaque, an empty
+      // buffer at full opacity composites as flat black.
+      //
+      // Redrawing here rather than leaving it to the next tick is the whole fix
+      // for the flicker. ResizeObserver callbacks run *after* the animation
+      // frame callbacks in the same turn of the rendering loop: the ticker has
+      // already drawn this frame by the time we get here, so a buffer cleared
+      // now is a black frame the visitor actually sees, and the ticker only
+      // repairs it on the next one. Anything that nudges the hero's box — a
+      // font landing, ScrollTrigger re-measuring, a phone hiding its URL bar —
+      // was worth one black flash. Painting synchronously means the resized
+      // buffer has a frame in it before the compositor ever looks at it.
+      //
+      // It matters just as much when the ticker is *not* running: held behind
+      // the preloader, scrolled out of view, or backgrounded, nothing would
+      // have repaired it at all.
+      if (this.resize()) this._render();
     };
 
     if (typeof ResizeObserver !== 'undefined' && this.canvas.parentElement) {
@@ -998,10 +1072,21 @@ export default class GlassSlabs {
     this._on(this.canvas, 'webglcontextlost', (e) => {
       e.preventDefault();
       this.stop();
+
+      // Lose the context before the first frame and the preloader is still
+      // holding its exit on `ready`. Settle it: the frame it is waiting for is
+      // not coming, and the alternative is making the visitor sit out the full
+      // cap behind the panel for it.
+      this._settleReady?.(false);
+
+      // Back to the CSS backdrop until `webglcontextrestored`, which is a real
+      // fallback again now that its slats are not display:none.
       this.canvas.parentElement?.classList.remove('is-live');
     });
 
     this._on(this.canvas, 'webglcontextrestored', () => {
+      // A restored context has no buffer at all, whatever the tracked size says,
+      // so this one genuinely does have to force resize() past its guard.
       this._w = 0;
       this.resize();
       this._render();
@@ -1048,6 +1133,17 @@ export default class GlassSlabs {
   _maybeStart() {
     // Reduced motion gets the composition, held still — one frame, no ticker.
     if (this._held || this._running || this._static || !this.renderer) return;
+
+    // A resume is never a fair sample. Coming back from a hidden tab or back
+    // into view, the first frames carry whatever the page did while the scene
+    // was stopped, and the governor cannot tell that from a slow GPU — it would
+    // step down on the strength of a scroll. Serve the warm-up again.
+    if (this._samples !== null) {
+      this._samples.length = 0;
+      this._windowMs = 0;
+      this._warmupMs = 0;
+    }
+
     this._running = true;
     gsap.ticker.add(this._tick);
   }
@@ -1119,8 +1215,8 @@ export default class GlassSlabs {
   _govern(delta) {
     if (this._samples === null) return;
 
-    // Shader compiles, texture uploads and the first mip build all land in the
-    // opening frames, and none of them happen again.
+    // Shader compiles, texture uploads, the first mip build and — the expensive
+    // one — the rest of the page finishing its own boot. See WARMUP_MS.
     if (this._warmupMs < WARMUP_MS) {
       this._warmupMs += delta;
       return;
@@ -1142,8 +1238,11 @@ export default class GlassSlabs {
     }
 
     this._qualityLevel++;
-    this._w = 0; // force resize() past its no-op guard
-    this.resize();
+
+    // The new pixel ratio is enough to trip resize()'s guard on its own, and the
+    // repaint is not optional: the step down reallocates the buffer, and this
+    // runs from inside the tick, after the frame was drawn at the old size.
+    if (this.resize()) this._render();
 
     this._samples.length = 0;
     this._windowMs = 0;

@@ -19,7 +19,7 @@
  */
 
 import { gsap, ScrollTrigger } from '../core/gsap.js';
-import { isMobile, prefersReducedMotion } from '../utils/env.js';
+import { prefersReducedMotion } from '../utils/env.js';
 
 /** How far a covered panel recedes. Enough to read as depth, not as a shrink. */
 const COVERED_SCALE = 0.94;
@@ -28,10 +28,15 @@ export function initCardStack() {
   const stacks = document.querySelectorAll('[data-card-stack]');
   if (!stacks.length) return;
 
-  // Below 768px the stylesheet drops the panels back into normal flow, so there
-  // is nothing to recede behind anything. Reduced motion opts out of the cue and
-  // keeps the stacking, which is a layout rather than an animation.
-  if (isMobile() || prefersReducedMotion()) return;
+  // Runs at every width. It used to bail below 768px, because the stylesheet
+  // dropped the panels back into normal flow there and left nothing to recede
+  // behind anything; the panels are sticky on a phone now, so the depth cue goes
+  // with them. It costs nothing extra to do so — the cue is one scrubbed
+  // transform per panel, which the compositor carries.
+  //
+  // Reduced motion still opts out of the cue and keeps the stacking, which is a
+  // layout rather than an animation.
+  if (prefersReducedMotion()) return;
 
   stacks.forEach((stack) => {
     const cards = [...stack.children];
@@ -41,11 +46,17 @@ export function initCardStack() {
       if (!next) return;
 
       // The offset the *next* panel parks at, in px — not this one's. Each
-      // panel now sticks one `--peek` lower than the one before it, so the two
-      // are no longer the same number, and it is the arriving panel reaching its
-      // own resting place that ends the cover. `top` is a calc() in the
-      // stylesheet; the computed value has already resolved it.
-      const stickyTop = parseFloat(getComputedStyle(next).top) || 0;
+      // panel sticks one `--peek` lower than the one before it, so the two are
+      // not the same number, and it is the arriving panel reaching its own
+      // resting place that ends the cover. `top` is a calc() in the stylesheet;
+      // the computed value has already resolved it.
+      //
+      // Read on every refresh rather than once at setup. Both halves of that
+      // calc are now breakpoint-dependent — a phone parks the panels higher and
+      // peeks less, so they fit above the fold — and a viewport crossing 768px
+      // would otherwise leave every trigger ending at the offset the other
+      // breakpoint had.
+      const stickyTop = () => parseFloat(getComputedStyle(next).top) || 0;
 
       gsap.to(card, {
         scale: COVERED_SCALE,
@@ -53,7 +64,7 @@ export function initCardStack() {
         scrollTrigger: {
           trigger: next,
           start: 'top bottom',
-          end: `top top+=${stickyTop}`,
+          end: () => `top top+=${stickyTop()}`,
           scrub: true,
           // The offset is in px and the viewport can change under it.
           invalidateOnRefresh: true,

@@ -11,6 +11,58 @@
   overflow: hidden;
 }
 
+/**
+ * The pinned band.
+ *
+ * The same treatment the home page's hero gets: the band stays where it is and
+ * the sections after it are dealt over the top of it, squeezing it down into a
+ * rounded card as they arrive. js/animations/hero-stack.js runs it.
+ *
+ * The transform goes on the section itself rather than on a child, which is the
+ * one way this differs from the hero. Both the photograph and the wordmark break
+ * out to `100vw` — scaling anything inside would leave those two at full width,
+ * and clipping them back to the column is the one thing the composition cannot
+ * survive. The section already has `overflow: hidden`, so it is also the box the
+ * corner radius has something to cut.
+ */
+.studio-band.is-pinned {
+  position: sticky;
+
+  /**
+   * Set by the JS, and this is the reason it has to be.
+   *
+   * The band is content-sized and its height tracks the viewport's *width*, so
+   * on a wide short screen it is taller than the window — 1008px against 900 at
+   * 1440×900. Pinned to the top, the part that falls off the bottom is the copy
+   * and the CTA. Pinned to the bottom, what is lost is the top of a decorative
+   * wordmark, which is the right thing to lose. The offset is zero while the
+   * band fits and negative by the shortfall when it does not, and CSS has no way
+   * to know which of those it is.
+   */
+  top: var(--pin-top, 0px);
+
+  // A positioned element paints above its static siblings, which is the opposite
+  // of what this needs. Zero puts it back underneath the sheet.
+  z-index: 0;
+
+  transform-origin: center center;
+  will-change: transform;
+
+  // The veil that takes the band down as the page covers it. Its opacity is a
+  // custom property because GSAP can reach a variable on the element and cannot
+  // reach a pseudo-element at all.
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    opacity: var(--pin-veil, 0);
+    background-color: #02091b;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+}
+
 // `.container-large` carries no width in this codebase — the page banners use it purely as a hook.
 .studio-band_inner {
   width: 100%;

@@ -61,6 +61,15 @@ html.no-js .page-transition {
   display: none;
 }
 
+/* Parked. Restated here because page-transition.js parks the cover by class
+   rather than by inline style, and on the home page it does that within a frame
+   of boot — which can be before the stylesheet carrying the real rule has
+   landed. Same values, so this cannot drift from it. */
+.page-transition.is-idle {
+  visibility: hidden;
+  opacity: 0;
+}
+
 /* The home page's cover. Sized from its four insets rather than a width/height
    pair so it does not collide with the stylesheet's `--vh` height fallback —
    when both arrive, `height` wins and `bottom` is simply ignored. */

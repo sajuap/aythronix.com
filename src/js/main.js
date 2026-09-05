@@ -36,8 +36,12 @@ import { initMarquees } from './animations/marquee.js';
 import { initButtonBrackets } from './animations/button-brackets.js';
 import { initReveals } from './animations/reveals.js';
 import { initCardStack } from './animations/card-stack.js';
+import { initHeroStack, initPageHeroStack, initStudioStack } from './animations/hero-stack.js';
 import { initLottieIcons } from './components/lottie-icons.js';
 import { initWorkRail } from './components/work-rail.js';
+import { initSectorList } from './components/sector-list.js';
+import { initFaq } from './components/faq.js';
+import { initBlogPost } from './components/blog-post.js';
 import { initImageTrail } from './components/image-trail.js';
 import { initAnchors } from './components/anchors.js';
 import { initContactForm } from './components/contact-form.js';
@@ -214,7 +218,29 @@ function initAfterReveal() {
     initCardStack,
     initLottieIcons,
     initWorkRail,
+    initSectorList,
     initImageTrail,
+    // The pinned hero never leaves the viewport, so both Three.js scenes would
+    // otherwise keep drawing behind an opaque sheet for every screen after the
+    // first. These two callbacks are what stop that — see the note at the top of
+    // animations/hero-stack.js.
+    () => {
+      initHeroStack({
+        onCovered: () => {
+          heroGlass?.stop();
+          heroSphere?.stop();
+        },
+        onRevealed: () => {
+          heroGlass?.start();
+          heroSphere?.start();
+        },
+      });
+
+      // The about page's studio band, same device. Nothing to pause behind this
+      // one — it is a photograph, not a running scene.
+      initStudioStack();
+      initPageHeroStack();
+    },
     () => {
       // Crossing the 992px boundary either needs the sphere or needs it gone.
       onResize(initHeroSphere, 250);
@@ -227,6 +253,12 @@ function initAfterReveal() {
 
 function boot() {
   initViewportHeight();
+
+  // Before the page transition, and that ordering is load-bearing: this writes
+  // the "keep reading" cards into the article page, and the transition binds its
+  // cover to the links that exist when it runs. The other way round and those
+  // three cards would be the only links on the site that navigate bare.
+  initBlogPost();
 
   // First, and ahead of the dynamic import that smooth scroll waits on: this
   // panel is covering the viewport from CSS, so every frame before it is lifted
@@ -249,6 +281,11 @@ function boot() {
   // Static/idempotent wiring that does not depend on the intro.
   initNavMenu();
   initButtonBrackets();
+  // Here rather than in the post-reveal batch: this one *collapses* the FAQ
+  // panels, which are written open so a failed module still leaves them
+  // readable. A frame or two of six open answers is not something anyone should
+  // see, and at DOMContentLoaded nobody can.
+  initFaq();
   initAnchors();
   initContactForm();
   initBlogFilters();

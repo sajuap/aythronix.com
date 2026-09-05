@@ -88,7 +88,7 @@
 
       <main id="content">
       <!-- PLACEHOLDER COPY: invented names; portraits are initials rather than photographs. -->
-        <section class="hero-section page-hero">
+        <section class="hero-section page-hero is-pinned">
           <div class="padding-global">
             <div class="container-large">
               <h1 class="page-hero_title" data-reveal="text">Portfolio</h1>
@@ -97,15 +97,27 @@
           </div>
         </section>
 
+        <!--
+          Everything after the banner, dealt over it as one opaque sheet — the same
+          device the home page uses under its hero. The banner is sticky and stays
+          behind this for the rest of the page, so any gap in the cover is a gap it
+          shows through.
+        -->
+        <div class="page-stack">
+
         <!-- `section-bleeds` drops this column's side hairlines: the work rail below crosses them. -->
         <section id="Work" class="case-studies-section section-bleeds">
           <div class="padding-global">
             <div class="container-large-bordered">
               <div class="padding-section-medium">
                 <div class="padding-horizontal padding-medium">
-                  <div class="margin-bottom margin-huge">
+                  <div class="margin-bottom">
                     <div class="max-width-large">
-                      <div class="label-chip">Selected Work</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Selected Work</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       </div>
                     </div>
@@ -264,7 +276,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">More Projects</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">More Projects</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       <h2 data-reveal="text">Recent Engagements</h2>
                       <div class="margin-top margin-small">
@@ -274,48 +290,76 @@
                     </div>
                   </div>
 
-                  <!-- The blog's card grid, reused. Cards point at contact until case studies exist. -->
+                  <!--
+                    The blog's card grid, reused. Cards point at contact until case
+                    studies exist.
+
+                    The thumb used to carry the discipline as text, which is what the
+                    blue gradient behind it was for; it holds the cover photo now, so
+                    the discipline has moved down to the meta line beside the sector.
+                    Platform is the one image not named for its card — there is no
+                    `platform.jpg`, so it borrows the data-centre shot from the blog set.
+                  -->
                   <div class="posts_grid" data-reveal="fade">
                     <a href="contact.html" class="post-card">
-                      <div class="post-card_thumb">Web</div>
-                      <div class="post-card_meta">Placeholder sector</div>
+                      <div class="post-card_thumb"><img src="/src/assets/images/web.jpg" width="800" height="500" loading="lazy" decoding="async" alt="A developer working through code on a laptop" /></div>
+                      <div class="post-card_meta">Web · Financial services</div>
                       <div class="post-card_title">A customer portal rebuilt around one identity model</div>
-                      <p class="post-card_excerpt">Four logins collapsed into one.</p>
+                      <p class="post-card_excerpt">
+                        Three products, three sets of credentials, and a support queue full of
+                        password resets. One account, one session, one place to look.
+                      </p>
                     </a>
 
                     <a href="contact.html" class="post-card">
-                      <div class="post-card_thumb">Mobile</div>
-                      <div class="post-card_meta">Placeholder sector</div>
-                      <div class="post-card_title">Field app that keeps working without signal</div>
-                      <p class="post-card_excerpt">Offline-first, syncing when it can.</p>
+                      <div class="post-card_thumb"><img src="/src/assets/images/mobile.webp" width="800" height="500" loading="lazy" decoding="async" alt="A mobile application being used on a handset" /></div>
+                      <div class="post-card_meta">Mobile · Field services</div>
+                      <div class="post-card_title">A field app that keeps working without signal</div>
+                      <p class="post-card_excerpt">
+                        Engineers had gone back to paper because the app gave up underground.
+                        Offline-first now, with a sync that resolves conflicts rather than
+                        overwriting them.
+                      </p>
                     </a>
 
                     <a href="contact.html" class="post-card">
-                      <div class="post-card_thumb">AI</div>
-                      <div class="post-card_meta">Placeholder sector</div>
+                      <div class="post-card_thumb"><img src="/src/assets/images/ai.jpg" width="800" height="500" loading="lazy" decoding="async" alt="An abstract visualisation of a machine learning model" /></div>
+                      <div class="post-card_meta">AI · Customer support</div>
                       <div class="post-card_title">Support triage that routes before a human reads it</div>
-                      <p class="post-card_excerpt">Classification with a human fallback.</p>
+                      <p class="post-card_excerpt">
+                        Classification on the way in and confidence thresholds on the way out,
+                        so anything the model is unsure of still lands with a person.
+                      </p>
                     </a>
 
                     <a href="contact.html" class="post-card">
-                      <div class="post-card_thumb">E-Commerce</div>
-                      <div class="post-card_meta">Placeholder sector</div>
+                      <div class="post-card_thumb"><img src="/src/assets/images/e-commerce.jpg" width="800" height="500" loading="lazy" decoding="async" alt="An online storefront open on a laptop beside a card reader" /></div>
+                      <div class="post-card_meta">E-Commerce · Retail</div>
                       <div class="post-card_title">A catalogue migration nobody noticed happening</div>
-                      <p class="post-card_excerpt">Redirects mapped before the cutover.</p>
+                      <p class="post-card_excerpt">
+                        Every URL mapped and redirected before the cutover, so the new
+                        storefront went live on a weekday morning and search never noticed.
+                      </p>
                     </a>
 
                     <a href="contact.html" class="post-card">
-                      <div class="post-card_thumb">Platform</div>
-                      <div class="post-card_meta">Placeholder sector</div>
+                      <div class="post-card_thumb"><img src="/src/assets/images/blog/migration.jpg" width="800" height="500" loading="lazy" decoding="async" alt="Engineers working at server racks in a data centre" /></div>
+                      <div class="post-card_meta">Platform · SaaS</div>
                       <div class="post-card_title">Deploys moved from a weekend job to a weekday one</div>
-                      <p class="post-card_excerpt">Pipelines, checks, and a rollback path.</p>
+                      <p class="post-card_excerpt">
+                        A pipeline that runs the checks, a release that can be taken back in a
+                        minute, and alerting that names the cause rather than the symptom.
+                      </p>
                     </a>
 
                     <a href="contact.html" class="post-card">
-                      <div class="post-card_thumb">SEO</div>
-                      <div class="post-card_meta">Placeholder sector</div>
-                      <div class="post-card_title">Rebuilding an information architecture around demand</div>
-                      <p class="post-card_excerpt">Structure first, content second.</p>
+                      <div class="post-card_thumb"><img src="/src/assets/images/seo.jpg" width="800" height="500" loading="lazy" decoding="async" alt="Search performance charts on a desktop display" /></div>
+                      <div class="post-card_meta">SEO · Publishing</div>
+                      <div class="post-card_title">An information architecture rebuilt around demand</div>
+                      <p class="post-card_excerpt">
+                        The pages people were searching for existed, but nothing linked to
+                        them. Structure first, content second, and the rankings followed.
+                      </p>
                     </a>
                   </div>
                 </div>
@@ -331,7 +375,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">Sectors</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Sectors</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       <h2 data-reveal="text">Where We Work</h2>
                       </div>
@@ -392,7 +440,11 @@
                 <div class="padding-horizontal padding-medium">
                   <div class="margin-bottom margin-huge">
                     <div class="max-width-large">
-                      <div class="label-chip">Work With Us</div>
+                      <div class="display-horizontal-left is-gap-0-3rem is-still-horizontal">
+                        <div class="subtitle-line"></div>
+                        <div class="text-style-subtitle">Work With Us</div>
+                        <div class="subtitle-line"></div>
+                      </div>
                       <div class="margin-top margin-small">
                       <h2 data-reveal="text">Have Something Like This?</h2>
                       <div class="margin-top margin-small">
@@ -416,6 +468,7 @@
             </div>
           </div>
         </section>
+        </div>
       </main>
 
       <footer class="footer_section">
